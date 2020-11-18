@@ -94,7 +94,7 @@ class product extends Controller
 
             $mallId = $productClass->checkMallId($productId , $mallId);
             $colorId = $billClass->checkColorId($colorId,$productId,1);
-            $sizeId = $billClass->checkColorId($sizeId,$productId,1);
+            $sizeId = $billClass->checkSizeId($sizeId,$productId,1);
 
             if($colorId == false || $sizeId == false || $mallId == false )return back()->with('failed', 'oops! choose a color and size');
             
