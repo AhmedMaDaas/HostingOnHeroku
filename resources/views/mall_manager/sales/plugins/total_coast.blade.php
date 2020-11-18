@@ -1,0 +1,1 @@
+<span>${{ $quantity * $product_coast }}</span>

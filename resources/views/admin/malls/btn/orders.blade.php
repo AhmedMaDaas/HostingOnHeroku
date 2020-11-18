@@ -1,0 +1,1 @@
+<a href="{{ url('admin/malls/mall-sales/' . $mall_id) }}" class="btn btn-primary">{{ trans('admin.orders') }}</a>

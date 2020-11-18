@@ -1,0 +1,1 @@
+<a href="{{ url('admin/states/' . $id . '/edit') }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>

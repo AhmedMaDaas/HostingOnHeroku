@@ -1,0 +1,285 @@
+.info{
+    display: flex; 
+	width: 100%;
+}
+.info1,.products-sale{
+    padding-right: 0px;
+    padding-left: 0px;
+	
+
+}
+.info1
+{
+	width: 85%
+}
+.products-sale .main-container{
+	min-height: 100px;
+	width:100%
+}
+.info .brands{
+    padding-top: 20px;
+	width:15%;
+}
+.info .brands .brands1{
+    padding-top: 10px;
+     padding-bottom: 10px;
+  border-bottom: 1px solid #ececec;
+    padding-left: 10px
+}
+.info .brands .brands1 label{
+    margin-bottom: 0px;
+	width: 3px
+}
+.info .brands .brands1 h4{
+    text-align: center
+}
+.info .brands .brands1 .rating{
+    width: 150px;
+    display: inline
+}
+
+.info .brands .brands1 .rating img{
+    width: 16px;
+    height: 16px;
+
+}
+.category .sort{
+    display: flex; 
+    margin-top: 10px;
+    position: relative;
+    float: right
+}
+.sort price{
+    padding-top: 10px
+}
+.sort .price button{
+    width: 30px;
+ height: 30px;
+    background-color: var(--orange-color);
+    border: 4px solid var(--orange-color);
+	padding-right: 19px
+    
+    
+}
+.sort .price button img{
+
+}
+.sort input[type="text"]{
+    width:50px;
+    height: 30px
+}
+.sort .sorting{
+    margin-left: 20px;
+        height: 34px;
+    border-radius: 24px;
+    text-align: center;
+    padding-top: 5px;
+    box-sizing: border-box;
+    width: 100px;
+    background-color: var(--orange-color);
+    margin-right: 15px;
+    cursor: pointer;
+    z-index: 1
+   
+    
+}
+.sort .sorting span{
+   display: inline-block;
+    color: white;
+	font-size: 18px
+}
+.sort .sorting ul{
+    padding-left: 0px;
+    display: inline-block;
+        margin-left: 0px;
+    padding-left: 0px;
+    display: none;
+    width: 100px;
+    background-color: var(--orange-color);
+    margin-top: 10px;;
+        border-radius: 24px
+}
+
+.sort .sorting ul li{
+    list-style-type: none
+}
+.sort .sorting ul li a{
+       color: white;
+    margin: auto;
+    -webkit-transition:all 0.2s ease;
+    -moz-transition:all 0.2s ease;
+    -o-transition:all 0.2s ease;
+    transition:all 0.2s ease;
+    border: 1px solid transparent
+}
+.sort .sorting ul li a:hover{
+    font-size: 18px
+}
+@media only screen and (max-width: 347px){
+	.category .sort{
+		display: block;
+		text-align: center;
+		float: none
+	}
+	.sort .sorting{
+		width: 71px;
+		margin: auto;
+		height: 27px;
+		padding-top: 0px;
+		margin-top: 10px
+	}
+	.sort .sorting span{
+		font-size: 13px
+	}
+	.sort .price input[type=text]{
+		width: 40px;
+		height: 25px
+	}
+	.sort .price button{
+		height: 25px;
+		padding-right: 8px
+	}
+	.info .row .brands{
+		width: 300px
+	}
+	.info1{
+		width: 100%
+	}
+	.info{
+		flex-direction: column		
+	}
+	.info .brands{
+		width: 90%
+	}
+	.rating img{
+		width: 14px;
+		height: 14px;
+		
+	}
+	.info .brands .brands1{
+	padding-left: 10px;
+		margin: auto
+	}
+	.sort .price button{
+			padding-top: 0px;
+		padding-bottom: 0px;
+		width: 25px;
+		padding-right: 15px;
+	}
+	.sort .price button img{
+		height: 14px;
+		width: 14px;
+		vertical-align: inherit
+	}
+	.info .brands .brands1 h4,.products-sale .main-container .sec {
+		font-size: 17px
+	}
+}
+@media (min-width: 348px) and (max-width: 610px){
+	.category{
+		width: 100%;
+		height: 210px;
+		text-align: center
+	}
+	.category .chose{
+		margin-left: 5%;
+		width: 100%
+	}
+	.category .sort{
+		display: block;
+		text-align: center;
+		float: none
+	}
+	.sort .sorting{
+		width: 85px;
+		margin: auto;
+		height: 27px;
+		padding-top: 0px;
+		margin-top: 10px
+	}
+	.sort .sorting span{
+		font-size: 14px
+	}
+	.sort .price input[type=text]{
+		width: 60px;
+		height: 25px
+	}
+	.sort .price button{
+		height: 25px;
+		padding-right: 8px
+	}
+	.info .row .brands{
+		width: 300px
+	}
+	.info1{
+		width: 100%
+	}
+	.info{
+		flex-direction: column		
+	}
+	.info .brands{
+		width: 90%;
+		padding-top: 10px
+	}
+	.rating img{
+		width: 14px;
+		height: 14px;
+		
+	}
+	.info .brands .brands1{
+	padding-left: 10px;
+		margin: auto
+	}
+	.sort .price button{
+			padding-top: 0px;
+		padding-bottom: 0px;
+		width: 25px;
+		padding-right: 17px;
+	}
+	.sort .price button img{
+		height: 14px;
+		width: 14px;
+		vertical-align: inherit
+	}
+	.info .brands .brands1 h4,.products-sale .main-container .sec {
+		font-size: 17px
+	}
+}
+@media (min-width: 611px) and (max-width: 768px){
+	.info .brands{
+		width: 25%
+	}
+	.info .info1{
+		width: 75%
+	}
+	.sort .sorting{
+		width: 99px;
+		height: 30px;
+		padding-top: 0px
+	}
+	.sort .sorting span{
+		font-size: 17px
+	}
+	.info .brands .brands1 h4,.products-sale .main-container .sec{
+		font-size: 19px
+	}
+}
+@media (min-width: 769px) and (max-width: 991.98px){
+		.info .brands{
+		width: 25%
+	}
+	.info .info1{
+		width: 75%
+	}
+	.sort .sorting{
+		width: 100px;
+		height: 33px;
+		padding-top: 0px
+	}
+	.sort .sorting span{
+		font-size: 19px
+	}
+	.info .brands .brands1 h4,.products-sale .main-container .sec{
+		font-size: 21px
+	}
+}

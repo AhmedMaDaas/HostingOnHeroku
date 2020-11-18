@@ -1,0 +1,166 @@
+table.dataTable {
+	width: 100% !important;
+}
+
+.jstree-anchor {
+
+    text-decoration: none !important;
+    color: #fff !important;
+
+}
+
+.jstree-anchor:hover{
+	color: #3C4858 !important;
+}
+
+.hidden{
+	display: none !important;
+}
+
+.dataTables_paginate {
+	width: 100%;
+	position: relative;
+}
+
+.dataTables_paginate .pagination{
+	position: absolute;
+	right: 0;
+}
+
+.dataTables_info{
+	width: 100%;
+}
+
+.dz-image img{
+	width: 100%;
+}
+
+.select2-selection{
+	background-color: #8b92a9 !important;
+}
+
+.dropzone{
+	background-color: cadetblue;
+}
+
+a.dz-remove{
+	color: cadetblue;
+}
+
+select.language{
+    background: #1a2035;
+    color: #868b99;
+    border-color: #1a2035;
+    margin-left: 10px;
+    cursor: pointer;
+    padding-right: 10px
+    
+
+}
+
+.navbar .collapse .navbar-nav .nav-item .nav-link{
+    padding:10px 8px;
+    text-transform: none;
+    font-size: 16px
+}
+
+.table{
+	text-align: center;
+}
+
+.table .box-title{
+	color: #fff;
+}
+
+.dataTables_info{
+	color: #fff;
+}
+
+.dropdown-menu {
+	position: absolute;
+    top: -57px;
+    left: -150px;
+    will-change: top, left;
+}
+
+.orders-table {
+	min-height: 130px;
+}
+
+/******** Ediatble Table ********/
+
+table.editable-table{
+	position: relative;
+	width: 100%;
+	border-color: white;
+	border-collapse: separate !important;
+	text-align: center;
+	background-color: white;
+	table-layout:fixed;
+	/*overflow:hidden;*/
+}
+
+table.editable-table td{
+    background-color: white;
+}
+
+table.editable-table tr td:last-child{
+	width: 200px;
+	min-width: 200px;
+}
+
+.btn-table{
+	width: 50px;
+	padding: 12px 00px;
+}
+
+.cell-control{
+	position: absolute;
+	top: -50px;
+	right: 50%;
+	z-index: 100;
+}
+
+.rotate{
+	transform: rotate(90deg);
+}
+
+/******** Ediatble Table ********/
+
+/************   Attractive Info   ************/
+
+#attractive-info{
+	padding: 20.0px;
+}
+
+#attractive-info .store{
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    background-color: #FFF;
+    padding: 0px;
+    box-shadow: 0px 0px 6px var(--lightgray-color);
+    margin: 10px;
+    position: relative;
+    transition: transform .5s
+}
+
+#attractive-info .store > img{
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px
+}
+
+.delete-attr-info{
+	position: absolute;
+	top: 2px;
+	right: 2px;
+}
+
+.delete-attr-info:hover{
+	cursor: pointer;
+}
+
+/************   Attractive Info   ************/

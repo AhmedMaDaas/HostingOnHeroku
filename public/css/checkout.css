@@ -1,0 +1,780 @@
+.checkout{
+    min-height: 800px;
+    background-color: var(--backgray);
+    padding: 20px;
+    display: flex;
+    flex-direction: row
+}
+.checkout .buy{
+    width: 70%;
+ min-height: 50%;
+    padding: 10px;
+    background-color: white
+}
+.checkout .buy .select{
+    display: flex;
+    float: right;
+    
+}
+.checkout .buy .select .delet img,.checkout .buy .select .selectall img{
+    width: 19x;
+    height: 19px;
+    margin-right: 3px
+}
+.checkout .buy .select .delet,.checkout .buy .select .selectall{
+    cursor: pointer
+}
+.checkout .buy .select span{
+    margin-right: 6px;
+    margin-left: 6px
+}
+.checkout .buy .store {
+    margin-top: 15px;
+	min-height: 100px
+}
+.checkout .buy .store .list{
+    
+    background-color: #d6e8e7;
+    padding: 10px
+ 
+}
+.checkout .buy .store .list li{
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px
+}
+.checkout .buy .store .list li .media-body{
+    margin-top: 10px
+}
+.checkout .buy .store .list li > img.mr-3{
+width: 150px;
+    height: 150px;
+    margin-left: 5px
+}
+.checkout .buy .store .list li .media-body .t img{
+    width: 40px;
+    height: 40px;
+}
+.checkout .buy .store .list li .media-body .t{
+    display: flex;
+    flex-direction: row
+}
+.checkout .buy .store .list li .media-body p{
+ margin-right: 10px;
+    margin-bottom: 3px
+}
+.checkout .buy .store .list li .totalprice{
+    margin: auto;
+    width: 14%;
+    text-align: center
+}
+.checkout .buy .store .list li .totalprice p{
+    margin-bottom: 0px
+}
+.checkout .buy .store .list li .totalprice p:first-child{
+    font-size: 22px;
+    color:var(--fairouzi-color);
+}
+.checkout .buy .store .list li .totalprice .old-price del,.discount{
+    color:#af9f9f
+}
+.checkout .invoice{
+    display: flex;
+    flex-direction: column
+}
+.checkout .invoice .totalinvoice{
+    min-height: 370px;
+    background-color: white;
+    width: 400px;
+	margin-left: 20px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column
+}
+.checkout .invoice .totalinvoice h4 img{
+	margin-right: 10px
+}
+.checkout .invoice .totalinvoice .line{
+	width: 370px;
+	height: 3px;
+	background-color: var(--backgray)
+}
+.checkout .invoice .totalinvoice .totaldiscount,.checkout .invoice .totalinvoice .totalcost,.checkout .invoice .totalinvoice .total{
+	padding: 10px;
+	
+}
+.checkout .invoice .totalinvoice .total{
+	text-align: center
+}
+.checkout .invoice .totalinvoice .totaldiscount span,.checkout .invoice .totalinvoice .totalcost span,.checkout .invoice .totalinvoice .total span{
+	font-size: 20px;
+	margin-left: 10px;
+	color: #af9f9f
+}
+.checkout .invoice .totalinvoice .total{
+	padding: 10px;
+	    width: 250px;
+    margin: auto;
+    border: 2px solid #ababab;
+}
+.checkout .invoice .totalinvoice .total p{
+	margin-bottom: 0px
+}
+.checkout .invoice .totalinvoice .total p span{
+	margin-right: 5px;
+	font-size: 14px
+}
+.invoice .totalinvoice input[type="text"]{
+	line-height: 1.5;
+		margin-top: 10px;
+	width: 340px;
+	margin-left: 20px	
+}
+
+.checkout .invoice .totalinvoice .total span{
+	color: black;
+}
+.checkout .invoice .totalinvoice .totaldiscount span img,.checkout .invoice .totalinvoice .totalcost span img,checkout .invoice .totalinvoice .total span img{
+	width: 25px;
+	height: 25px;
+	margin-right: 5px
+}
+.checkout .invoice .totalinvoice .code{
+	text-align: center;
+	padding: 10px
+}
+.checkout .invoice .totalinvoice .code input[type="text"]{
+	width: 180px;
+	padding: 5px
+}
+.checkout .invoice .totalinvoice .code .apply{
+	width: 70px;
+	background-color: var(--orange-color);
+	border: 2px solid var(--orange-color);
+	padding: 5px;
+	color: white
+}
+.bb{
+	display: flex;
+	padding-left: 20px
+}
+.checkout .invoice .totalinvoice .bb .confirm,.invoice .totalinvoice .bb .confirmcash{
+	      width: 130px;
+    color: white;
+    background-color: var(--fairouzi-color);
+    border: 2px solid var(--fairouzi-color);
+    padding: 5px;
+	margin: 15px 20px
+}
+.invoice .totalinvoice .bb .confirmcash{
+		background-color: var(--orange-color);
+	border: 2px solid var(--orange-color);
+}
+.checkout .invoice .productmaylike{
+	background-color: var(--fairouzi-color);
+	margin-top: 20px;
+	min-height: 400px;
+	padding: 20px;
+	width: 350px;
+	margin-left: 20px;
+}
+.product{
+	margin: auto;
+	margin-top: 15px
+}
+.checkout .invoice .productmaylike .likee{
+	color: white;
+	font-size: 20px;
+	border-bottom: 2px solid var(--backgray);
+		text-align: center
+}
+.checkout .invoice .productmaylike .likee img{
+	width: 25px;
+	height: 25px;
+	margin-right: 5px;
+	margin-bottom: 5px
+}
+.checkout .invoice .productmaylike .lline{
+		width: 370px;
+	height: 10px;
+}
+.checkout .buy .store .list li .media-body p{
+	margin-right: 5px
+}
+.invoice .totalinvoice .location{
+	font-size: 24px
+}
+
+
+.invoice .totalinvoice .code .inputcode{
+	line-height: 1.15
+}
+/*MediaQuery*/
+@media only screen and (max-width: 347px){
+	.checkout{
+		flex-direction: column
+	}
+	.checkout .buy{
+		width: 100%
+	}
+		.checkout .buy .store .list li .media-body p {
+		margin-right: 6px
+	}
+	.checkout .buy .store .list li > img.mr-3 {
+		width: 65px;
+		height: 65px;
+		margin-left: 20px
+	}
+	.checkout .buy .store .list li .media-body h6{
+		font-size: 14px
+	}
+	.media{
+		display: flex !important;
+		flex-direction: column !important
+	}
+	
+	.checkout .buy .store .list li .totalprice{
+		width: auto;
+		margin-top: 5px
+	}
+	.rating img{
+		width:16px;
+		height: 16px
+	}
+	.checkout .buy .store .list li .totalprice p:first-child {
+		font-size: 16px;
+		width: 120px
+	}
+	.checkout .invoice .totalinvoice{
+		width: 100%;
+		margin-left: 0px;
+		margin-top: 10px;
+		padding: 5px
+	}
+	.checkout .invoice .totalinvoice h4,.checkout .invoice .totalinvoice h5{
+		font-size: 16px
+	}
+	.checkout .invoice .totalinvoice h4 img{
+		width: 22px;
+		height: 22px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span, .checkout .invoice .totalinvoice .totalcost span{
+		font-size: 16px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span img,.checkout .invoice .totalinvoice .totalcost span img,.checkout .invoice .totalinvoice .total span img{
+		width: 20px;
+		height: 20px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount, .checkout .invoice .totalinvoice .totalcost, .checkout .invoice .totalinvoice .total {
+		padding: 0px
+	}
+	.checkout .invoice .totalinvoice .total span{
+		font-size: 14px
+	}
+	.checkout .buy .select .delet, .checkout .buy .select .selectall{
+		font-size: 12px
+	}
+	.store .check label{
+		font-size: 12px
+	}
+	.checkout .buy .store .list li .media-body p {
+		font-size: 14px}
+	.checkout .invoice .totalinvoice .total{
+		margin-top: 10px;
+		margin-bottom:5px;
+		width: 100%
+	}
+	.checkout .invoice .totalinvoice .confirm,.checkout .invoice .totalinvoice .code .apply,.confirmcash{
+		width: 70px;
+		font-size: 13px
+	}
+	.checkout .invoice .totalinvoice .code .apply{
+		margin-top: 5px;
+		margin-left: 0px
+	}
+	.checkout .invoice .totalinvoice .code input[type="text"]{
+		margin: a
+	}
+	.invoice .totalinvoice input[type="text"]{
+		width: 120px;
+		margin-bottom: 2px
+	}
+	.checkout .invoice .productmaylike{
+		margin-left: 0px;
+		width: auto
+	}
+	.checkout .invoice .productmaylike .likee{
+		font-size: 15px;
+		
+	}
+	.checkout .invoice .productmaylike .likee img{
+		width: 19px;
+		height: 19px
+	}	
+	.invoice .totalinvoice .bb .confirmcash {
+		font-size: 13px
+	}
+	.checkout .invoice .totalinvoice .code{
+		padding-left: 0px
+	}
+	.checkout .invoice .totalinvoice .code .inputcode{
+		margin-left: 0px;
+			
+	}
+}
+@media (min-width: 348px) and (max-width: 610px){
+		.checkout{
+		flex-direction: column
+	}
+	.checkout .buy{
+		width: 100%
+	}
+	.checkout .buy .store .list li > img.mr-3 {
+		width: 75px;
+		height: 75px;
+		margin-left: 20px
+	}
+	.checkout .buy .store .list li .media-body h6{
+		font-size: 15px
+	}
+	.media{
+		display: flex !important;
+		flex-direction: column !important
+	}
+	
+	.checkout .buy .store .list li .totalprice{
+		width: auto;
+		margin-top: 5px
+	}
+	.rating img{
+		width:17px;
+		height: 17px
+	}
+	.checkout .buy .store .list li .totalprice p:first-child {
+		font-size: 17px;
+		width: 120px
+	}
+	.checkout .invoice .totalinvoice{
+		width: 100%;
+		margin-left: 0px;
+		margin-top: 10px;
+		padding: 5px
+	}
+	.checkout .invoice .totalinvoice h4,.checkout .invoice .totalinvoice h5{
+		font-size: 17px
+	}
+	.checkout .invoice .totalinvoice h4 img{
+		width: 23px;
+		height: 23px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span, .checkout .invoice .totalinvoice .totalcost span{
+		font-size: 16px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span img,.checkout .invoice .totalinvoice .totalcost span img,.checkout .invoice .totalinvoice .total span img{
+		width: 22px;
+		height: 22px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount, .checkout .invoice .totalinvoice .totalcost, .checkout .invoice .totalinvoice .total {
+		padding: 0px
+	}
+	.checkout .invoice .totalinvoice .total span{
+		font-size: 15px
+	}
+	.checkout .buy .select .delet, .checkout .buy .select .selectall{
+		font-size: 13px
+	}
+	.store .check label{
+		font-size: 15px
+	}
+	.checkout .buy .store .list li .media-body p {
+		font-size: 15px}
+	.checkout .invoice .totalinvoice .total{
+		margin-top: 20px;
+		margin-bottom: 5px
+	}
+	.checkout .invoice .totalinvoice .bb .confirm,.checkout .invoice .totalinvoice .bb .confirmcash,.checkout .invoice .totalinvoice .code .apply{
+		width: 75px;
+		font-size: 15px
+	}
+	.bb{
+		justify-content: center
+	}
+	.checkout .invoice .totalinvoice input[type="text"]{
+		width: 180px;
+		margin: auto;
+		margin-top: 10px
+	}
+	.checkout .invoice .totalinvoice .code input[type="text"]{
+		width: 130px;
+		margin-bottom: 2px;
+		margin-left: 30px
+	}
+	.checkout .invoice .productmaylike{
+		margin-left: 0px;
+		width: auto
+	}
+	.checkout .invoice .productmaylike .likee{
+		font-size: 16px;
+		
+	}
+	.checkout .invoice .productmaylike .likee img{
+		width: 21px;
+		height: 21px
+	}
+		.checkout .buy .store .list li .media-body p {
+		margin-right: 6px
+	}
+	.checkout .buy .store .list li .media-body .t img{
+		width: 27px;
+		height: 27px
+	}
+}
+@media (min-width: 611px) and (max-width: 768px){
+	.checkout {
+		padding: 7px
+	}
+	.checkout .buy .store .list li > img.mr-3{
+		width: 90px;
+		height: 90px
+	}
+	.checkout .buy .store .list li > img.mr-3{
+		margin-right:4px !important
+	}
+	.checkout .buy .store .list{
+		padding: 5px
+	}
+	.checkout .buy .store .list li .media-body{
+		margin-top: 0px
+	}
+	.checkout .invoice {
+		width: 33%
+	}
+	.checkout .invoice .totalinvoice {
+		margin-left: 10px;
+		padding: 5px;
+		width: 100%
+	}
+	.rating img{
+		width: 20px;
+		height: 20px
+	}
+	.checkout .buy .store .list li .totalprice{
+		width: auto
+	}
+	.checkout .buy .store .list li .totalprice p:first-child{
+		font-size: 19px
+	}
+	.checkout .buy .store .list li .media-body .t img{
+		width: 27px;
+		height: 27px
+	}
+	.checkout .buy .store .list li .media-body p {
+		margin-right: 6px
+	}
+	.checkout .invoice .productmaylike{
+		padding: 5px;
+		margin-left: 10px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount, .checkout .invoice .totalinvoice .totalcost, .checkout .invoice .totalinvoice .total{
+		padding: 2px;	
+	}
+	.checkout .invoice .totalinvoice .total{
+		margin-left: 5px
+	}
+	.checkout .invoice .totalinvoice h4,.checkout .invoice .totalinvoice h5{
+		font-size: 1.3em
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span, .checkout .invoice .totalinvoice .totalcost span, .checkout .invoice .totalinvoice .total span{
+		font-size: 17px;
+		display: block;
+		margin-left: 0px
+	}
+	.checkout .invoice .totalinvoice .total{
+		text-align: left;
+		width: 90%
+	}
+	.checkout .invoice .totalinvoice .total span{
+		display: inline;
+		font-size: 15px
+	}
+	.checkout .invoice .totalinvoice .total span img{
+		width: 22px;
+		height: 22px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span img, .checkout .invoice .totalinvoice .totalcost span img, checkout .invoice .totalinvoice .total span img{
+		width: 20px;
+		height: 20px
+	}
+.checkout .invoice .totalinvoice h4 img {
+	width: 25px;
+	height: 25px
+	}
+	.store .check label{
+		font-size: 18px
+	}
+	.checkout .invoice .totalinvoice .code{
+		text-align: left;
+		padding: 5px;
+		padding-bottom: 10px
+	}
+	.checkout .invoice .totalinvoice .code input[type="text"]{
+		width: 110px
+	}
+	.checkout .invoice .totalinvoice .confirm{
+		width: 75px;
+		margin: 15px 60px
+	}
+	.product{
+		margin: 10px 0px
+	}
+	.checkout .invoice .productmaylike{
+		text-align: left;
+		width: 100%
+	}
+	.checkout .invoice .productmaylike .likee{
+		font-size: 19px
+	}
+	.checkout .invoice .productmaylike .likee img{
+		width: 22px;
+		height: 22px
+	}
+	.checkout .invoice .totalinvoice input[type="text"]{
+		width: 190px;
+		
+	}
+	.checkout .invoice .totalinvoice .bb .confirm, .invoice .totalinvoice .bb .confirmcash{
+		width: 90px;
+		
+	}
+}
+@media (min-width: 769px) and (max-width: 991.98px){
+	.checkout {
+		padding: 7px
+	}
+	.checkout .buy .store .list li > img.mr-3{
+		width: 105px;
+		height: 105px
+	}
+	.checkout .buy .store .list li > img.mr-3{
+		margin-right:4px !important
+	}
+	.checkout .buy .store .list{
+		padding: 5px
+	}
+	.checkout .buy .store .list li .media-body{
+		margin-top: 0px
+	}
+	.checkout .invoice {
+		width: 34%
+	}
+	.invoice .totalinvoice input[type="text"]{
+		width: 230px
+	}
+	.checkout .invoice .totalinvoice {
+		margin-left: 10px;
+		padding: 5px;
+		width: 100%
+	}
+	.rating img{
+		width: 22px;
+		height: 22px
+	}
+	
+.checkout .invoice .totalinvoice .code .apply{
+	width: 94px;
+	margin-top: 10px;
+	margin-left: 30%
+}
+	.checkout .buy .store .list li .totalprice{
+		width: auto
+	}
+	.checkout .buy .store .list li .totalprice p:first-child{
+		font-size: 22px
+	}
+	.checkout .buy .store .list li .media-body .t img{
+		width: 29px;
+		height: 29px
+	}
+	.checkout .buy .store .list li .media-body p {
+		margin-right: 6px
+	}
+	.checkout .invoice .productmaylike{
+		padding: 5px;
+		margin-left: 10px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount, .checkout .invoice .totalinvoice .totalcost, .checkout .invoice .totalinvoice .total{
+		padding: 2px;	
+	}
+	.checkout .invoice .totalinvoice .total{
+		margin-left: 5px
+	}
+	.checkout .invoice .totalinvoice h4{
+		font-size: 1.5em
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span, .checkout .invoice .totalinvoice .totalcost span, .checkout .invoice .totalinvoice .total span{
+		font-size: 19px;
+		display: block;
+		margin-left: 0px
+	}
+	.checkout .invoice .totalinvoice .total{
+		width: 90%
+	}
+	.checkout .invoice .totalinvoice .total span{
+		display: inline;
+		font-size: 17px
+	}
+	.checkout .invoice .totalinvoice .total span img{
+		width: 22px;
+		height: 22px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span img, .checkout .invoice .totalinvoice .totalcost span img, checkout .invoice .totalinvoice .total span img{
+		width: 20px;
+		height: 20px
+	}
+.checkout .invoice .totalinvoice h4 img {
+	width: 25px;
+	height: 25px
+	}
+	.store .check label{
+		font-size: 18px
+	}
+	.checkout .invoice .totalinvoice .code{
+		text-align: left;
+		padding: 5px;
+		padding-bottom: 10px
+	}
+	.checkout .invoice .totalinvoice .code input[type="text"]{
+		width: 165px
+	}
+	.checkout .invoice .totalinvoice .confirm{
+		width: 95px;
+		margin: 15px 60px
+	}
+	.product{
+		margin: 10px 20px
+	}
+	.checkout .invoice .productmaylike{
+		text-align: left;
+		width: 100%
+	}
+	.checkout .invoice .productmaylike .likee{
+		font-size: 19px
+	}
+	.checkout .invoice .productmaylike .likee img{
+		width: 24px;
+		height: 24px
+	}
+}
+@media (min-width: 992px) and (max-width: 1199.98px){
+		.checkout {
+		padding: 7px
+	}
+	.checkout .buy .store .list li > img.mr-3{
+		width: 120px;
+		height: 120px
+	}
+	.checkout .buy .store .list li > img.mr-3{
+		margin-right:4px !important
+	}
+	.checkout .buy .store .list{
+		padding: 5px
+	}
+	.checkout .buy .store .list li .media-body{
+		margin-top: 0px
+	}
+	.checkout .invoice {
+		width: 34%
+	}
+	.checkout .invoice .totalinvoice {
+		margin-left: 10px;
+		padding: 5px;
+		width: 100%
+	}
+	.rating img{
+		width: 26px;
+		height: 26px
+	}
+	.checkout .buy .store .list li .totalprice{
+		width: auto
+	}
+	.checkout .buy .store .list li .totalprice p:first-child{
+		font-size: 22px
+	}
+	.checkout .buy .store .list li .media-body .t img{
+		width: 29px;
+		height: 29px
+	}
+	.checkout .buy .store .list li .media-body p {
+		margin-right: 6px
+	}
+	.checkout .invoice .productmaylike{
+		padding: 5px;
+		margin-left: 10px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount, .checkout .invoice .totalinvoice .totalcost, .checkout .invoice .totalinvoice .total{
+		padding: 2px;	
+	}
+	.checkout .invoice .totalinvoice .total{
+		margin-left: 10px;
+		text-align: center;
+			width: 90%
+	}
+	.checkout .invoice .totalinvoice h4{
+		font-size: 1.6em
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span, .checkout .invoice .totalinvoice .totalcost span, .checkout .invoice .totalinvoice .total span{
+		font-size: 19px;
+		
+		margin-left: 0px;
+	
+	}
+	.checkout .invoice .totalinvoice .total span{
+		display: inline;
+		font-size: 19px
+	}
+	.checkout .invoice .totalinvoice .total span img{
+		width: 25px;
+		height: 25px
+	}
+	.checkout .invoice .totalinvoice .totaldiscount span img, .checkout .invoice .totalinvoice .totalcost span img, checkout .invoice .totalinvoice .total span img{
+		width: 26px;
+		height: 26px
+	}
+.checkout .invoice .totalinvoice h4 img {
+	width: 28px;
+	height: 28px
+	}
+	.store .check label{
+		font-size: 18px
+	}
+	.checkout .invoice .totalinvoice .code{
+		text-align: left;
+		padding: 5px;
+		padding-bottom: 20px;
+		text-align: center
+	}
+	.invoice .totalinvoice input[type="text"]{
+	width:300px
+	}
+	.checkout .invoice .totalinvoice .code input[type="text"]{
+		width: 195px
+	}
+	.checkout .invoice .totalinvoice .confirm{
+		width: 110px;
+		margin: auto
+	}
+	.product{
+	margin: auto
+	}
+	.checkout .invoice .productmaylike{
+		text-align: center;
+		width: 100%
+	}
+	.checkout .invoice .productmaylike .likee{
+		font-size: 21px
+	}
+	.checkout .invoice .productmaylike .likee img{
+		width: 28px;
+		height: 28px
+	}
+}

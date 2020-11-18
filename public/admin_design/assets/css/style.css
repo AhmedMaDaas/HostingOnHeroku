@@ -1,0 +1,6 @@
+select.form-control option{
+    background: gray
+}
+select.form-control option:hover{
+    background:#913f9e
+}

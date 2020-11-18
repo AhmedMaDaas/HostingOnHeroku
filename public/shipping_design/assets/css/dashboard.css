@@ -1,0 +1,153 @@
+:root{
+  --dark-color: #212a39;
+}
+.app-brand{
+    background-color: var(--dark-color)
+}
+.app-brand a img{
+    max-width: 150px
+}
+.store-img-small{
+    max-width: 145px;
+    max-height: 145px
+}
+.customer-img-small{
+    width: 100%;
+    height: 100%
+}
+.rounded-circle {
+    max-height: 45px;
+    max-width: 45px
+}
+.rounded-circle-mid {
+    border-radius: 50%;
+    max-height: 100px;
+    max-width: 100px
+}
+.manage-customer{
+    margin: auto
+}
+.manage-customer .loyalty{
+    display: inline-block
+}
+.manage-customer .loyalty > label{
+    color: #8a909d
+}
+.sidebar-footer-content > h6{
+    font-size: 11px
+}
+.card-mini .card-body {
+    max-height: 198px;
+    text-align: center
+}
+.card-mini .card-body > p {
+    font-size: 14px
+}
+.storey{
+    margin-top: 10px
+}
+.card-table thead th {
+    font-size: 16px;
+    font-weight: bold
+}
+.radius-pag{
+    margin: auto;
+    background-color: transparent;
+    border: 0px
+}
+.pagination-flat-rounded .page-item .page-link{
+    margin: 3px
+}
+.radius-pag .card-body{
+    padding: 0px
+}
+.fast-manage > span{
+    font-size: 20px;
+    margin: 0px 3px
+}
+.fast-manage > span:hover{
+    cursor: pointer
+}
+.widget-dropdown > ul > li > a > span{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0px
+}
+
+.lang{
+    margin-right: 20px
+}
+.lang .dropdown-menu{
+    max-width: 75px;
+    border-top-left-radius: 0px;
+    background-color: #4c84ff;
+    border: 0px;
+    top: 38px
+}
+.lang .dropdown-menu .dropdown-item{
+    color: #fbfcff
+}
+.lang .dropdown-menu .dropdown-item:hover{
+    color: #4c84ff
+}
+.modal{
+    z-index: 9999
+}
+
+.new-order{
+    color: crimson;
+}
+
+.no-after:after{
+    border: none !important;
+    content: '' !important;
+    margin: 0 !important;
+    position: relative !important;
+    width: 0px !important;
+    height: 0px !important;
+    border-radius: 0px !important;
+    top: -18px !important;
+    left: -17px !important;
+}
+
+#notifications-menu{
+    max-height: 173px;
+    overflow: auto;
+}
+
+/************************* Start Media Query ****************************/
+
+/***** Mobiles And Tablets *****/
+@media (max-width: 575.98px){
+  .lang .dropdown-menu{
+        position: absolute
+    }
+
+}
+
+/***** Small Screens *****/
+
+@media (min-width: 576px) and (max-width: 767.98px){
+    .lang .dropdown-menu{
+        position: absolute
+    }
+
+}
+
+/***** Medium Screens *****/
+
+@media (min-width: 768px) and (max-width: 991.98px){
+    .lang .dropdown-menu{
+        position: absolute
+    }
+}
+
+/** Large Screen **/
+@media (min-width: 992px) and (max-width: 1199.98px){
+    .user-menu .dropdown-toggle > img{
+        max-width: 37px
+    }
+    .user-menu .dropdown-toggle > span{
+        font-size: 14px
+    }
+}
