@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('photo', 500)->nullable();
             $table->string('phone');
             $table->enum('level', ['user', 'mall', 'company']);
-            $table->bigInteger('facebook_id', 255)->nullable();
-            $table->bigInteger('google_id', 255)->nullable();
+            $table->string('facebook_id', 255)->nullable();
+            $table->string('google_id', 255)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
