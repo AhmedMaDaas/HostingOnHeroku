@@ -181,7 +181,7 @@ form.Question button.add{
 	flex-wrap: wrap
 }
 .productsingle .productpic .options .quantityoption{
-    margin-top:0px
+    margin-top:8px
 }
 .productsingle .productpic .options .quantityoption .quantityval{
     margin-left: 10px
@@ -193,7 +193,7 @@ form.Question button.add{
     margin-bottom: 5px
 }
 .productsingle .productpic .options .sizeoption button,.productsingle .productpic .options .quantityoption button{
-    width: 30px;
+    min-width: 30px;
     height: 30px;
     color: black;
     background-color: white;
@@ -322,7 +322,7 @@ border-radius: 20px
 		font-size: 14px
 	}
 	.productsingle .productpic .options .sizeoption button,.productsingle .productpic .options .quantityoption button{
-		width: 20px;
+		min-width: 20px;
 		height: 20px;
 		font-size: 10px;
 		text-align: center;
@@ -436,7 +436,7 @@ border-radius: 20px
 		font-size: 15px
 	}
 	.productsingle .productpic .options .sizeoption button,.productsingle .productpic .options .quantityoption button{
-		width: 23px;
+		min-width: 23px;
 		height: 23px;
 		font-size: 12px;
 		text-align: center;
@@ -506,7 +506,7 @@ border-radius: 20px
 	}
 		.thumb-image{
 		height: 250px;
-			width: 250px
+			
 	}
 	.flex-control-thumbs li{
 		width: 75px;
@@ -561,7 +561,7 @@ border-radius: 20px
 		font-size: 16px
 	}
 	.productsingle .productpic .options .sizeoption button,.productsingle .productpic .options .quantityoption button{
-		width: 26px;
+		min-width: 26px;
 		height: 26px;
 		font-size: 12px;
 		text-align: center;
@@ -621,7 +621,7 @@ border-radius: 20px
 	}
 		.thumb-image{
 		height: 270px;
-			width: 270px
+		
 	}
 	.flex-control-thumbs li{
 		width: 30%;
@@ -666,7 +666,7 @@ border-radius: 20px
 		font-size: 18px
 	}
 	.productsingle .productpic .options .sizeoption button,.productsingle .productpic .options .quantityoption button{
-		width: 30px;
+		min-width: 30px;
 		height: 30px;
 		font-size: 18px;
 		text-align: center;
