@@ -56,10 +56,11 @@ width: 45%
     margin-left: 0px;
     padding-left: 0px;
     display: none;
-    width: 116px;
+    min-width: 116px;
     background-color: var(--orange-color);
     margin-top: 10px;;
-        border-radius: 24px
+        border-radius: 24px;
+	padding: 4px
         
 }
 .category .chose .cate ul li{
@@ -85,7 +86,7 @@ width: 45%
     cursor: pointer;
     margin-left: 15px;
 }
-.category .allproduct ,.category .home,.category .chose .cate{
+.category .allproduct ,.category .home{
     height: 34px;
     border-radius: 24px;
     text-align: center;
@@ -96,6 +97,22 @@ width: 45%
     margin-right: 15px;
     cursor: pointer;
     z-index: 1
+}
+.category .chose .cate{
+	min-width: 116px;
+	    height: 34px;
+    border-radius: 24px;
+    text-align: center;
+    padding-top: 2px;
+    box-sizing: border-box;
+    background-color: var(--orange-color);
+    margin-right: 15px;
+    cursor: pointer;
+    z-index: 1;
+	  -webkit-transition:all 0.5s ease;
+    -moz-transition:all 0.5s ease;
+    -o-transition:all 0.5s ease;
+    transition:all 0.5s ease;
 }
 .category .home{
     background-color: var(--fairouzi-color);
@@ -209,8 +226,8 @@ width: 90%;
 	
 	}
 
-.category .allproduct ,.category .home,.category .chose .cate{
-		width:100px;
+.category .allproduct ,.category .home{
+		width:50px;
 		height: 25px;
 		padding-top: 0px;
 		margin-right: 3px;	
@@ -219,6 +236,12 @@ width: 90%;
 		width: 250px;
 	margin-top: 20px
 	}
+	.category .chose .cate{
+		min-width:50px;
+		height: 25px;
+		padding-top: 0px;
+		margin-right: 3px;
+	}
 .category .allproduct a ,.category .home a,.category .chose .cate p{
 		font-size: 13px
 	}
@@ -226,7 +249,7 @@ width: 90%;
 		margin-left: 5px
 	}
 	.category .chose .cate ul{
-		width: 73px;
+		min-width: 50px;
 		border-radius: 15px
 	}
 	.category .chose .cate ul li{
@@ -292,8 +315,14 @@ width: 90%;
 	
 	}
 
-.category .allproduct ,.category .home,.category .chose .cate{
+.category .allproduct ,.category .home{
 		width:85px;
+		height: 27px;
+		padding-top: 0px;
+		margin-right: 3px;	
+	}
+	.category .chose .cate{
+		min-width:85px;
 		height: 27px;
 		padding-top: 0px;
 		margin-right: 3px;	
@@ -303,6 +332,10 @@ width: 90%;
 	margin-top: 20px;
 	margin-left: 31%
 	}
+	.sort .sorting ul li a{
+		font-size: 14px
+	}
+	
 .category .allproduct a ,.category .home a,.category .chose .cate p{
 		font-size: 14px
 	}
@@ -310,7 +343,7 @@ width: 90%;
 		margin-left: 10px
 	}
 	.category .chose .cate ul{
-		width: 85px;
+		min-width: 85px;
 		border-radius: 15px
 	}
 	.category .chose .cate ul li{
@@ -377,11 +410,14 @@ width: 90%;
 	
 	}
 
-.category .allproduct ,.category .home,.category .chose .cate{
+.category .allproduct ,.category .home{
 		width:99px;
 		height: 30px;
 		padding-top: 0px;
 		margin-right: 3px;	
+	}
+	.category .chose .cate{
+		min-width: 99px
 	}
 .category .chose{
 		width: 100%;
@@ -395,7 +431,7 @@ width: 90%;
 		margin-left: 15px
 	}
 	.category .chose .cate ul{
-		width: 99px;
+		min-width: 99px;
 		border-radius: 15px
 	}
 	.category .chose .cate ul li{
@@ -462,14 +498,17 @@ width: 90%;
 	
 	}
 
-.category .allproduct ,.category .home,.category .chose .cate{
+.category .allproduct ,.category .home{
 		width:110px;
 		height: 33px;
 		padding-top: 1px;
 		margin-right: 7px;	
 	}
+	.category .chose .cate{
+		min-width:110px;
+	}
 .category .chose{
-/* 		width: 100%; */
+		width: 100%;
 	margin-top: 20px;
 	margin-left: 28%
 	}
@@ -480,7 +519,7 @@ width: 90%;
 		margin-left: 14px
 	}
 	.category .chose .cate ul{
-		width: 110px;
+		min-width: 110px;
 		border-radius: 15px
 	}
 	.category .chose .cate ul li{
