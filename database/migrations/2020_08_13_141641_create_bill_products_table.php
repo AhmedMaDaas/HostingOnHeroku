@@ -21,9 +21,9 @@ class CreateBillProductsTable extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->bigInteger('mall_id')->unsigned();
             $table->foreign('mall_id')->references('id')->on('malls')->onDelete('cascade');
-            $table->bigInteger('size_id')->unsigned();
+            $table->bigInteger('size_id')->unsigned()->nullable();
             $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade');
-            $table->bigInteger('color_id')->unsigned();
+            $table->bigInteger('color_id')->unsigned()->nullable();
             $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
             $table->integer('quantity');
             $table->double('product_coast');
