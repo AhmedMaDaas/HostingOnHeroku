@@ -72,13 +72,36 @@
                   
               <ul class="list-unstyled list">
             @endif
+            <?php
+            if(($billProduct->product_coast != $billProduct->product->price) && 
+              (time()-(60*60*24)) > strtotime($billProduct->product->offer_end_at)){
+
+              // call function from app/http/helper
+               updatePriceBill($billProduct->id,$billProduct->product->price,$billProduct->quantity,$bill->id,$billProduct->product_coast,$bill->total_coast);
+            }
+            if(($billProduct->product_coast != $billProduct->product->price_offer) && 
+              (time()-(60*60*24)) <= strtotime($billProduct->product->offer_end_at)){
+
+              // call function from app/http/helper
+               updatePriceBill($billProduct->id,$billProduct->product->price_offer,$billProduct->quantity,$bill->id,$billProduct->product_coast,$bill->total_coast);
+            }
+               
+            if(!empty($billProduct->color))$colorId = $billProduct->color->id;
+            else $colorId = 0;
+            if(!empty($billProduct->size))$sizeId = $billProduct->size->id;
+            else $sizeId = 0;
+             ?>
                <li class="media">
-                  <input type="checkbox" name="products" value="{{$billProduct->product->id.'/'.$billProduct->color->id.'/'.$billProduct->size->id}}">
+                  <input type="checkbox" name="products" value="{{$billProduct->product->id.'/'.$colorId.'/'.$sizeId}}">
                   <img class="mr-3" src="{{Storage::url('/storage/'.$billProduct->product->photo)}}" alt="Generic placeholder image">
                     <div class="media-body">
                         <h6 class="mt-0 mb-1 description"><a href="{{route('product.get',['productId'=>$billProduct->product->id])}}">{{$billProduct->product->name_en}}</a></h6>
+                        @if(!empty($billProduct->color))
                         <div class="t"> <p>Color:</p> {{$billProduct->color->name_en}} </div>
+                        @endif
+                        @if(!empty($billProduct->size))
                         <div class="t"><p>Size:</p><span>{{$billProduct->size->name_en}}</span></div>
+                        @endif
                         <div class="t"><p>quantity:</p><span>{{$billProduct->quantity}}</span></div>
                         <input type="hidden" id="product-id" class="product-id" value="{{$billProduct->product->id}}">
                         <meta name="_token" content="{{ csrf_token() }}">
@@ -234,32 +257,36 @@
     </div>     
 </div>
     
-    <div class="footer">
-    <div class="container">
-        <div class="footer-grids row">
-            <div class="col-md-9 col-xs-6 footer-grid">
-                <h3>Bazar Al-Seeb</h3>
-                <p>Grand Shopping Mall In<span class="locate-footer"><img src="{{url('/')}}/images/oman-flag-3d-icon-16.png">Seeb, Oman</span></p>
+    <!-- Start Footer -->
+    <div class="footer navbar-inverse navbar-fixed-bottom">
+        <div class="footer-container">
+            <div class="container">
+            <div class="footer-grids row">
+                <div class="col-md-9 col-xs-6 footer-grid">
+                    <h3>Bazar Al-Seeb</h3>
+                    <p>Grand Shopping Mall In<span class="locate-footer"><img src="{{url('/')}}/images/oman-flag-3d-icon-16.png">Seeb, Oman</span></p>
+                </div>
+                <div class="col-md-3 col-xs-6 footer-grid">
+                    <h3>Contact Info</h3>
+                    <ul class="list-unstyled">
+                        <li><img src="{{url('/')}}/icons/location_on-24px.svg" class="filter-white">Seeb, Oman</li>
+                        <li><img src="{{url('/')}}/icons/pngegg%20(2).png" class="filter-white"><a href="mailto:info@example.com">bazaralseeb@gmail.com</a></li>
+                        <li><img src="{{url('/')}}/icons/call-24px.svg" class="filter-white">+968 9405 6359</li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-md-3 col-xs-6 footer-grid">
-                <h3>Contact Info</h3>
-                <ul class="list-unstyled">
-                    <li><img src="{{url('/')}}/icons/location_on-24px.svg" class="filter-white">Seeb, Oman</li>
-                    <li><img src="{{url('/')}}/icons/pngegg%20(2).png" class="filter-white"><a href="mailto:info@example.com">bazaralseeb@gmail.com</a></li>
-                    <li><img src="{{url('/')}}/icons/call-24px.svg" class="filter-white">+968 9405 6359</li>
-                </ul>
+            <div class="footer-logo">
+                <h2><a href="index.html">BAZAR AL-SEEB</a></h2>
+                <span>shop anywhere</span>
+            </div>
+            <div class="copy-righ">
+                <p>&copy 2020 Bazar Al seeb. All rights reserved <a href="#">BAZAR AL-SEEB</a></p>
             </div>
         </div>
-        <div class="footer-logo">
-            <h2><a href="index.html">BAZAR AL-SEEB</a></h2>
-            <span>shop anywhere</span>
         </div>
-        <div class="copy-righ">
-            <p>&copy 2020 Bazar Al seeb. All rights reserved <a href="#">BAZAR AL-SEEB</a></p>
-        </div>
+        
     </div>
-</div>
-<!-- End Footer -->
+    <!-- End Footer -->
     
 <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
 <script src="{{url('/')}}/js/popper.js"></script>

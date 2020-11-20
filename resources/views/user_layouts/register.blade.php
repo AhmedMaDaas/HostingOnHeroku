@@ -81,8 +81,9 @@
     </div>
     <!-- End Log In -->
     <!-- Start Footer -->
-    <div class="footer">
-        <div class="container">
+    <div class="footer navbar-inverse navbar-fixed-bottom">
+        <div class="footer-container">
+            <div class="container">
             <div class="footer-grids row">
                 <div class="col-md-9 col-xs-6 footer-grid">
                     <h3>Bazar Al-Seeb</h3>
@@ -105,7 +106,9 @@
                 <p>&copy 2020 Bazar Al seeb. All rights reserved <a href="#">BAZAR AL-SEEB</a></p>
             </div>
         </div>
-	</div>
+        </div>
+        
+    </div>
     <!-- End Footer -->
     <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
     <script src="{{url('/')}}/js/popper.js"></script>

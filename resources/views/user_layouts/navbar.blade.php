@@ -175,7 +175,7 @@
             <a href="{{route('check.get')}}">
                 <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-orange">
             </a>
-            <span>{{$sumQuantity}}</span>
+            <span id="sumQuantity">{{$sumQuantity}}</span>
         </div>
     </div>
 

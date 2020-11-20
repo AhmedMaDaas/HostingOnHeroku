@@ -38,14 +38,14 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><img src="{{url('/')}}/icons/pngegg%20(2).png" class="filter-orange"></span>
                   </div>
-                  <input type="email" name="email" class="form-control" placeholder="Email" value="{{old('fname')}}" required>
+                  <input type="email" name="email" class="form-control" placeholder="Email" value="{{old('fname')}}">
                 </div>
                 
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><img src="{{url('/')}}/icons/lock-24px.svg" class="filter-orange"></span>
                   </div>
-                  <input type="password" name="password" class="form-control" placeholder="Password" required>
+                  <input type="password" name="password" class="form-control" placeholder="Password">
                 </div>
                 <input type="submit" name="log" class="form-btn" value="Log In">
                 <hr>
@@ -62,8 +62,9 @@
     </div>
     <!-- End Log In -->
     <!-- Start Footer -->
-    <div class="footer">
-        <div class="container">
+    <div class="footer navbar-inverse navbar-fixed-bottom">
+        <div class="footer-container">
+            <div class="container">
             <div class="footer-grids row">
                 <div class="col-md-9 col-xs-6 footer-grid">
                     <h3>Bazar Al-Seeb</h3>
@@ -86,7 +87,9 @@
                 <p>&copy 2020 Bazar Al seeb. All rights reserved <a href="#">BAZAR AL-SEEB</a></p>
             </div>
         </div>
-	</div>
+        </div>
+        
+    </div>
     <!-- End Footer -->
     <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
     <script src="{{url('/')}}/js/popper.js"></script>

@@ -803,8 +803,9 @@
 	</div>
     <!-- End Mail Us -->
     <!-- Start Footer -->
-    <div class="footer">
-        <div class="container">
+    <div class="footer navbar-inverse navbar-fixed-bottom">
+        <div class="footer-container">
+            <div class="container">
             <div class="footer-grids row">
                 <div class="col-md-9 col-xs-6 footer-grid">
                     <h3>Bazar Al-Seeb</h3>
@@ -813,9 +814,9 @@
                 <div class="col-md-3 col-xs-6 footer-grid">
                     <h3>Contact Info</h3>
                     <ul class="list-unstyled">
-                        <li><img src="icons/location_on-24px.svg" class="filter-white">Seeb, Oman</li>
-                        <li><img src="icons/pngegg%20(2).png" class="filter-white"><a href="mailto:info@example.com">bazaralseeb@gmail.com</a></li>
-                        <li><img src="icons/call-24px.svg" class="filter-white">+968 9405 6359</li>
+                        <li><img src="{{url('/')}}/icons/location_on-24px.svg" class="filter-white">Seeb, Oman</li>
+                        <li><img src="{{url('/')}}/icons/pngegg%20(2).png" class="filter-white"><a href="mailto:info@example.com">bazaralseeb@gmail.com</a></li>
+                        <li><img src="{{url('/')}}/icons/call-24px.svg" class="filter-white">+968 9405 6359</li>
                     </ul>
                 </div>
             </div>
@@ -827,7 +828,9 @@
                 <p>&copy 2020 Bazar Al seeb. All rights reserved <a href="#">BAZAR AL-SEEB</a></p>
             </div>
         </div>
-	</div>
+        </div>
+        
+    </div>
     <!-- End Footer -->
 
     <!--ajax in seeb.js-->

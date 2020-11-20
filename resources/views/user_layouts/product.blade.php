@@ -43,11 +43,13 @@
 							<li data-thumb="{{Storage::url('/storage/'.$product->photo)}}">
 								<div class="thumb-image"> <img src="{{Storage::url('/storage/'.$product->photo)}}" data-imagezoom="true" class="img-responsive"> </div>
 							</li>
-                            @foreach($product->files as $file)
-                            <li data-thumb="{{Storage::url('/storage/'.$file->fullFile)}}">
-                                 <div class="thumb-image"> <img src="{{Storage::url('/storage/'.$file->fullFile)}}" data-imagezoom="true" class="img-responsive"> </div>
-                            </li>
-                            @endforeach
+                            @if(count($product->files))
+                                @foreach($product->files as $file)
+                                <li data-thumb="{{Storage::url('/storage/'.$file->fullFile)}}">
+                                     <div class="thumb-image"> <img src="{{Storage::url('/storage/'.$file->fullFile)}}" data-imagezoom="true" class="img-responsive"> </div>
+                                </li>
+                                @endforeach
+                            @endif
 							<!-- <li data-thumb="{{url('/')}}/images/si1.jpg">
 								 <div class="thumb-image"> <img src="{{url('/')}}/images/si1.jpg" data-imagezoom="true" class="img-responsive"> </div>
 							</li>
@@ -107,17 +109,20 @@
             <span class="old-price"><del>150.00 omr</del></span> -->
 
             
-            
-            <p class="colorfamily">Color Family</p>
-            <div class="colorpic">
-                @foreach($product->colors as $color)
-                    <button class="{{$color->color->name_en}}"><input type="radio" name="color" value="{{$color->color->id}}" hidden></button>
-                @endforeach
-                <!-- <button class="red"><input type="radio" name="h" hidden></button>
-                <button class="blue"><input type="radio" name="h" hidden></button>
-                <button class="green"><input type="radio" name="h" hidden></button>
-                <button class="gray"><input type="radio" name="h" hidden></button> -->
-            </div>
+            @if(count($product->colors))
+                <p class="colorfamily">Color Family</p>
+                <div class="colorpic">
+                    @foreach($product->colors as $color)
+                        <button class="{{$color->color->name_en}}"><input type="radio" name="color" value="{{$color->color->id}}" hidden></button>
+                    @endforeach
+                    <!-- <button class="red"><input type="radio" name="h" hidden></button>
+                    <button class="blue"><input type="radio" name="h" hidden></button>
+                    <button class="green"><input type="radio" name="h" hidden></button>
+                    <button class="gray"><input type="radio" name="h" hidden></button> -->
+                </div>
+            @else
+                <br>
+            @endif
             
             <!-- <div class="colorpic">
                 
@@ -125,16 +130,19 @@
                 <img src="{{url('/')}}/images/si1.jpg">
                 <img src="{{url('/')}}/images/si2.jpg">
             </div> -->
-
-           <div class="sizeoption">
-                <p class="size">Size</p>
-                @foreach($product->sizes as $size)
-                    <button value="1"><input type="radio" name="size" value="{{$size->size->id}}" hidden>{{$size->size->name_en}}</button>
-                 @endforeach
-                <!-- <button value="2"><input type="radio" name="h" hidden>M</button>
-                <button value="3"><input type="radio" name="h" hidden>L</button>
-                <button value="4"><input type="radio" name="h" hidden>XL</button> -->
-            </div>
+            @if(count($product->sizes))
+                <div class="sizeoption">
+                    <p class="size">Size</p>
+                    @foreach($product->sizes as $size)
+                        <button value="1"><input type="radio" name="size" value="{{$size->size->id}}" hidden>{{$size->size->name_en}}</button>
+                     @endforeach
+                    <!-- <button value="2"><input type="radio" name="h" hidden>M</button>
+                    <button value="3"><input type="radio" name="h" hidden>L</button>
+                    <button value="4"><input type="radio" name="h" hidden>XL</button> -->
+                </div>
+            @else
+                <br>
+            @endif
             
             <div class="quantityoption">
                 <p class="quantity" >Quantity</p>
@@ -279,8 +287,9 @@
     </section>
     
     <!-- Start Footer -->
-    <div class="footer">
-        <div class="container">
+    <div class="footer navbar-inverse navbar-fixed-bottom">
+        <div class="footer-container">
+            <div class="container">
             <div class="footer-grids row">
                 <div class="col-md-9 col-xs-6 footer-grid">
                     <h3>Bazar Al-Seeb</h3>
@@ -289,9 +298,9 @@
                 <div class="col-md-3 col-xs-6 footer-grid">
                     <h3>Contact Info</h3>
                     <ul class="list-unstyled">
-                        <li><img src="{{ url('/') }}/icons/location_on-24px.svg" class="filter-white">Seeb, Oman</li>
-                        <li><img src="{{ url('/') }}/icons/pngegg%20(2).png" class="filter-white"><a href="mailto:info@example.com">bazaralseeb@gmail.com</a></li>
-                        <li><img src="{{ url('/') }}/icons/call-24px.svg" class="filter-white">+968 9405 6359</li>
+                        <li><img src="{{url('/')}}/icons/location_on-24px.svg" class="filter-white">Seeb, Oman</li>
+                        <li><img src="{{url('/')}}/icons/pngegg%20(2).png" class="filter-white"><a href="mailto:info@example.com">bazaralseeb@gmail.com</a></li>
+                        <li><img src="{{url('/')}}/icons/call-24px.svg" class="filter-white">+968 9405 6359</li>
                     </ul>
                 </div>
             </div>
@@ -303,6 +312,8 @@
                 <p>&copy 2020 Bazar Al seeb. All rights reserved <a href="#">BAZAR AL-SEEB</a></p>
             </div>
         </div>
+        </div>
+        
     </div>
     <!-- End Footer -->
     
