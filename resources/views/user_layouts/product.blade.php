@@ -40,13 +40,13 @@
 					<div class="flexslider">
 						<ul class="slides">
 
-							<li data-thumb="{{Storage::url('/storage/'.$product->photo)}}">
-								<div class="thumb-image"> <img src="{{Storage::url('/storage/'.$product->photo)}}" data-imagezoom="true" class="img-responsive"> </div>
+							<li data-thumb="{{url('/storage/'.$product->photo)}}">
+								<div class="thumb-image"> <img src="{{url('/storage/'.$product->photo)}}" data-imagezoom="true" class="img-responsive"> </div>
 							</li>
                             @if(count($product->files))
                                 @foreach($product->files as $file)
-                                <li data-thumb="{{Storage::url('/storage/'.$file->fullFile)}}">
-                                     <div class="thumb-image"> <img src="{{Storage::url('/storage/'.$file->fullFile)}}" data-imagezoom="true" class="img-responsive"> </div>
+                                <li data-thumb="{{url('/storage/'.$file->fullFile)}}">
+                                     <div class="thumb-image"> <img src="{{url('/storage/'.$file->fullFile)}}" data-imagezoom="true" class="img-responsive"> </div>
                                 </li>
                                 @endforeach
                             @endif
@@ -162,7 +162,7 @@
      <div class="sold">
         <h4>Sold By</h4>
          <div class="soldinfo">
-         <img src="{{Storage::url('/storage/'.$mallProduct->mall->icon)}}">
+         <img src="{{url('/storage/'.$mallProduct->mall->icon)}}">
              <div class="inffo">
                 <input type="hidden" value="{{$mallProduct->mall->id}}" name="mall"> 
                   <p class="storename">{{$mallProduct->mall->name_en}}</p>
@@ -195,7 +195,7 @@
                                 @else
                                     <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                                 @endif
-                                <img src="{{Storage::url('/storage/'.$product->photo)}}">
+                                <img src="{{url('/storage/'.$product->photo)}}">
                                 <div class="product-details">
                                     <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                         {{$product->name_en}}

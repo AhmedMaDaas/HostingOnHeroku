@@ -16,7 +16,7 @@
     @section("content")
     <!-- End Navbar -->
     <!-- Start About Heading Section -->
-    <section class="about-heading-section" style="{{ Storage::has($websiteInfo->main_photo) ? 'background-image: url(' . Storage::url('/storage/' . $websiteInfo->main_photo) .');' : '' }}">
+    <section class="about-heading-section" style="{{ Storage::has($websiteInfo->main_photo) ? 'background-image: url(' . url('/storage/' . $websiteInfo->main_photo) .');' : '' }}">
         <div class="container-cover">
             <div class="about-container-content">
                 <h1>BAZAR ALSEEB</h1>
@@ -32,7 +32,7 @@
         <div class="swiper-wrapper">
 
             @foreach($websiteInfo->attrInfo as $attr)
-                <div class="swiper-slide" style="background-image:url({{ Storage::url('/storage/' . $attr->photo) }})"><div class="text-container"><p>{{ $attr->title }}</p></div></div>
+                <div class="swiper-slide" style="background-image:url({{ url('/storage/' . $attr->photo) }})"><div class="text-container"><p>{{ $attr->title }}</p></div></div>
             @endforeach
             
         </div>
@@ -57,7 +57,7 @@
         </div>
         <div class="info-img">
             @if(isset($websiteInfo->desc_photo))
-            <img src="{{ Storage::url('/storage/' . $websiteInfo->desc_photo) }}">
+            <img src="{{ url('/storage/' . $websiteInfo->desc_photo) }}">
             @endif
         </div>
     </section>

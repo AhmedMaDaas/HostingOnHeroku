@@ -93,7 +93,7 @@
              ?>
                <li class="media">
                   <input type="checkbox" name="products" value="{{$billProduct->product->id.'/'.$colorId.'/'.$sizeId}}">
-                  <img class="mr-3" src="{{Storage::url('/storage/'.$billProduct->product->photo)}}" alt="Generic placeholder image">
+                  <img class="mr-3" src="{{url('/storage/'.$billProduct->product->photo)}}" alt="Generic placeholder image">
                     <div class="media-body">
                         <h6 class="mt-0 mb-1 description"><a href="{{route('product.get',['productId'=>$billProduct->product->id])}}">{{$billProduct->product->name_en}}</a></h6>
                         @if(!empty($billProduct->color))
@@ -201,7 +201,7 @@
                   <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                   <meta name="_token" content="{{ csrf_token() }}">
                   <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
-                  <img src="{{Storage::url('/storage/'.$product->photo)}}">
+                  <img src="{{url('/storage/'.$product->photo)}}">
                   <div class="product-details">
                       <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                           {{$product->name_en}}

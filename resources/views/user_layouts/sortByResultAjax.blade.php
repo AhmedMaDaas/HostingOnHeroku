@@ -26,7 +26,7 @@
                                     @else
                                         <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                                     @endif
-                                    <img src="{{Storage::url('/storage/'.$product->product->photo)}}">
+                                    <img src="{{url('/storage/'.$product->product->photo)}}">
                                     <div class="product-details">
                                         <a href="{{route('product.get',['productId'=>$product->product->id])}}" class="product-name">
                                             {{$product->product->name_en}}

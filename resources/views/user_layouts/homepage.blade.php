@@ -39,7 +39,7 @@
                     <div class="carousel-item">
                     @endif
                         <a href="{{route('storebrand.get',['mallId'=>$ad->mall->id,'departmentId'=>'all'])}}">
-                            <img src="{{Storage::url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
+                            <img src="{{url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
                         </a>
                     </div>
                 @endforeach
@@ -96,7 +96,7 @@
                             @else
                                 <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
                             @endif
-                            <img src="{{Storage::url('/storage/'.$product->photo)}}">
+                            <img src="{{url('/storage/'.$product->photo)}}">
                             <div class="product-details">
                                 <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                     {{$product->name_en}}
@@ -168,7 +168,7 @@
                 @foreach($products as $product)
                     <div class="col-md-3 col-sm-4 col-xs-6 prod-hor-card">
                         <div class="prod-img">
-                            <img src="{{Storage::url('/storage/'.$product->photo)}}">
+                            <img src="{{url('/storage/'.$product->photo)}}">
                         </div>
                         <div class="prod-hor-details">
                             @foreach($product->malls as  $key => $mall)
@@ -302,7 +302,7 @@
                         <div class="row justify-content-center">
                             @foreach($malls as $mall)
                                 <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                    <img src="{{Storage::url('/storage/'.$mall->icon)}}">
+                                    <img src="{{url('/storage/'.$mall->icon)}}">
                                     <div class="store-footer">
                                         <a href="{{route('storebrand.get',['mallId'=> $mall->id , 'departmentId'=> 'all'])}}">{{$mall->name_en}}</a>
                                     </div>
@@ -401,7 +401,7 @@
                             @else
                                 <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
                             @endif
-                            <img src="{{Storage::url('/storage/'.$product->product->photo)}}">
+                            <img src="{{url('/storage/'.$product->product->photo)}}">
                             <div class="product-details">
                                 <a href="{{route('product.get',['productId'=>$product->product->id])}}" class="product-name">
                                     {{$product->product->name_en}}
@@ -602,7 +602,7 @@
                             @else
                                 <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
                             @endif
-                            <img src="{{Storage::url('/storage/'.$product->photo)}}">
+                            <img src="{{url('/storage/'.$product->photo)}}">
                             <div class="product-details">
                                 <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                     {{$product->name_en}}
