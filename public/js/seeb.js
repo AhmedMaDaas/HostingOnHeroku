@@ -129,6 +129,7 @@ $(document).ready(function(){
                 // thisVar.removeClass("filter-fairouzi");
                 // thisVar.addClass("filter-orange");
             }else{
+                $('#sumQuantity').text(response.sumQuantityAndTotalCost[1]);
                 thisVar.attr("src",newSrc.toString()+'/'+"check_circle-24px.svg").addClass("added");
             }
             //alert("suc ");
@@ -305,16 +306,16 @@ $(document).ready(function(){
 
     
     
-    $("body").niceScroll({
-      cursorwidth:"7px",
-        cursorcolor: "#0D958B",
-        cursoropacitymin: 0.3,
-        background: "#F6F6F6",
-        cursorborder: "0",
-        autohidemode: false,
-        horizrailenabled: false,
-        zindex: 99999
-    });
+    // $("body").niceScroll({
+    //   cursorwidth:"7px",
+    //     cursorcolor: "#0D958B",
+    //     cursoropacitymin: 0.3,
+    //     background: "#F6F6F6",
+    //     cursorborder: "0",
+    //     autohidemode: false,
+    //     horizrailenabled: false,
+    //     zindex: 99999
+    // });
     $(".navbar .navbar-nav .dropdown .dropdown-menu").niceScroll({
       cursorwidth:"7px",
         cursorcolor: "#0D958B",

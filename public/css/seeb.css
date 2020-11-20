@@ -35,18 +35,21 @@ body{
 }
 input[type="text"]::placeholder,
 input[type="email"]::placeholder,
-input[type="password"]::placeholder{
+input[type="password"]::placeholder,
+input[type="phone"]::placeholder{
     color: var(--lightgray-color);
     opacity: 1
 }
 input[type="text"]:-ms-input-placeholder,
 input[type="email"]:-ms-input-placeholder,
-input[type="password"]:-ms-input-placeholder{ /* Internet Explorer 10-11 */
+input[type="password"]:-ms-input-placeholder,
+input[type="phone"]:-ms-input-placeholder{ /* Internet Explorer 10-11 */
   color: var(--lightgray-color)
 }
 input[type="text"]::-ms-input-placeholder,
 input[type="email"]::-ms-input-placeholder,
-input[type="password"]::-ms-input-placeholder{ /* Microsoft Edge */
+input[type="password"]::-ms-input-placeholder,
+input[type="phone"]::-ms-input-placeholder{ /* Microsoft Edge */
   color: var(--lightgray-color)
 }
 button:focus{
@@ -567,7 +570,9 @@ button:focus{
 .prod-hor-card .prod-hor-details{
     width: 115px;
     max-width: 115px;
-    text-align: center
+    text-align: center;
+    padding: 5px;
+    overflow: hidden
 }
 .prod-hor-card .prod-hor-details:hover{
     width: 100%;
@@ -584,7 +589,7 @@ button:focus{
     display: block;
     margin-top: 25px;
     margin-bottom: 25px;
-    font-size: 22px
+    font-size: 20px
 }
 .prod-hor-card .prod-hor-details .store-name:hover{
     color: var(--orange-color);
@@ -829,28 +834,25 @@ button:focus{
 .stores-section .stores-div{
     width: 100%;
     height: auto;
-    max-height: 603px;
-    max-height: 700px;
     background-color: var(--fairouzi-color);
     padding: 30px 0px
 }
 .stores-section .stores-div .container .sub-container{
     width: 100%;
-    height: 558px;
     border-radius: 11px;
     background-color: #FFF
 }
 /****** swipper ******/
-.swiper-container {
+.home-swiper {
     width: 99%;
-    /*height: 50px;*/
+    height: 50px;
     padding: 5px 75px;
     align-items: center;
     justify-content: center; 
     text-align: center;
     display: flex;
 }
-.swiper-wrapper{
+.home-swiper .swiper-wrapper{
     display: flex
 }
 .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
@@ -868,7 +870,7 @@ button:focus{
 .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled{
     opacity: 1
 }
-.swiper-slide {
+.home-swiper .swiper-wrapper .swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -894,18 +896,18 @@ button:focus{
     .swiper-button-prev:hover::after{
         color: var(--stronggray-color)
     }
-.swiper-slide{
+.home-swiper .swiper-wrapper .swiper-slide{
     text-align: center
 }
-.swiper-slide > img{
+.home-swiper .swiper-wrapper .swiper-slide > img{
     max-height: 24px;
     max-width: 24px;
     opacity: 65%
 }
-.swiper-slide > img:hover{
+.home-swiper .swiper-wrapper .swiper-slide > img:hover{
     cursor: pointer
 }
-.swiper-slide > span{
+.home-swiper .swiper-wrapper .swiper-slide > span{
     display: block;
     font-size: 12px;
     color: var(--orange-color);
@@ -919,16 +921,15 @@ button:focus{
     margin: auto;
     display: none
 }
-.swiper-slide:first-of-type > img{
+.home-swiper .swiper-wrapper .swiper-slide:first-of-type > img{
     opacity: 100%
 }
-.swiper-slide:first-of-type > span{
+.home-swiper .swiper-wrapper .swiper-slide:first-of-type > span{
     display: block
 }
 .sub-container .stores{
     width: 95%;
-    height: 80%;
-    max-height: 80%;
+    height: auto;
     background-color: #FFF;
     margin: 12px auto 0px;
     padding: 5px 50px;
@@ -947,7 +948,8 @@ button:focus{
     padding: 0px;
     box-shadow: 0px 0px 6px var(--lightgray-color);
     margin: 10px;
-    transition: transform .5s
+    transition: transform .5s;
+    overflow: hidden
 }
 .sub-container .stores .row .store:hover{
     box-shadow: 0px 0px 8px var(--stronggray-color);
@@ -975,7 +977,7 @@ button:focus{
 }
 .sub-container .stores .row .store > div > a{
     text-decoration: none;
-    /*max-width: 50%;*/
+    max-width: 50%;
     font-size: 17px;
     color: var(--orange-color)
 }
@@ -1089,86 +1091,95 @@ button:focus{
 /** Start Footer **/
 .footer{
     width: 100%;
-    height: auto;
     max-width: 100%;
     margin: 0;
-    background-color: var(--fairouzi-color);
-    padding: 20px 0px 5px
+    padding: 20px 0px 5px;
+    min-height: calc(100vh - 380px);
+    position: relative
 }
-.footer h3{
+.footer .footer-container{
+    margin: 0px;
+    width: 100%;
+    height: auto;
+    background-color: var(--fairouzi-color);
+    position: absolute;
+    bottom: 0;
+    left: 0
+}
+.footer  .footer-container h3{
     color: #e5e5e5a3;
     font-size: 30px
 }
-.footer .footer-grid > p{
+.footer  .footer-container .footer-grid > p{
     color: #FFF;
     padding-left: 10px
 }
-.footer .footer-grid > p > span{
+.footer  .footer-container .footer-grid > p > span{
     display: block
 }
-.footer .footer-grid > p > span > img{
+.footer  .footer-container .footer-grid > p > span > img{
     margin-right: 5px
 }
-.footer .footer-grid > ul{
+.footer  .footer-container .footer-grid > ul{
     padding-left: 10px
 }
-.footer .footer-grid > ul > li,
-.footer .footer-grid > ul > li > a{
+.footer  .footer-container .footer-grid > ul > li,
+.footer  .footer-container .footer-grid > ul > li > a{
     color: #FFF;
     text-decoration: none
 }
-.footer .footer-grid > ul > li > a:hover{
+.footer  .footer-container .footer-grid > ul > li > a:hover{
     color: var(--orangeyellow-color);
     -webkit-transition:all 0.8s ease;
     -moz-transition:all 0.8s ease;
     -o-transition:all 0.8s ease;
     transition:all 0.8s ease
 }
-.footer .footer-grid > ul > li > img{
+.footer  .footer-container .footer-grid > ul > li > img{
     width: 20px;
     height: 20px;
     margin-right: 5px
 }
-.footer .footer-logo{
+.footer  .footer-container .footer-logo{
     width: 250px;
     margin: auto;
     text-align: center
 }
-.footer .footer-logo > h2 > a{
+.footer  .footer-container .footer-logo > h2 > a{
     text-decoration: none;
     color: var(--orangeyellow-color)
 }
-.footer .footer-logo > h2{
+.footer  .footer-container .footer-logo > h2{
     transition: .5s
 }
-.footer .footer-logo > h2:hover{
+.footer  .footer-container .footer-logo > h2:hover{
     transform: scale(1.1);
     -webkit-transition:all 0.8s ease;
     -moz-transition:all 0.8s ease;
     -o-transition:all 0.8s ease;
     transition:all 0.8s ease
 }
-.footer .footer-logo > span{
+.footer  .footer-container .footer-logo > span{
     color: #e5e5e5a3;
     font-size: 18px;
     border-top: 1px solid var(--orangeyellow-color)
 }
-.footer .copy-righ{
+.footer  .footer-container .copy-righ{
     width: 380px;
     margin: 0px auto;
     padding: 10px 0px 0px
 }
-.footer .copy-righ > p{
+.footer  .footer-container .copy-righ > p{
     color: #e5e5e5a3;
     font-size: 15px;
     margin-bottom: 0px
 }
-.footer .copy-righ > p > a{
+.footer  .footer-container .copy-righ > p > a{
     text-decoration: none;
     color: #FFF;
     font-size: 15px
 }
-.footer .copy-righ > p > a:hover{
+.footer  .footer-container .copy-righ > p > a:hover{
     color: var(--orangeyellow-color);
     -webkit-transition:all 0.8s ease;
     -moz-transition:all 0.8s ease;
@@ -1996,16 +2007,16 @@ button:focus{
         min-height: 300px;
         padding: 3px
     }
-    .footer h3{
+    .footer .footer-container h3{
         font-size: 14px
     }
-    .footer .footer-grid > ul {
+    .footer .footer-container .footer-grid > ul {
         padding-left: 0px
     }
-    .footer .footer-grid > p{
+    .footer .footer-container .footer-grid > p{
         font-size: 10px
     }
-    .footer .footer-grid > ul > li, .footer .footer-grid > ul > li > a {
+    .footer .footer-container .footer-grid > ul > li, .footer .footer-grid > ul > li > a {
         font-size: 10px
     }
     .product .product-details .shopping-card{
@@ -2028,25 +2039,25 @@ button:focus{
     .footer-logo > h2 > a{
         font-size: 18px
     }
-    .footer .footer-logo{
+    .footer .footer-container .footer-logo{
         width: 180px
     }
-    .footer .footer-logo > span{
+    .footer .footer-container .footer-logo > span{
         font-size: 11px
     }
     
-    .footer .footer-grid > ul > li > img {
+    .footer .footer-container .footer-grid > ul > li > img {
         width: 13px;
         height: 13px;
         margin-right: 1px
     }
-    .footer .copy-righ > p{
+    .footer .footer-container .copy-righ > p{
         font-size: 8px
     }
-    .footer .copy-righ > p > a{
+    .footer .footer-container .copy-righ > p > a{
         font-size: 8px
     }
-    .footer .footer-grid > p > span > img {
+    .footer .footer-container .footer-grid > p > span > img {
         margin-right: 2px;
         width: 15px;
         height: 10px
@@ -2063,7 +2074,7 @@ button:focus{
     }
     .prod-hor-card .prod-hor-details .store-name{
         font-size: 17px;
-        margin: 20px auto
+        margin: 19px auto
     }
     .prod-hor-card .prod-hor-details .prod-price {
         font-size: 15px
@@ -2445,13 +2456,13 @@ button:focus{
     .collections-bottom-grids {
         min-height: 440px
     }
-    .footer h3{
+    .footer .footer-container h3{
         font-size: 23px
     }
-    .footer .footer-grid > p{
+    .footer .footer-container .footer-grid > p{
         font-size: 11px
     }
-    .footer .footer-grid > ul > li, .footer .footer-grid > ul > li > a {
+    .footer .footer-container f.footer-grid > ul > li, .footer .footer-grid > ul > li > a {
         font-size: 11px
     }
     .product .product-details .shopping-card{
@@ -2470,19 +2481,19 @@ button:focus{
     .footer-logo > h2 > a{
         font-size: 23px
     }
-    .footer .footer-logo > span{
+    .footer .footer-container .footer-logo > span{
         font-size: 13px
     }
     
-    .footer .footer-grid > ul > li > img {
+    .footer .footer-container .footer-grid > ul > li > img {
         width: 15px;
         height: 15px;
         margin-right: 1px
     }
-    .footer .copy-righ > p{
+    .footer .footer-container .copy-righ > p{
         font-size: 12px
     }
-    .footer .copy-righ > p > a{
+    .footer .footer-container .copy-righ > p > a{
         font-size: 13px
     }
     /***** End Home Page *****/
@@ -3084,14 +3095,14 @@ button:focus{
         overflow: hidden;
         white-space: nowrap
     }
-    .footer .footer-grid > ul {
+    .footer .footer-container .footer-grid > ul {
         width: 222px
     }
-    .footer .footer-grid > ul > li,
-    .footer .footer-grid > ul > li > a{
+    .footer .footer-container .footer-grid > ul > li,
+    .footer .footer-container .footer-grid > ul > li > a{
         font-size: 14px
     }
-    .footer h3{
+    .footer .footer-container h3{
         width: 200px
     }
     /***** End Home Page *****/
