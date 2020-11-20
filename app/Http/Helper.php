@@ -1,5 +1,21 @@
 <?php
 
+// update product_coast in bill_products table and update total_coast in bill table
+//if the the offer is end and product_coast still equal price_offer in bill and bill_products
+//or update it's after the offer is start and the product in bill
+if(!function_exists('updatePriceBill')){
+  function updatePriceBill($billProductId , $price , $quantity , $billId , $product_coast , $total_coast){
+    $oldTotal = $product_coast*$quantity;
+    $newTotal = $price*$quantity;
+
+    $total_coast = $total_coast - $oldTotal;
+    $total_coast = $total_coast + $newTotal;
+
+    App\Bill::find($billId)->update(['total_coast'=>$total_coast]);
+    App\BillProduct::find($billProductId)->update(['product_coast'=>$price]);
+  }
+}
+
 if(!function_exists('getWebsiteInfo')){
 	function getWebsiteInfo(){
         $info = \App\WebSiteInfo::orderBy('id', 'desc')->with('attrInfo')->first();

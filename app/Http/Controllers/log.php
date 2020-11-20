@@ -111,14 +111,24 @@ class log extends Controller
         try {
 
             $user = Socialite::with($service)->user();
-            $logClass->checkLoginByService($service,$user->getId(),$user->getName(),$user->getEmail(),$user->getAvatar());
+
+            // $request = new Request([
+            //     'email' => $user->getEmail(),
+            // ]);
+
+            // $this->validate($request, [
+            //     'email' => 'unique:users',
+            // ]);
+
+            $state = $logClass->checkLoginByService($service,$user->getId(),$user->getName(),$user->getEmail(),$user->getAvatar());
+            if(!$state)return \Redirect::route('login')->with('failed', 'this email is founded');
             return \Redirect::route('home.get');
 
 
         } catch (Exception $e) {
 
 
-            return \Redirect::route('login');
+            return \Redirect::route('login')->with('failed', 'something its get failed');
 
 
         }

@@ -179,18 +179,19 @@ class AddsController extends Controller
         unset($data['products']);
         unset($data['departments_ids']);
 
+        $add = Ad::find($id);
+
         if(request()->hasFile('photo')){
         	$data['photo'] = Up::upload([
         		'file' => 'photo',
         		'uploadType' => 'single',
         		'path' => 'adds',
-        		'deleteFile' => '',
+        		'deleteFile' => $add->photo,
         	]);
         }
 
         $data = $this->date($data);
 
-        $add = Ad::find($id);
         $mallId = $add->mall_id;
         $add->update($data);
 

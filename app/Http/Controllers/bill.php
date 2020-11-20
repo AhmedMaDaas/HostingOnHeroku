@@ -39,13 +39,12 @@ class bill extends Controller
 
     function showCheckPage(indexClass $indexClass , billClass $billClass){
         if(session('login')){
+            //dd($billClass->updatePriceInBill(37));
             $departmentsParents = $indexClass->getDepartmentsWithParent();
             $sumQuantityAndTotalCost = $indexClass->checkLogin();
 
             $bill = $billClass->checkBill(session('login'));
-            //$mallsIds = $billClass->getMallsIds($bill->products);
-            // $billsIds = $indexClass->getLastBills(3);
-            // $depsIds = $indexClass->getDepsIdsByBill($billsIds);
+
             $relatedProducts = $indexClass->getProductsByBill(session('login'))->take(3);
             if(!count($relatedProducts))$relatedProducts = $indexClass->getProducts()->take(3);  
 
@@ -67,16 +66,9 @@ class bill extends Controller
     }
 
     function postCheckPage(Request $request ,indexClass $indexClass,billClass $billClass){
-    	// $indexClass = new indexClass();
-    	// $billClass = new billClass();
 
     	if(Request()->ajax()){
-            // $productId = $request->input('productId');
-            // $productName = $request->input('productName');
-            // $productSize= $request->input('productSize');
-            // $productColor = $request->input('productColor');
 
-            
             if($request->input('button') == 'delete'){
                 $products = $request->input('products');
                 if(is_null($products))return response()->json(['operation' => 'failed' ]);
@@ -90,19 +82,8 @@ class bill extends Controller
                 return response()->json(['operation' => 'succesed','total_coast' => $deleted[1],'sumQuantity' => $deleted[2] ]);
                 
             }else{
-                // $type = $request->input('type');
-                // $type = $billClass->checkType($type);
-
-                // $colorId = $billClass->checkColorId($productColor,$productId);
-                // $sizeId = $billClass->checkSizeId($productSize,$productId);
-                // if($colorId == false || $sizeId == false )return response()->json(['operation' => 'failed' ]);
-
-                // $sumQuantityAndTotalCost = $indexClass->sumPrice($productId,$colorId,$sizeId,0,$type);
-                // if($sumQuantityAndTotalCost == false)return response()->json(['operation' => 'failed' ]);
-                // //$productQuantity = $billClass->getProductQuantity($productId);
-                // return response()->json(['operation' => 'succesed','total_coast' => $sumQuantityAndTotalCost[0],'sumQuantity' => $sumQuantityAndTotalCost[1],'productQuantity'=>$sumQuantityAndTotalCost[2]]); 
-            
-
+                
+               return response()->json(['operation' => 'failed' ]);
             }
     		
         }else{

@@ -97,7 +97,11 @@ class product extends Controller
             $sizeId = $billClass->checkSizeId($sizeId,$productId,1);
 
             if($colorId == false || $sizeId == false || $mallId == false )return back()->with('failed', 'oops! choose a color and size');
-            
+            $checkQ = $productClass->checkQuantity($productId,$quantity,$sizeId,$colorId);
+            if(!$checkQ)return back()->with('failed', 'there is not found enough of quantity');
+            if($colorId == -1) $colorId = null;
+            if($sizeId == -1) $sizeId = null;
+
             if(isset($_POST['add_product'])){
                 $sumQuantityAndTotalCost = $indexClass->sumPrice($productId,$colorId,$sizeId,$mallId,$quantity);
                 if($sumQuantityAndTotalCost == 'login')return \Redirect::route('login');

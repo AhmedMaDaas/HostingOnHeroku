@@ -41,17 +41,22 @@ class logClass{
 
 	function checkLoginByService($service,$service_id,$name,$email,$photo){
 		if($service == 'facebook'){
-			$user = User::where('facebook_id',$service_id)->first();
-			if(empty($user))$user = User::create(['name'=>$name,'email'=>$email,'facebook_id'=>$service_id,'photo'=>$photo,'level'=>'user']);
-			session(['login'=>$user->id]);
-			return true;
-		}elseif($service == 'google'){
-			$user = User::where('google_id',$service_id)->first();
-			if(empty($user))$user = User::create(['name'=>$name,'email'=>$email,'google_id'=>$service_id,'photo'=>$photo,'level'=>'user']);
-			session(['login'=>$user->id]);
-			return true;
 
+			$coloum = 'facebook_id';
+
+		}elseif($service == 'google'){
+
+			$coloum = 'google_id';
 		}
+		
+		$user = User::where($coloum,$service_id)->first();
+			if(empty($user)){
+				$foundUser = User::where('email',$email)->first();
+				if(!empty($foundUser))return false;
+				$user = User::create(['name'=>$name,'email'=>$email,$coloum=>$service_id,'photo'=>$photo,'level'=>'user']);
+			}
+			session(['login'=>$user->id]);
+			return true;
 	}
 
 }

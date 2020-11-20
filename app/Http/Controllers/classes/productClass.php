@@ -10,6 +10,8 @@ use App\Bill;
 use App\Mall;
 use App\BillProduct;
 use App\MallProduct;
+use App\ColorProduct;
+use App\SizeProduct;
 use App\Commint;
 
 class productClass{
@@ -33,7 +35,12 @@ class productClass{
 
 	function getProduct($productId,$mallId){
 		//$numOfProduct = Settings::where('name')
-		$product = Product::where('id',$productId)->where('stock','>=',1)->with('malls')->with('files')->with('sizes')->with('colors')->first();
+		$product = Product::where('id',$productId)->where('stock','>=',1)->with('malls')->with('files')
+		->with(['sizes'=>function($query){
+			$query->where('quantity','>=',1);
+		}])->with(['colors'=>function($query){
+			$query->where('quantity','>=',1);
+		}])->first();
 		if(!empty($product)){
 			return $product;
 		}
@@ -84,6 +91,23 @@ class productClass{
 				return $product->price_offer;
 				//return $product->price - $product->price_offer;
 			return $product->price;
+	}
+
+	function checkQuantity($productId,$quantity,$sizeId,$colorId){
+
+
+		$product = Product::find($productId)->where('stock','>=',$quantity)->first();
+		if(empty($product))return false;
+		if($colorId != -1){
+			$product = ColorProduct::where(['product_id'=>$productId,'color_id'=>$colorId])->where('stock','>=',$quantity)->first();
+			if(empty($product))return false;
+		}
+		if($sizeId != -1){
+			$product = SizeProduct::where(['product_id'=>$productId,'size_id'=>$sizeId])->where('stock','>=',$quantity)->first();
+			if(empty($product))return false;
+		}
+
+		return true;
 	}
 
 	

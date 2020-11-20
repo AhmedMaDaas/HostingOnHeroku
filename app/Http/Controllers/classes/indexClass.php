@@ -209,6 +209,8 @@ class indexClass{
 		if(empty($billUser) || $billUser->status!='opened' ){
 			return [false];
 		}else{
+			if($colorId == 0) $colorId = null;
+            if($sizeId == 0) $sizeId = null;
 			$billProduct = BillProduct::where(['product_id' => $productId,'bill_id'=>$billUser->id,'color_id'=>$colorId,'size_id'=>$sizeId])->first();
 
             if(!empty($billProduct)){
@@ -363,9 +365,17 @@ class indexClass{
 		$mallProduct = MallProduct::where('product_id',$productId)->with('mall')->first();
 		$sizeProduct = SizeProduct::where('product_id',$productId)->inRandomOrder()->with('size')->first();
 		$colorProduct = ColorProduct::where('product_id',$productId)->inRandomOrder()->with('color')->first();
-		if(empty($mallProduct) || empty($sizeProduct) || empty($colorProduct))return false;
+		// if(empty($sizeProduct)){
+		// 	$product = SizeProduct::where('porduct_id',$porductId)->first();
+		// }
+		
+		if(empty($mallProduct))return false;
+		if(empty($sizeProduct))$sizeId = null;
+		else $sizeId = $sizeProduct->size->id;
+		if(empty($colorProduct))$colorId = null;
+		else $colorId = $colorProduct->color->id;
 
-		$sumQuantityAndTotalCost = $this->sumPrice($productId,$colorProduct->color->id,$sizeProduct->size->id,$mallProduct->mall->id,1);
+		$sumQuantityAndTotalCost = $this->sumPrice($productId,$colorId,$sizeId,$mallProduct->mall->id,1);
         // if($sumQuantityAndTotalCost == 'login')return 'login';
         // if($sumQuantityAndTotalCost == false)return false;
 

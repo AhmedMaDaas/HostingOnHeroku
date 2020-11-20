@@ -10,6 +10,7 @@ use App\Bill;
 use App\BillProduct;
 use App\ColorProduct;
 use App\SizeProduct;
+use \Carbon\Carbon;
 
 class billClass{
 	
@@ -33,6 +34,22 @@ class billClass{
 		}
 	}
 
+//not completed yet
+	function updatePriceInBill($billId){
+		$currentDate = Carbon::now();
+
+		$test = BillProduct::where('bill_id',$billId)
+		->join('products', 'bill_products.product_id', '=', 'products.id')
+		->where('products.offer_end_at','<',$currentDate)->get();
+		//->where('bill_products.product_coast','=','products.price')->get();
+
+		// foreach ($test as $key => $record) {
+		// 	if($record->product_coast != $record->price)
+		// 		BillProduct::where('product_id',$record->product_id)->update(['product_coast'=>$record->price]);
+		// }
+		return $test;
+	}
+
 	function getMallsIds($billProduct){
 		$mallsIds = $billProduct->pluck('mall_id')->toArray();
 		$mallsIds = array_unique($mallsIds);
@@ -47,14 +64,22 @@ class billClass{
 
 	function checkColorId($colorId,$productId){
 		$color = ColorProduct::where(['product_id' => $productId,'color_id' => $colorId])->where('quantity','>',0)->first();
-		if(empty($color))return false;
+		if(empty($color)){
+			$color = ColorProduct::where('product_id',$productId)->first();
+			if(empty($color))return -1;
+			return false;
+		}
 		return $colorId;
 
 	}
 
 	function checkSizeId($sizeId,$productId){
 		$size = SizeProduct::where(['product_id' => $productId,'size_id' => $sizeId])->where('quantity','>',0)->first();
-		if(empty($size))return false;
+		if(empty($size)){
+			$size = SizeProduct::where('product_id',$productId)->first();
+			if(empty($size))return -1;
+			return false;
+		}
 		return $sizeId;
 	}
 
