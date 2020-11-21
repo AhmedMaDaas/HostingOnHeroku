@@ -25,13 +25,15 @@
     background-color: var(--fairouzi-color);
     border: 0px
 }
-html, body{min-height:100%;}
+html{min-height:100vh}
 body{
     direction: ltr;
     padding: 0;
     position: relative;
     width: 100%;
-    overflow-x: hidden
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding-bottom: 255px
 }
 input[type="text"]::placeholder,
 input[type="email"]::placeholder,
@@ -1097,17 +1099,18 @@ button:focus{
     max-width: 100%;
     margin: 0;
     padding: 20px 0px 5px;
-    min-height: calc(100vh - 380px);
-    position: relative
+    height:  255px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: var(--fairouzi-color)
 }
 .footer .footer-container{
     margin: 0px;
     width: 100%;
-    height: auto;
+    height: 100%;
     background-color: var(--fairouzi-color);
-    position: absolute;
-    bottom: 0;
-    left: 0
+    position: relative
 }
 .footer  .footer-container h3{
     color: #e5e5e5a3;
