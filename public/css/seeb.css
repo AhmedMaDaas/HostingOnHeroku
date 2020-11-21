@@ -834,16 +834,19 @@ button:focus{
 .stores-section .stores-div{
     width: 100%;
     height: auto;
+    max-height: 603px;
+    max-height: 700px;
     background-color: var(--fairouzi-color);
     padding: 30px 0px
 }
 .stores-section .stores-div .container .sub-container{
     width: 100%;
+    height: 558px;
     border-radius: 11px;
     background-color: #FFF
 }
 /****** swipper ******/
-.home-swiper {
+.swiper-container {
     width: 99%;
     height: 50px;
     padding: 5px 75px;
@@ -852,7 +855,7 @@ button:focus{
     text-align: center;
     display: flex;
 }
-.home-swiper .swiper-wrapper{
+.swiper-wrapper{
     display: flex
 }
 .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
@@ -870,7 +873,7 @@ button:focus{
 .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled{
     opacity: 1
 }
-.home-swiper .swiper-wrapper .swiper-slide {
+.swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -896,18 +899,18 @@ button:focus{
     .swiper-button-prev:hover::after{
         color: var(--stronggray-color)
     }
-.home-swiper .swiper-wrapper .swiper-slide{
+.swiper-slide{
     text-align: center
 }
-.home-swiper .swiper-wrapper .swiper-slide > img{
+.swiper-slide > img{
     max-height: 24px;
     max-width: 24px;
     opacity: 65%
 }
-.home-swiper .swiper-wrapper .swiper-slide > img:hover{
+.swiper-slide > img:hover{
     cursor: pointer
 }
-.home-swiper .swiper-wrapper .swiper-slide > span{
+.swiper-slide > span{
     display: block;
     font-size: 12px;
     color: var(--orange-color);
@@ -921,15 +924,16 @@ button:focus{
     margin: auto;
     display: none
 }
-.home-swiper .swiper-wrapper .swiper-slide:first-of-type > img{
+.swiper-slide:first-of-type > img{
     opacity: 100%
 }
-.home-swiper .swiper-wrapper .swiper-slide:first-of-type > span{
+.swiper-slide:first-of-type > span{
     display: block
 }
 .sub-container .stores{
     width: 95%;
-    height: auto;
+    height: 80%;
+    max-height: 80%;
     background-color: #FFF;
     margin: 12px auto 0px;
     padding: 5px 50px;
@@ -948,8 +952,7 @@ button:focus{
     padding: 0px;
     box-shadow: 0px 0px 6px var(--lightgray-color);
     margin: 10px;
-    transition: transform .5s;
-    overflow: hidden
+    transition: transform .5s
 }
 .sub-container .stores .row .store:hover{
     box-shadow: 0px 0px 8px var(--stronggray-color);
@@ -977,7 +980,7 @@ button:focus{
 }
 .sub-container .stores .row .store > div > a{
     text-decoration: none;
-    max-width: 50%;
+    /*max-width: 50%;*/
     font-size: 17px;
     color: var(--orange-color)
 }
