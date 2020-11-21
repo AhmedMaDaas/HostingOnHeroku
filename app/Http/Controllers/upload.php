@@ -17,7 +17,7 @@ class Upload extends Controller
             $destinationPath = 'storage/' . $data['path'];
             $imageName = 'img_' . rand(1000000, 9999999) . '.' . request()->file($data['file'])->getClientOriginalExtension();
             request()->file($data['file'])->move($destinationPath, $imageName);
-    		return $destinationPath . '/' . $imageName;
+    		return $data['path'] . '/' . $imageName;
     	}
     	else if( request()->hasFile($data['file']) && $data['uploadType'] == 'multiple' ){
     		$file = request()->file($data['file']);
@@ -26,14 +26,16 @@ class Upload extends Controller
     		$type = $file->getMimeType();
     		$size = $file->getSize();
     		$hashName = $file->hashName();
-
-    		$file->store($data['path']);
+            
+            $destinationPath = 'storage/' . $data['path'];
+            $imageName = 'img_' . rand(1000000, 9999999) . '.' . $name;
+            $file->move($destinationPath, $imageName);
 
     		$add = File::create([
     			'name' => $name,
 		        'size' => $size,
 		        'file' => $hashName,
-		        'fullFile' => $data['path'] . '/' . $hashName,
+		        'fullFile' => $data['path'] . '/' . $imageName,
 		        'mimeType' => $type,
 		        'fileType' => $data['fileType'],
 		        'relationId' => $data['relationId'],
