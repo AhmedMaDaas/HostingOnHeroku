@@ -45,7 +45,7 @@
                     <label class="bmd-label-floating">{{ trans('admin.site_logo') }}</label>
                     {{ Form::file('logo', ['class'=>'form-control']) }}
                     @if(!empty($settings->logo))
-                      <img src="{{ Storage::url('storage/' . $settings->logo) }}" style="width:50px;height:50px"/>
+                      <img src="{{ url('storage/' . $settings->logo) }}" style="width:50px;height:50px"/>
                     @endif
                   
                 </div>
@@ -59,7 +59,7 @@
                     <label class="bmd-label-floating">{{ trans('admin.site_icon') }}</label>
                     {{ Form::file('icon', ['class'=>'form-control']) }}
                     @if(!empty($settings->icon))
-                      <img src="{{ Storage::url('storage/' . $settings->icon) }}" style="width:50px;height:50px"/>
+                      <img src="{{ url('storage/' . $settings->icon) }}" style="width:50px;height:50px"/>
                     @endif
                           
                   </div>
