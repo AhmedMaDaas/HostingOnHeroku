@@ -15,8 +15,8 @@ class Upload extends Controller
     	if(request()->hasFile($data['file']) && $data['uploadType'] == 'single'){
     		Storage::has($data['deleteFile']) ? Storage::delete($data['deleteFile']) : '';
             $destinationPath = 'storage/' . $data['path'];
-            $imageName = 'img_' . rand(1000000, 9999999) . '.' . $request->file($data['file'])->getClientOriginalExtension();
-            $request->file($data['file'])->move($destinationPath, $imageName);
+            $imageName = 'img_' . rand(1000000, 9999999) . '.' . request()->file($data['file'])->getClientOriginalExtension();
+            request()->file($data['file'])->move($destinationPath, $imageName);
     		return $destinationPath . '/' . $imageName;
     	}
     	else if( request()->hasFile($data['file']) && $data['uploadType'] == 'multiple' ){
