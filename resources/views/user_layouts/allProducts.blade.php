@@ -193,7 +193,7 @@
                         <div class="row justify-content-center">
                             @foreach($malls as $mall)
                                 <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                    <img src="{{url('/storage/'.$mall->photo)}}">
+                                    <img src="{{url('/storage/'.$mall->icon)}}">
                                     <div class="store-footer">
                                         <a href="{{route('storebrand.get',['mallId'=>$mall->id,'departmentId'=>'all'])}}">{{$mall->name_en}}</a>
                                     </div>
