@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Classes\indexClass;
 use App\Http\Controllers\Classes\billClass;
+use App\Http\Controllers\Classes\productClass;
 use App\Jobs\MakeNewOrder;
 
 use PayPal\Rest\ApiContext;
@@ -38,34 +39,50 @@ class bill extends Controller
     }
 
     function showCheckPage(indexClass $indexClass , billClass $billClass){
-        if(session('login')){
-            //dd($billClass->updatePriceInBill(37));
-            $departmentsParents = $indexClass->getDepartmentsWithParent();
-            $sumQuantityAndTotalCost = $indexClass->checkLogin();
+        if(session('login') || \Cookie::get('remembered')){
+            if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
+            session(['back'=>\Request::url()]);
+            //dd($billClass->checkQuantityInBill(38));
+            // $departmentsParents = $indexClass->getDepartmentsWithParent2();
+            // $subDepartmentWithoutParent = $indexClass->getSubDepsDontHaveParent();
+            // $sumQuantityAndTotalCost = $indexClass->checkLogin();
+
+            /*
+            *
+            *   this elements is necassery for all pages in web site
+            */
+            $arr = $indexClass->getPrimaryElementForAllPages('checkout');
 
             $bill = $billClass->checkBill(session('login'));
+
+            /*update product_coast in bill_products table and update total_coast in bill table
+            if the the offer is end and product_coast still equal price_offer in bill and bill_products
+            or update it's after the offer is start and the product in bill*/
+            if($bill){
+                $billClass->updatePriceInBill($bill->id,$bill->total_coast,'price','<');
+                $billClass->updatePriceInBill($bill->id,$bill->total_coast,'price_offer','>=');
+            }
 
             $relatedProducts = $indexClass->getProductsByBill(session('login'))->take(3);
             if(!count($relatedProducts))$relatedProducts = $indexClass->getProducts()->take(3);  
 
-            $arr = [
-                    'total_coast' => $sumQuantityAndTotalCost['total_coast'],
-                    'sumQuantity' => $sumQuantityAndTotalCost['sumQuantity'],
+            $arr1 = [
+                    // 'total_coast' => $sumQuantityAndTotalCost['total_coast'],
+                    // 'sumQuantity' => $sumQuantityAndTotalCost['sumQuantity'],
                     'bill' => $bill,
                     'relatedProducts' => $relatedProducts,
-                    //'mallsIds' => $mallsIds,
-                    'departmentsParents' => $departmentsParents[0],
-                    'mainDep' => $departmentsParents[1],
-                    'active' => 'checkout',
+                    // 'departmentsParents' => $departmentsParents,
+                    // 'subDepartmentWithoutParent' => $subDepartmentWithoutParent,
+                    //'active' => 'checkout',
 
                 ];
-                return view('user_layouts.checkout',$arr);
+                return view('user_layouts.checkout',array_merge_recursive($arr,$arr1));
         }else{
             return \Redirect::route('login');
         }
     }
 
-    function postCheckPage(Request $request ,indexClass $indexClass,billClass $billClass){
+    function postCheckPage(Request $request ,indexClass $indexClass,billClass $billClass , productClass $productClass){
 
     	if(Request()->ajax()){
 
@@ -88,7 +105,8 @@ class bill extends Controller
     		
         }else{
 
-            if(!session('login'))return \Redirect::route('login');
+            if(!session('login') && !\Cookie::get('remembered'))return \Redirect::route('login');
+                if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
 
                 $data = $this->validate(request(),[
                     'country'=>'required',
@@ -103,7 +121,11 @@ class bill extends Controller
                 $bill = $billClass->checkBill(session('login'));
                 if(!$bill)return back()->with('failed', 'oops! , your bill dosen\'t have any products');
 
+
                 $bill->update(['address'=>$country.'/'.$city.'/'.$street]);
+                $checkQuantity = $billClass->checkQuantityInBill($bill->id);
+
+                if($checkQuantity['status'])return back()->with('failed',$checkQuantity['msg']);
 
             if(isset($_POST['paybal'])){
 
@@ -114,9 +136,11 @@ class bill extends Controller
 
                 $items_products = [];
                 foreach($bill->products as $billProduct){
+                    // $checkQ = $productClass->checkQuantity($billProduct->product_id,$billProduct->quantity,$billProduct->size_id,$billProduct->color_id);
+                    // if(!$checkQ)return back()->with('failed', 'quantity of product : ('.$billProduct->product->name_en.'|'.$billProduct->product->name_ar.') still just '.$billProduct->product->stock);
 
                     $item1 = new Item();
-                    $item1->setName($billProduct->product->name)
+                    $item1->setName($billProduct->product->name_en.'|'.$billProduct->product->name_ar)
                         ->setCurrency('USD')
                         ->setQuantity($billProduct->quantity)
                         ->setSku($billProduct->product->id) // Similar to `item_number` in Classic API
@@ -174,6 +198,7 @@ class bill extends Controller
 
             }elseif (isset($_POST['cash'])) {
                 dispatch(new MakeNewOrder($bill->id));
+                $bill->update(['payment'=>'cash']);
                 return back()->with('success', 'success');
             }
     		return back()->with('failed', 'oops! , there is something happen');
@@ -233,7 +258,9 @@ class bill extends Controller
                         exit(1);
                     }
                     //return $payment;
-                    if(!session('login'))return \Redirect::route('login');
+                    if(!session('login') && !\Cookie::get('remembered'))return \Redirect::route('login');
+                    if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
+                    
                     $bill = $billClass->checkBill(session('login'));
                     dispatch(new MakeNewOrder($bill->id));
                     if($payment->state == 'approved'){

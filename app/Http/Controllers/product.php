@@ -40,7 +40,11 @@ class product extends Controller
 
 
     function showProductPage($productId ,productClass $productClass ,indexClass $indexClass){
-
+        //dd(\Route::getFacadeRoot()->current()->uri());
+        if(!session('login') && !\Cookie::get('remembered'))session(['back'=>\Request::url()]);
+        if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
+        
+        
         $mallProduct = $productClass->getMallInfo($productId);
         if(!$mallProduct)return \Redirect::route('home.get');
         $product = $productClass->getProduct($productId,$mallProduct->mall_id);
@@ -52,9 +56,16 @@ class product extends Controller
         $relatedProducts = $productClass->getSomeProducts($mallProduct->mall_id,$productId);
         //$commintsInPage = 6;
 //dd($indexClass->getDepartments());
-        $departmentsParents = $indexClass->getDepartmentsWithParent();
+        // $departmentsParents = $indexClass->getDepartmentsWithParent2();
+        // $subDepartmentWithoutParent = $indexClass->getSubDepsDontHaveParent();
 
-        $sumQuantityAndTotalCost = $indexClass->checkLogin();
+        // $sumQuantityAndTotalCost = $indexClass->checkLogin();
+        /*
+        *
+        *   this elements is necassery for all pages in web site
+        */
+        $arr = $indexClass->getPrimaryElementForAllPages('product');
+
     	//$product = $productClass->getProduct($productId,$mallId);
         //$commints = $productClass->getCommints($productId,$commintsInPage);
         //if($product == false)return \Redirect::route('home');
@@ -62,26 +73,29 @@ class product extends Controller
         //if($mall == false)return \Redirect::route('home');
     	//$relatedProducts = $productClass->getSomeProducts($mall);
     	
-    	$arr = [
+    	$arr1 = [
     		'product' => $product,
             'countFollowers' => $countFollowers,
     		 'mallProduct' => $mallProduct,
     		 'relatedProducts' => $relatedProducts,
-            'total_coast' => $sumQuantityAndTotalCost['total_coast'],
-            'sumQuantity' => $sumQuantityAndTotalCost['sumQuantity'],
+            // 'total_coast' => $sumQuantityAndTotalCost['total_coast'],
+            // 'sumQuantity' => $sumQuantityAndTotalCost['sumQuantity'],
             //'commints' => $commints,
-            'departmentsParents' => $departmentsParents[0],
-            'mainDep' => $departmentsParents[1],
-            'active' => 'product',
+            // 'departmentsParents' => $departmentsParents,
+            // 'subDepartmentWithoutParent' => $subDepartmentWithoutParent,
+            // 'departmentsParents' => $departmentsParents[0],
+            // 'mainDep' => $departmentsParents[1],
+            //'active' => 'product',
             'table' => $table,
 
     	];
-    	return view('user_layouts.product',$arr);
+    	return view('user_layouts.product',array_merge_recursive($arr,$arr1));
     }
 
     function postProductPage(Request $request,$productId ,billClass $billClass,productClass $productClass, indexClass $indexClass){
 
-        if(!session('login'))return \Redirect::route('login');
+        if(!session('login') && !\Cookie::get('remembered'))return \Redirect::route('login');
+        if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
         
         $product = $productClass->checkProduct($productId);
         if(!$product)return back()->with('failed', 'some thing wrong happen');
@@ -126,7 +140,7 @@ class product extends Controller
                 //foreach($bill->products as $billProduct){
 
                     $item1 = new Item();
-                    $item1->setName($product->name)
+                    $item1->setName($product->name_en.'|'.$product->name_ar)
                         ->setCurrency('USD')
                         ->setQuantity($quantity)
                         ->setSku($product->id) // Similar to `item_number` in Classic API
@@ -188,7 +202,8 @@ class product extends Controller
 
         }elseif(isset($_POST['add_commint'])){
             $commint = $request->input('commint');
-            if(session('login')){
+            if(session('login') || \Cookie::get('remembered')){
+                if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
                 Commint::create(['product_id'=>$productId,'user_id'=>session('login'),'commint'=>$commint]);
                 return back()->with('success', 'your commint added successfully');
             }
@@ -196,7 +211,8 @@ class product extends Controller
 
         }elseif(isset($_POST['add_question'])){
             $question = $request->input('question');
-            if(session('login')){
+            if(session('login') || \Cookie::get('remembered')){
+                if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
                 Commint::create(['product_id'=>$productId,'user_id'=>session('login'),'commint'=>$question]);
                 return back()->with('success', 'your question added successfully');
             }

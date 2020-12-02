@@ -27,7 +27,7 @@ class ShippingStatistics
         $this->allOrders = DB::table('bills')->where('status', 'completed')->when(isCompany(), function($query){
                             return $query->where('visible', 1);
                         })
-                        ->select(DB::raw('sum(total_coast) as salesPerMonth'),
+                        ->select(DB::raw('sum(total_coast - shipping_coast) as salesPerMonth'),
                                  DB::raw('count(id) as oCount'),
                                  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
                         ->groupby('year','month')

@@ -12,47 +12,53 @@ class index extends Controller
     
 	
     function home(Request $request){
-        
+        if(!session('login') && !\Cookie::get('remembered'))session(['back'=>\Request::url()]);
+        if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
     	$indexClass = new indexClass();
         //dd($indexClass->search('all','s'));
         //dd($indexClass->evaluationProduct(1,5,4));
         //dd($indexClass->getBestSellerProducts());
     	$products = $indexClass->getProducts();
-        $departmentsParents = $indexClass->getDepartmentsWithParent();
-    	//$departments = $indexClass->getDepartments();
-        //$countDepartments = count($departments);
+        //$sumQuantityAndTotalCost = $indexClass->checkLogin();
+        // $departmentsParents = $indexClass->getDepartmentsWithParent2();
+        // $subDepartmentWithoutParent = $indexClass->getSubDepsDontHaveParent();
+
+        /*
+        *
+        *   this elements is necassery for all pages in web site
+        */
+        $arr = $indexClass->getPrimaryElementForAllPages('home');
+
     	$ads = $indexClass->getAds();
         $justForYouProduct = $indexClass->justForYouProduct();
-//dd($departmentsParents);
-        $sumQuantityAndTotalCost = $indexClass->checkLogin();
+//dd($indexClass->getDepartments());
+        
 
-        session(['total_coast' => $sumQuantityAndTotalCost['total_coast'],
-                 'sumQuantity' => $sumQuantityAndTotalCost['sumQuantity'],
+        session(['total_coast' => $arr['total_coast'],
+                 'sumQuantity' => $arr['sumQuantity'],
         ]);
 
         $bestSellerProducts = $indexClass->getBestSellerProducts();
         $malls = $indexClass->getMalls();
         $productsWithDates = $indexClass->getProductsWithSale();
 
-    	$arr = [
+    	$arr1 = [
     	'products'=>$products,
-    	//'departments' => $departments,
     	'ads' => $ads,
-        //'countDepartments' => $countDepartments,
-        'total_coast' => $sumQuantityAndTotalCost['total_coast'],
-        'sumQuantity' => $sumQuantityAndTotalCost['sumQuantity'],
-        'departmentsParents' => $departmentsParents[0],
-        'mainDep' => $departmentsParents[1],
+        // 'total_coast' => $sumQuantityAndTotalCost['total_coast'],
+        // 'sumQuantity' => $sumQuantityAndTotalCost['sumQuantity'],
+        // 'departmentsParents' => $departmentsParents,
+        // 'subDepartmentWithoutParent' => $subDepartmentWithoutParent,
         'bestSellerProducts' => $bestSellerProducts,
         'malls' => $malls,
         'currentDate'  => $productsWithDates[0],
         'endDate' => $productsWithDates[1],
         'productsWithSale' =>$productsWithDates[2],
         'justForYouProduct' => $justForYouProduct,
-        'active' => 'home',
+        //'active' => 'home',
 
     	];
-    	return view('user_layouts.homepage',$arr);
+    	return view('user_layouts.homepage',array_merge_recursive($arr,$arr1));
     }
 
     function test(){
@@ -67,9 +73,10 @@ class index extends Controller
         if(Request()->ajax()) {
             
             if(Request()->input('button') == 'love'){
-                if(!session('login')){
+                if(!session('login') && !\Cookie::get('remembered')){
                     return response()->json(['operation' => 'login']);
                 }
+                if(!session('login'))session(['login'=>\Cookie::get('remembered')]);
 
                 $productId = Request()->input('productId');
                 $product = $indexClass->checkProductWitoutStock($productId);
@@ -88,9 +95,10 @@ class index extends Controller
                 return response()->json(['operation' => $searchResult,'view'=>$view]);
 
             }elseif(Request()->input('button') == 'evaluation'){
-                if(!session('login')){
+                if(!session('login') && !\Cookie::get('remembered')){
                     return response()->json(['operation' => 'login']);
                 }
+                if(!session('login'))session(['login'=>\Cookie::get('remembered')]);
 
                 $productId = Request()->input('productId');
                 $star = Request()->input('star');
