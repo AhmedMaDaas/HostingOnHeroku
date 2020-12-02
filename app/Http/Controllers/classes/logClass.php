@@ -17,10 +17,21 @@ class logClass{
 		
 	}
 
-	function checkIfRegister($email,$password){
+	function checkIfRegister($email,$password,$remember_me){
 		$user = User::where(['email'=>$email])->first();
-		if(empty($user->id))return false;
-		\Hash::check($password,$user->password);
+		 //\Auth::login($user, $remember_me);
+		//\Auth::attempt(['email' => $email, 'password' => $password], $remember_me);
+		//dd( \Auth::viaRemember());
+		
+		if(empty($user->id)||!\Hash::check($password,$user->password))return false;
+		
+		if ($remember_me) {
+	        $cookie =  \Cookie::queue('remembered', $user->id, time() + 31536000);
+	    }else {
+	        //$cookie =  Cookie::queue('username', '', time() - 100);
+	    }
+	        //dd($_COOKIE);
+	        //dd( !\Cookie::get('remembered'));
 		session(['login'=>$user->id]);
 		return true;
 	}
@@ -39,7 +50,7 @@ class logClass{
 		//}
 	}
 
-	function checkLoginByService($service,$service_id,$name,$email,$photo){
+	function checkLoginByService($service,$service_id,$name,$email,$photo,$remember_me){
 		if($service == 'facebook'){
 
 			$coloum = 'facebook_id';
@@ -54,7 +65,16 @@ class logClass{
 				$foundUser = User::where('email',$email)->first();
 				if(!empty($foundUser))return false;
 				$user = User::create(['name'=>$name,'email'=>$email,$coloum=>$service_id,'photo'=>$photo,'level'=>'user']);
+			}else{
+				User::where('id',$user->id)->update(['name'=>$name,'email'=>$email,$coloum=>$service_id,'photo'=>$photo,'level'=>'user']);
 			}
+
+			if ($remember_me) {
+		        $cookie =  \Cookie::queue('remembered', $user->id, time() + 31536000);
+		    }else {
+		        //$cookie =  Cookie::queue('username', '', time() - 100);
+		    }
+
 			session(['login'=>$user->id]);
 			return true;
 	}

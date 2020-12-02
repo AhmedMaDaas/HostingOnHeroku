@@ -80,7 +80,7 @@ class productClass{
 	}
 
 	function checkProduct($productId){
-		$product = Product::find($productId)->where('stock','>=',1);
+		$product = Product::where('id',$productId)->where('stock','>=',1)->first();
 		if(!empty($product))return $product;
 		return false;
 	}
@@ -96,14 +96,14 @@ class productClass{
 	function checkQuantity($productId,$quantity,$sizeId,$colorId){
 
 
-		$product = Product::find($productId)->where('stock','>=',$quantity)->first();
+		$product = Product::where('id',$productId)->where('stock','>=',$quantity)->first();
 		if(empty($product))return false;
 		if($colorId != -1){
-			$product = ColorProduct::where(['product_id'=>$productId,'color_id'=>$colorId])->where('stock','>=',$quantity)->first();
+			$product = ColorProduct::where(['product_id'=>$productId,'color_id'=>$colorId])->where('quantity','>=',$quantity)->first();
 			if(empty($product))return false;
 		}
 		if($sizeId != -1){
-			$product = SizeProduct::where(['product_id'=>$productId,'size_id'=>$sizeId])->where('stock','>=',$quantity)->first();
+			$product = SizeProduct::where(['product_id'=>$productId,'size_id'=>$sizeId])->where('quantity','>=',$quantity)->first();
 			if(empty($product))return false;
 		}
 

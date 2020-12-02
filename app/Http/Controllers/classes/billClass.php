@@ -34,20 +34,75 @@ class billClass{
 		}
 	}
 
-//not completed yet
-	function updatePriceInBill($billId){
+/*this statments were in checkout but replaced by the function updatePriceInBill
+if(($billProduct->product_coast != $billProduct->product->price) && 
+              (time()-(60*60*24)) > strtotime($billProduct->product->offer_end_at)){
+
+              // call function from app/http/helper
+               updatePriceBill($billProduct->id,$billProduct->product->price,$billProduct->quantity,$bill->id,$billProduct->product_coast,$bill->total_coast);
+            }
+            if(($billProduct->product_coast != $billProduct->product->price_offer) && 
+              (time()-(60*60*24)) <= strtotime($billProduct->product->offer_end_at)){
+
+              // call function from app/http/helper
+               updatePriceBill($billProduct->id,$billProduct->product->price_offer,$billProduct->quantity,$bill->id,$billProduct->product_coast,$bill->total_coast);
+            }
+
+            */
+	function updatePriceInBill($billId,$quantity,$price='price',$ope='<'){
 		$currentDate = Carbon::now();
 
-		$test = BillProduct::where('bill_id',$billId)
-		->join('products', 'bill_products.product_id', '=', 'products.id')
-		->where('products.offer_end_at','<',$currentDate)->get();
-		//->where('bill_products.product_coast','=','products.price')->get();
+		// $query = "update `bill_products` inner join `bills` 
+		// 			on `bills`.`id` = `bill_products`.`bill_id` 
+		// 			inner join `products` 
+		// 			on `products`.`id` = `bill_products`.`product_id` 
+		// 			and `products`.`price` != `bill_products`.`product_coast` 
+		// 			 set
+		// 			 `bills`.`total_coast` = `bills`.`total_coast` - (`bill_products`.`product_coast` * `bill_products`.`quantity`),
+		// 			  `bill_products`.`product_coast` = `products`.`price`,
+		// 			  `bills`.`total_coast` = `bills`.`total_coast` + (`bill_products`.`product_coast` * `bill_products`.`quantity`)
+		// 			  where `bill_id` = 38 
+		// 			  and `products`.`offer_end_at` < ".$currentDate;
 
-		// foreach ($test as $key => $record) {
-		// 	if($record->product_coast != $record->price)
-		// 		BillProduct::where('product_id',$record->product_id)->update(['product_coast'=>$record->price]);
-		// }
-		return $test;
+		// 			  return \DB::update($query);
+
+
+		$records = BillProduct::where('bill_id',$billId)
+		->join('products',function($join)use($price)
+		 {
+		   $join->on('products.id', '=', 'bill_products.product_id');
+		   $join->on('products.'.$price, '!=', 'bill_products.product_coast');
+
+		 })
+		->where('products.offer_end_at',$ope,$currentDate)->get();
+
+		if(count($records)){
+			$oldTotal = 0;
+			$newTotal = 0;
+			foreach ($records as $key => $record) {
+				$oldTotal = $oldTotal+($record->product_coast*$record->quantity);
+				$newTotal = $newTotal+($record->$price*$record->quantity);
+			}
+			//dd($oldTotal.','.$newTotal);
+			$oldTotal = $quantity - $oldTotal;
+			$newTotal = $oldTotal + $newTotal;
+			
+
+			$records = BillProduct::where('bill_id',$billId)
+			->join('products',function($join)use($price)
+			 {
+			   $join->on('products.id', '=', 'bill_products.product_id');
+			   $join->on('products.'.$price, '!=', 'bill_products.product_coast');
+
+			 })
+			->where('products.offer_end_at',$ope,$currentDate)
+			->update(['bill_products.product_coast'=>\DB::raw("`products`.`".$price."`")]);
+
+			Bill::where('id',$billId)->update(['total_coast'=>$newTotal]);
+		}
+		
+		//dd($records);
+		return $records;
 	}
 
 	function getMallsIds($billProduct){
@@ -92,6 +147,64 @@ class billClass{
 		$bill = Bill::create(['user_id'=>$userId,'address'=>'damas','status'=>'opened','total_coast'=>$totalPrice]);
 		$billProduct = BillProduct::create(['bill_id'=>$bill->id,'product_id'=>$productId,'color_id'=>$colorId,'size_id'=>$sizeId,'mall_id'=>$mallId,'product_coast'=>$productPrice,'quantity'=>$quantity]);
 		return $bill;
+	}
+
+
+	function checkQuantityInBill($billId){
+		$array = [];
+
+		$elements = BillProduct::where('bill_id',$billId)
+		->join('products',function($join)
+		 {
+		   $join->on('products.id', '=', 'bill_products.product_id');
+		   $join->on('products.stock', '<', 'bill_products.quantity');
+
+		 })->leftJoin('color_products',function($join)
+		 {
+		   $join->on('color_products.product_id', '=', 'bill_products.product_id');
+		   $join->on('color_products.color_id', '=', 'bill_products.color_id');
+		   $join->on('color_products.quantity', '<', 'bill_products.quantity');
+
+		 })->leftJoin('size_products',function($join)
+		 {
+		   $join->on('size_products.product_id', '=', 'bill_products.product_id');
+		   $join->on('size_products.size_id', '=', 'bill_products.size_id');
+		   $join->on('size_products.quantity', '<', 'bill_products.quantity');
+
+		 })
+		 ->select('bill_products.*','color_products.quantity as color_quantity','color_products.product_id as color_product',
+		 	'size_products.quantity as size_quantity','size_products.product_id as size_product','products.*')
+		 ->get();
+		 
+		 $message = $this->createMessage($elements);
+
+		 if(!$message){
+		 	$array['status']=false;
+		 	$array['msg']='';
+		 }else{
+
+		 	$array['status']=true;
+		 	$array['msg']=$message;
+		 }
+		   
+		 return $array;
+		//return $elements;
+	}
+
+	function createMessage($elements){
+		if(!empty($elements)){
+			$str ='';
+			$productQuantity = 0;
+			foreach ($elements as $key => $element) {
+				if(empty($element->color_quantity) && empty($element->size_quantity)) $productQuantity = $element->stock;
+				elseif($element->color_quantity > $element->size_quantity) $productQuantity = $element->color_quantity;
+				else $productQuantity = $element->size_quantity;
+				$str = $str.'(quantity of product : ['.$element->name_en.' | '.$element->name_ar.'] still just '.$productQuantity.' ) ';
+			}
+
+			return $str;
+		}
+		return false;
 	}
 
 	// function deleteProductBill($productId,$colorId,$sizeId){

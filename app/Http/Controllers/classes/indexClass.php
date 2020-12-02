@@ -42,6 +42,27 @@ class indexClass{
 		return $videoInfo->fullFile;
 	}
 
+	function getMainDeps(){
+		$mainDepartments = \DB::table('departments')
+                ->select(
+                    'departments.*'
+                )
+                ->whereNotExists( function ($query) {
+                    $query->select(DB::raw(1))
+                    ->from('products')
+                    ->whereRaw('departments.id = products.department_id');
+                })
+                ->get();
+        return $mainDepartments;
+	}
+
+	function getSubDeps(){
+		$subDepartments = Department::whereHas('malls.mall.products.product',function($query){
+					return $query->whereNotNull('id');
+			})->get();
+		return $subDepartments;
+	}
+
 	function getDepartmentsWithParent(){
 		$allDep = [];
 		$mainDep = [];
@@ -78,7 +99,25 @@ class indexClass{
 		return [$allDep,$mainDep];
 	}
 
+	function getDepartmentsWithParent2(){
+		$deps = Department::whereNotExists( function ($query) {
+                    $query->select(DB::raw(1))
+                    ->from('products')
+                    ->whereRaw('departments.id = products.department_id');
+                })->with('child')->get();
+		return $deps;
+	}
+
+	function getSubDepsDontHaveParent(){
+		$deps = Department::whereNull('parent')
+	          	 	->whereHas('malls.mall.products.product',function($query){
+						return $query->whereNotNull('id');
+					})->get();
+		return $deps;
+	}
+
 	function getDepartments(){
+
 		// $departments = Department::whereHas('malls.mall.products.product',function($query){
 		// 			return $query->whereNotNull('id');
 		// 	})->get();
@@ -115,7 +154,8 @@ class indexClass{
 
 
 	function checkLogin(){
-		if(session('login')){
+		if(session('login') || \Cookie::get('remembered')){
+			if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
 			$userId = session('login');
 			$billUser = Bill::whereUser_id($userId)->where('status','opened')->orderBy('created_at', 'desc')->first();
 			if(!empty($billUser) && $billUser->status=='opened' ){
@@ -143,7 +183,8 @@ class indexClass{
 
 	function sumPrice($productId,$colorId,$sizeId,$mallId,$quantity,$type = 'plus'){
 		//return [$type,$type,$type];
-		if(session('login')){
+		if(session('login') || \Cookie::get('remembered')){
+			if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
 			$userId = session('login');
 			$user = User::where('id',$userId)->first();
 			$price = $this->getPrice($productId);
@@ -203,7 +244,8 @@ class indexClass{
 	}
 
 	function deleteProductBill($productId,$colorId,$sizeId){
-		if(!session('login'))return [false];
+		if(!session('login') && !\Cookie::get('remembered'))return [false];
+		if(!session('login'))session(['login'=> \Cookie::get('remembered')]);
 		$userId = session('login');
 		$billUser = Bill::whereUser_id($userId)->where('status','opened')->orderBy('created_at', 'desc')->first();
 		if(empty($billUser) || $billUser->status!='opened' ){
@@ -237,9 +279,10 @@ class indexClass{
 		    ->groupBy('product_id')
 		    ->orderByRaw('COUNT(*) DESC')
 		    ->inRandomOrder()
-		    ->limit(6)->with(['product'=>function($query){
-			$query->where('stock','>=',1);
-			}])->take(10)
+		    ->limit(6)->whereHas('product',function($query){
+		    	return $query->where('stock','>=',1);
+		    })->with('product')
+		    //->take(10)
 		    ->get();
 		    return $BestSellerProducts;
 		}else{
@@ -249,13 +292,13 @@ class indexClass{
             	$departmentId = $department->id;
             	$BestSellerProducts  = BillProduct::select('product_id')
 				->whereHas('product',function($query) use($departmentId){
-					return $query->where('department_id', '=', $departmentId);
+					return $query->where('department_id', '=', $departmentId)
+								 ->where('stock','>=',1);
 				})
 			    ->groupBy('product_id')
 			    ->orderByRaw('COUNT(*) DESC')
-			    ->limit(6)->with(['product'=>function($query){
-				$query->where('stock','>=',1);
-				}])->get();
+			    ->limit(6)->with('product')
+			    ->get();
 			    $BestSellerProductsByDep[$department->name_en] = $BestSellerProducts;
                 
             }
@@ -299,6 +342,54 @@ class indexClass{
 		return $malls;
 		
 	}
+
+	function makeArraysSubIndex(){
+		$arr = [
+        'productsWithSale' => [],
+        'productsJustForYou' => [], 
+        'productsBestSellingByDep' => [],
+        'malls' => [],
+    	];
+
+    	return $arr;
+	}
+
+	function getPrimaryElementForAllPages($active){
+		$departmentsParents = $this->getDepartmentsWithParent2();
+        $subDepartmentWithoutParent = $this->getSubDepsDontHaveParent();
+        $sumQuantityAndTotalCost = $this->checkLogin();
+
+        $arr = [
+        'sumQuantity' => $sumQuantityAndTotalCost['sumQuantity'],
+        'departmentsParents' => $departmentsParents,
+        'subDepartmentWithoutParent' => $subDepartmentWithoutParent,
+        'total_coast' => $sumQuantityAndTotalCost['total_coast'],
+        'active' => $active,
+        // 'departmentsParents' => $departmentsParents[0],
+        // 'mainDep' => $departmentsParents[1],
+        //'ads' => $ads,
+        // 'productsWithSale' => $productsWithSale,
+        // 'productsJustForYou' => $productsJustForYou, 
+        // 'productsBestSellingByDep' => $productsBestSellingByDep,
+        // 'malls' => $malls,
+        
+
+    	];
+
+    	return $arr;
+	}
+
+	function getStoresByDefinedDep($departmentId,$skip=0){
+		$malls = Mall::whereHas('departments',function($query) use($departmentId){
+			$query->where('department_id',$departmentId);
+		})
+		->skip($skip)
+		->take(10)
+		->get();
+
+		return $malls;
+	}
+
 	function getProductsWithSale($all = false,$skip = 0){
 		date_default_timezone_set("Asia/Muscat");
 		$currentDate = Carbon::now();
@@ -368,7 +459,6 @@ class indexClass{
 		// if(empty($sizeProduct)){
 		// 	$product = SizeProduct::where('porduct_id',$porductId)->first();
 		// }
-		
 		if(empty($mallProduct))return false;
 		if(empty($sizeProduct))$sizeId = null;
 		else $sizeId = $sizeProduct->size->id;

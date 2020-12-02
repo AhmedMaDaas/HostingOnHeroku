@@ -95,7 +95,7 @@ class storeClass{
 		// $mall = Mall::where('id',$mallId)->first();
 		// $departments = $mall->departments()->->get();
 
-		// $MallDepartments = MallDepartment::where('mall_id',$mallId)->whereHas('department',function($query){
+		// $mallDepartments = mallDepartment::where('mall_id',$mallId)->whereHas('department',function($query){
 		// 			return $query->whereNotNull('parent');
 		// 	})->with('department')->get();
 		$deps = [];
@@ -180,7 +180,16 @@ class storeClass{
 
 	}
 
+	function getStoresByDefinedDep($departmentId,$skip=0){
+		$malls = Mall::whereHas('departments',function($query) use($departmentId){
+			$query->where('department_id',$departmentId);
+		})
+		->skip($skip)
+		->take(10)
+		->get();
 
+		return $malls;
+	}
 
 	function getProductsByDefinedDep($mallId,$departmentId ,$skip = 0){
 		$products = Product::where('stock','>=',1)->whereHas('malls.mall',function($query) use($mallId){
@@ -198,7 +207,7 @@ class storeClass{
 	}
 
 	function checkDepartment($departmentId){
-		$department = MallDepartment::where('department_id',$departmentId)->first();
+		$department = mallDepartment::where('department_id',$departmentId)->first();
 		if(!empty($department)) return $department;
 		return false;
 	}
@@ -611,8 +620,8 @@ class storeClass{
 
 			}else{
 				$products  = MallProduct::where('mall_id',$mallId)
-					->join('color_products', 'color_products.product_id', '=', 'mall_Products.product_id')
-					->join('size_products', 'mall_products.product_id', '=', 'size_products.product_id')
+					->leftJoin('color_products', 'color_products.product_id', '=', 'mall_Products.product_id')
+					->leftJoin('size_products', 'mall_products.product_id', '=', 'size_products.product_id')
 					->join('products', 'mall_products.product_id', '=', 'products.id')
 					->whereHas('product',function($query) use($departmentId,$coloumWhere,$ope,$valueWhere,$fromPrice,$toPrice){
 						return $query->where('department_id', '=', $departmentId)
