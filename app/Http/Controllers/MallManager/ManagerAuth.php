@@ -21,7 +21,7 @@ class ManagerAuth extends Controller
     }
 
     public function doLogin(){
-    	$remember = request('remember') == 1 ? true : false;
+    	$remember = request('remember') !== null ? true : false;
     	if(auth()->guard('web')->attempt(['email'=>request('email'), 'password'=>request('password'), 'level' => 'mall'], $remember)){
             return redirect('mall-manager/home');
     	}

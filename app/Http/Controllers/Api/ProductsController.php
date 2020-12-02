@@ -22,4 +22,15 @@ class ProductsController extends Controller
         }, 'weight', 'department'])->first();
         return json_encode($product);
     }
+
+    public function productsSearch(){
+        $query = request('query');
+        if(!isset($query)) return json_encode([]);
+
+        $products = Product::where('name_en', 'LIKE', '%' . $query . '%')
+                            ->orWhere('name_ar', 'LIKE', '%' . $query . '%')
+                            ->with('department')
+                            ->get();
+        return json_encode($products);
+    }
 }

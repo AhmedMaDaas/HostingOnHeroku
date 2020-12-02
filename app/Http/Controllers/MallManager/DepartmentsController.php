@@ -46,9 +46,10 @@ class departmentsController extends Controller
             'name_ar' => 'required',
             'name_en' => 'required',
             'parent' => 'sometimes|nullable|numeric',
-            'icon' => '',
-            'keywords' => '',
-            'description' => '',
+            'icon' => 'sometimes|nullable|image|mimes:svg',
+            'photo' => 'sometimes|nullable|image|mimes:svg,jpg,jpeg,png,gif',
+            'keywords' => 'sometimes|nullable|string',
+            'description' => 'sometimes|nullable|string',
         ]);
 
         $data['is_active'] = 'inactive';
@@ -57,6 +58,15 @@ class departmentsController extends Controller
         if(request()->has('icon')){
             $data['icon'] = Up::upload([
                 'file' => 'icon',
+                'uploadType' => 'single',
+                'path' => 'departments',
+                'deleteFile' => ''
+            ]);
+        }
+
+        if(request()->has('photo')){
+            $data['photo'] = Up::upload([
+                'file' => 'photo',
                 'uploadType' => 'single',
                 'path' => 'departments',
                 'deleteFile' => ''
@@ -120,11 +130,13 @@ class departmentsController extends Controller
             'name_ar' => 'required',
             'name_en' => 'required',
             'parent' => 'sometimes|nullable|numeric',
-            'icon' => '',
-            'keywords' => '',
-            'description' => '',
+            'icon' => 'sometimes|nullable|image|mimes:svg',
+            'photo' => 'sometimes|nullable|image|mimes:svg,jpg,jpeg,png,gif',
+            'keywords' => 'sometimes|nullable|string',
+            'description' => 'sometimes|nullable|string',
         ]);
 
+        $dep = Department::find($id);
         $data['is_active'] = 'inactive';
         $data['owner'] = auth()->guard('web')->user()->id;
 
@@ -133,11 +145,20 @@ class departmentsController extends Controller
                 'file' => 'icon',
                 'uploadType' => 'single',
                 'path' => 'departments',
-                'deleteFile' => Department::find($id)->icon,
+                'deleteFile' => $dep->icon,
             ]);
         }
 
-        Department::where('id', $id)->update($data);
+        if(request()->has('photo')){
+            $data['photo'] = Up::upload([
+                'file' => 'photo',
+                'uploadType' => 'single',
+                'path' => 'departments',
+                'deleteFile' => $dep->photo,
+            ]);
+        }
+
+        $dep->update($data);
 
         session()->flash('success', trans('admin.record_updated_successfully'));
 
@@ -156,6 +177,7 @@ class departmentsController extends Controller
 
         foreach($subDepartments as $subDepartment){
             Storage::has($subDepartment->icon) ? Storage::delete($subDepartment->icon) : '';
+            Storage::has($subDepartment->photo) ? Storage::delete($subDepartment->photo) : '';
             self::deleteSubDepartments($subDepartment->id);
             $subDepartment->delete();
         }
@@ -172,6 +194,7 @@ class departmentsController extends Controller
         $department = Department::find($id);
         self::deleteSubDepartments($id);
         Storage::has($department->icon) ? Storage::delete($department->icon) : '';
+        Storage::has($department->photo) ? Storage::delete($department->photo) : '';
         $department->delete();
         session()->flash('success', trans('admin.record_deleted_successfully'));
         return back();

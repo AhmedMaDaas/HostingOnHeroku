@@ -234,8 +234,8 @@ class productsController extends Controller
             session()->forget('pId');
         }
 
+        OtherData::where('product_id', $id)->delete();
         if(request()->has('other_data')){
-            OtherData::where('product_id', $id)->delete();
             $this->storeOtherData(request('other_data'), $id);
         }
 

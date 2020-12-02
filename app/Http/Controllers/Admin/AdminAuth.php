@@ -21,7 +21,7 @@ class adminAuth extends Controller
     }
 
     public function doLogin(){
-    	$remember = request('remember') == 1 ? true : false;
+    	$remember = request('remember') !== null ? true : false;
 
         $this->validate(request(), [
             'email' => 'required|email',
