@@ -66,6 +66,7 @@ select.language{
 
 .table{
 	text-align: center;
+	display: inline-table;
 }
 
 .table .box-title{
@@ -85,6 +86,10 @@ select.language{
 
 .orders-table {
 	min-height: 130px;
+}
+
+.bill-info div{
+	overflow: auto;
 }
 
 /******** Ediatble Table ********/
@@ -164,3 +169,26 @@ table.editable-table tr td:last-child{
 }
 
 /************   Attractive Info   ************/
+
+/************   Shipping Orders  ************/
+
+.card.card-default.radius-pag{
+	margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-clip: border-box;
+    border-radius: 0.25rem;
+    width: auto;
+}
+
+.pagination.pagination-flat.pagination-flat-rounded .page-link{
+	height: auto;
+	border-top-right-radius: 100%;
+    border-bottom-right-radius: 100%;
+    border-top-left-radius: 100%;
+    border-bottom-left-radius: 100%;
+}
+
+/************   Shipping Orders  ************/

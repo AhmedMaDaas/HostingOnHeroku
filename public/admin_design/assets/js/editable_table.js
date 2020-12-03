@@ -4,6 +4,10 @@ function rowButtons(rowSpan){
 		   '<button class="btn btn-danger btn-table delete-row"><i class="fa fa-trash"></i></button></td>';
 }
 
+function columnButtons(){
+	return '<td><button class="btn btn-danger btn-table delete-column"><i class="fa fa-trash"></i></button></td>';
+}
+
 function addButtons(position){
 	return '<button class="btn btn-success btn-table add-row-' + position + '"><i class="fa fa-plus"></i> Row</button>' + 
 		   '<button style="float: right" class="btn btn-info btn-table add-col-' + position + '"><i class="fa fa-plus"></i> Col</button>';
@@ -30,14 +34,25 @@ function addRowButtons(){
 	});
 }
 
+function addColumnButtons(){
+	var colCount = columnCount(0, $('table.editable-table tr').length - 1);
+	$('table.editable-table').prepend('<tr></tr>');
+	for(var i = 0; i < colCount; i++){
+		$('table.editable-table tr:first-child').append(columnButtons());
+	}
+	$('table.editable-table tr:first-child').append('<td></td>');
+}
+
 function addControleButtons(topAndBottom = true){
 	addRowButtons();
+	addColumnButtons();
 	if(!topAndBottom) return;
 	$('table.editable-table').before(addButtons('top'));
 	$('table.editable-table').after(addButtons('bottom'));
 }
 
 function removeControleButtons(){
+	$('table.editable-table tr:first-child').remove();
 	rowCounter = 0;
 	$('table.editable-table tr').each(function(){
 		var cell = $(this).find('td:last-child');
@@ -88,6 +103,46 @@ function delRow(button){
 	}
 }
 
+function checkIfDeletable(cellInColumnIndex, cellInColumn, columnIndex){
+	var shift = getShift(cellInColumn);
+	var colspan = getCellsCount(cellInColumn, 'colspan');
+	if((shift + cellInColumnIndex + colspan - 1) >= columnIndex){
+		if(colspan > 1) cellInColumn.attr('colspan', colspan - 1);
+		else cellInColumn.remove();
+		return true;
+	}
+	return false;
+}
+
+function deleteCellsInColumn(columnIndex){
+	var rows = $('table.editable-table tr');
+	for(var i = 1; i < rows.length; i++){
+		var columns = rows.eq(i).find('td');
+		for (var j = 0; j < columns.length; j++) {
+			if(checkIfDeletable(j, columns.eq(j), columnIndex)) {
+				break;
+			}
+		};
+	}
+}
+
+function delColumn(button){
+	var cell = button.parent('td');
+	var rows = $('table.editable-table tr');
+	if(columnCount(0, rows.length - 1) <= 1) return;
+	for(var i = 0; i < rows.length; i++){
+		var columns = rows.eq(i).find('td');
+		for (var j = 0; j < columns.length; j++) {
+			if(cell.is(columns.eq(j))){
+				deleteCellsInColumn(j);
+				removeControleButtons();
+				addControleButtons(false);
+				return;
+			}
+		};
+	}
+}
+
 function addCol(position){
 	var child = position == 'top' ? 'last' : 'first';
 	$('table.editable-table tr td:' + child + '-child').each(function(){
@@ -98,7 +153,9 @@ function addCol(position){
 			if($(this).parent('tr').find('button.edit-row').hasClass('hidden')) editRow($(this).parent('tr'));
 		}
 	});
-	updateShiftedCells(0, $('table.editable-table tr').length);
+	updateShiftedCells(0, $('table.editable-table tr').length - 1);
+	removeControleButtons();
+	addControleButtons(false);
 }
 
 function inOrAcitveEditable(row, edit){
@@ -278,11 +335,20 @@ function getShift(cell){
 	return parseInt(cell.attr('data-shift'));
 }
 
-function shiftCells(rowIndex, columnIndex, colspan){
+function shiftCellsInColumn(rowIndex, columnIndex, colspan){
 	var row = $('table.editable-table tr').eq(rowIndex);
 	for (var i = 0; i < row.find('td').length; i++) {
 		var cell = row.find('td').eq(i);
 		if(getShift(cell) + i < columnIndex) continue;
+		cell.attr('data-shift', colspan + getShift(cell));
+	};
+}
+
+function shiftCellsInRow(rowIndex, columnIndex, colspan){
+	var row = $('table.editable-table tr').eq(rowIndex);
+	var columns = row.find('td');
+	for (var i = columnIndex; i < columns.length; i++) {
+		var cell = columns.eq(i);
 		cell.attr('data-shift', colspan + getShift(cell));
 	};
 }
@@ -306,8 +372,12 @@ function updateShiftedCells(start, end){
 		for (var j = 0; j < columns.length; j++) {
 			if(getCellsCount(columns.eq(j), 'rowspan') > 1 && !columns.eq(j).has('button').length){
 				var k = getCellsCount(columns.eq(j), 'rowspan') - 1;
-				while(k > 0){shiftCells(i + k, j, getCellsCount(columns.eq(j), 'colspan')); k--;}
-			} 
+				while(k > 0){shiftCellsInColumn(i + k, j + getShift(columns.eq(j)), getCellsCount(columns.eq(j), 'colspan')); k--;}
+			}
+			if(getCellsCount(columns.eq(j), 'colspan') > 1 && !columns.eq(j).has('button').length){
+				var k = getCellsCount(columns.eq(j), 'colspan') - 1;
+				shiftCellsInRow(i, j + 1, k);
+			}
 		};
 	};
 }
@@ -500,6 +570,11 @@ $(document).ready(function(){
 	$(document).on('click', 'button.delete-row', function(e){
 		e.preventDefault();
 		delRow($(this));
+	});
+
+	$(document).on('click', 'button.delete-column', function(e){
+		e.preventDefault();
+		delColumn($(this));
 	});
 
 	$(document).on('click', 'table.editable-table tr td', function(){

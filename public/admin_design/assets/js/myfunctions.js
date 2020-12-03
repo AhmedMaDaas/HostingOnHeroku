@@ -11,6 +11,24 @@ function check_all(){
 
 $(document).ready(function(){
 
+	let simplepicker = new SimplePicker({
+      zIndex: 10
+    });
+
+    var input = null;
+
+    $(document).on('click', '.datepicker', function(){
+    	simplepicker.open();
+    	input = $(this);
+    });
+
+    simplepicker.on('submit', (date, readableDate) => {
+      input.val(readableDate);
+      if(!input.parent('div').hasClass('is-filled')) input.parent('div').addClass('is-filled');
+    });
+
+
+
 	$('.delete_all').on('click', function(){
 		$('#data_form').submit();
 	});
