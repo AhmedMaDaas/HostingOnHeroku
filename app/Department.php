@@ -11,6 +11,7 @@ class Department extends Model
     	'name_ar',
         'name_en',
         'description',
+        'photo',
         'icon',
         'keywords',
         'parent',
@@ -32,5 +33,9 @@ class Department extends Model
 
     public function ads(){
         return $this->hasMany('App\AdDepartment');
+    }
+
+    public function child(){
+       return $this->hasMany('App\Department', 'parent');
     }
 }
