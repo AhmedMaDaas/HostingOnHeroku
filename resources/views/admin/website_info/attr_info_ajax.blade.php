@@ -4,7 +4,7 @@
   @foreach($info->attrInfo as $attr)
     <div class="col-md-6 col-sm-4 col-xs-6 store">
       <i id="{{ $attr->id }}" class="fa fa-close delete-attr-info"></i>
-      <img src="{{ Storage::url('storage/' . $attr->photo) }}">
+      <img src="{{ url('storage/' . $attr->photo) }}">
     </div>
   @endforeach
   </div>
