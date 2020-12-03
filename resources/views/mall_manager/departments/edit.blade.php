@@ -55,6 +55,18 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
+                    <label class="bmd-label-floating">{{ trans('admin.photo') }}</label>
+                    {{ Form::file('photo', ['class'=>'form-control']) }}
+                    @if(isset($department->photo) && Storage::has($department->photo))
+                      <img src="{{ Storage::url('storage/' . $department->photo) }}" style="width:50px;height:50px">
+                    @endif
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
                     <input type="hidden" class="parent_id" name="parent" value="{{ Request::old('parent') }}">
                     <div id="jstree"></div>
                   </div>
@@ -84,6 +96,9 @@
                   <div class="form-group">
                     <label class="bmd-label-floating">{{ trans('admin.icon') }}</label>
                     {{ Form::file('icon', ['class'=>'form-control']) }}
+                    @if(isset($department->icon) && Storage::has($department->icon))
+                      <img src="{{ Storage::url('storage/' . $department->icon) }}" style="width:50px;height:50px">
+                    @endif
                   </div>
                 </div>
               </div>

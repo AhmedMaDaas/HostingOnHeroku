@@ -35,7 +35,7 @@
 					@foreach($product->files as $file)
 						var mock = {name: '{{ $file->name }}', id: '{{ $file->id }}', size: '{{ $file->size }}', type: '{{ $file->mimeType }}'};
 						this.emit('addedfile', mock);
-						this.options.thumbnail.call(this, mock, '{{ url("storage/" . $file->fullFile) }}');
+						this.options.thumbnail.call(this, mock, '{{ Storage::url("storage/" . $file->fullFile) }}');
 					@endforeach
 				@endif
 

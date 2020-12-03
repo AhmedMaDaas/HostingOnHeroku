@@ -55,6 +55,15 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
+                    <label class="bmd-label-floating">{{ trans('admin.photo') }}</label>
+                    {{ Form::file('photo', ['class'=>'form-control']) }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
                     <input type="hidden" class="parent_id" name="parent" value="{{ Request::old('parent') }}">
                     <div id="jstree"></div>
                   </div>

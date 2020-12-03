@@ -62,7 +62,7 @@
   <script src="{{ url('/admin_design') }}/assets/js/plugins/moment.js"></script>
 
   <!-- datepicker -->
-  <script src="{{ url('/admin_design') }}/assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
+  <script src="{{ url('/admin_design') }}/assets/js/plugins/simplepicker.js"></script>
 
   <script src="{{url('/')}}/admin_design/assets/js/myfunctions.js"></script>
 

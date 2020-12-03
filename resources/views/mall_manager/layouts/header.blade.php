@@ -22,7 +22,6 @@
   <link href="{{ url('shipping_design') }}/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
   <link href="{{ url('shipping_design') }}/assets/plugins/ladda/ladda.min.css" rel="stylesheet" />
   <link href="{{ url('shipping_design') }}/assets/plugins/select2/css/select2.min.css" rel="stylesheet" />
-  <link href="{{ url('shipping_design') }}/assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
   <link id="sleek-css" rel="stylesheet" href="{{ url('shipping_design') }}/assets/css/jam.min.css" />
   <!-- SLEEK CSS -->
   <link id="sleek-css" rel="stylesheet" href="{{ url('shipping_design') }}/assets/css/sleek.css" />
@@ -41,7 +40,7 @@
   <link rel="stylesheet" href="{{ url('/admin_design') }}/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   
   <!-- Date Picker -->
-  <link rel="stylesheet" href="{{url('/')}}/admin_design/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="{{url('/')}}/admin_design/assets/css/simplepicker.css">
   
   @stack('css')
   <link rel="stylesheet" href="{{ url('/admin_design') }}/assets/css/main_all.css">

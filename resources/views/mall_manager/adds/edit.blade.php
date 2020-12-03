@@ -138,15 +138,6 @@
   		addInputs();
   	}
 
-  	$('.datepicker').datepicker({
-		rtl: '{{ lang() == "ar" ? true : false }}',
-		language: '{{ lang() }}',
-		format: 'yyyy-mm-dd',
-		todayBtn: true,
-		clearBtn: true,
-		autoclose: false
-	});
-
     @if(count($mallsIds) > 1)
 	    var mallsData = [
 	      @foreach(getCountries() as $country)
@@ -253,8 +244,8 @@
                   <div class="form-group">
                     <label class="bmd-label-floating">{{ trans('admin.photo') }}</label>
                     {{ Form::file('photo', ['class' => 'form-control']) }}
-                    @if(isset($add->photo))
-                    	<img src="{{ url('storage/' . $add->photo) }}" style="width:50px;height:50px">
+                    @if(isset($add->photo) && Storage::has($add->photo))
+                    	<img src="{{ Storage::url('storage/' . $add->photo) }}" style="width:50px;height:50px">
                     @endif
                   </div>
                 </div>

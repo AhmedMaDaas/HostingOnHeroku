@@ -26,18 +26,32 @@
     return parseInt(cell.attr(rowOrColSpan));
   }
   
-  function addOtherData(){
+  function checkOtherData(){
     var rows = $('table.editable-table tr');
     for (var i = 0; i < rows.length; i++) {
+      var columns = rows.eq(i).find('td');
+      for (var j = 0; j < columns.length; j++) {
+        var cell = columns.eq(j);
+        if(cell.text().replace(/^\s+|\s+$/gm,'') !== '') return true;
+      }
+    }
+    return false;
+  }
+  
+  function addOtherData(){
+    $('#product_info_form #other-data').html('');
+    if(!checkOtherData()) return;
+    var rows = $('table.editable-table tr');
+    for (var i = 1; i < rows.length; i++) {
       var columns = rows.eq(i).find('td');
       for (var j = 0; j < columns.length; j++) {
         var cell = columns.eq(j);
         if(cell.has('button').length)continue;
         var value = [i, j, cell.text(), getCellsCount(cell, 'rowspan'), getCellsCount(cell, 'colspan')];
         var input = '<input type="hidden" name="other_data[]" value="' + value + '">';
-        $('#product_info_form').append(input);
-      };
-    };
+        $('#product_info_form #other-data').append(input);
+      }
+    }
   }
 
   $(document).ready(function() {
@@ -201,6 +215,8 @@
             @include('mall_manager.products.tabs.shipping_info')
             @include('admin.products.tabs.quantities')
             @include('mall_manager.products.tabs.other_data')
+
+            <div id="other-data"></div>
             
           </div>
         </div>

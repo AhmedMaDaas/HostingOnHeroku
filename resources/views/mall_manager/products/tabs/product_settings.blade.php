@@ -1,14 +1,6 @@
 
 @push('js')
 <script type="text/javascript">
-	$('.datepicker').datepicker({
-		rtl: '{{ lang() == "ar" ? true : false }}',
-		language: '{{ lang() }}',
-		format: 'yyyy-mm-dd',
-		todayBtn: true,
-		clearBtn: true,
-		autoclose: false
-	});
 
 	$(document).ready(function(){
 		$('.status').on('change', function(){
