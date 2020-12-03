@@ -12,9 +12,11 @@
         "fideloper/proxy": "^4.4",
         "intervention/image": "^2.5",
         "laravel/framework": "^6.20",
+        "laravel/helpers": "^1.4",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2.0",
+        "mavinoo/laravel-batch": "^2.2",
         "paypal/rest-api-sdk-php": "*",
         "pusher/pusher-php-server": "~3.0",
         "yajra/laravel-datatables": "1.5"
