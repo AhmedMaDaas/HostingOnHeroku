@@ -123,7 +123,7 @@ $(document).ready(function(){
           }, 
           dataType: 'json',
           success: function (response) {
-            if(response.operation == 'login')location.href="/login";
+            //if(response.operation == 'login')//location.href="/login";
             if(response.opertaion == 'failed'){
                 // thisVar.css("opacity","1");
                 // thisVar.removeClass("filter-fairouzi");
@@ -165,8 +165,8 @@ $(document).ready(function(){
           dataType: 'json',
           success: function (response) {
             //alert(response.operation);
-            if(response.operation == 'login')location.href="/login";
-            if(response.statusLove){
+            //if(response.operation == 'login')location.href="/login";
+            if(response.statusLove == 1){
                 thisVar.css("opacity","1");
                 thisVar.removeClass("filter-fairouzi");
                 thisVar.addClass("filter-orange");
@@ -193,6 +193,118 @@ $(document).ready(function(){
         // }
         
     });
+    
+
+    $(document).on('click', '#modal-log', function(){
+        var email = $('#log_email').val();
+        var password = $('#log_pass').val();
+        var remember_me = $('#remember_me').prop("checked");
+        var meta = $(this).parent().find('meta[name="_token"]').attr('content');
+        
+
+        $.ajax({
+          url: "/login",
+          type: 'POST',
+          context:this,
+          data: {
+            '_token' :meta,
+            'email': email,
+            'password': password,
+            'remember_me' : remember_me,
+          }, 
+          dataType: 'json',
+          success: function (response) {
+            //alert(response.operation);
+            if(response.operation == 'failed'){
+                if(response.errors.length<=1){
+                    $('#errors_log').css("display","");
+                    $('#errors_log').text(response.errors);
+                }else{
+                    $('#errors_log').text('');
+                    $.each(response.errors,function(i,error){
+                        $('#errors_log').css("display","");
+                        $('#errors_log').append(error[0]+'<br>');
+                    });
+                }
+                
+                //$('#errors').text()
+            }else{
+                $('#login-modal').modal('hide');
+                //$('#login-modal').replaceWith("display","none");
+                // var oldUrl = $('#log-li').attr("href"); // Get current url
+                // var newUrl = oldUrl.replace(oldUrl, "/logout");
+                $('#log-li').attr("href", "/logout");
+                $('#log-li').text("logout");
+                $('#reg-li').text("");
+                $(".product").find(".shopping-card").attr("data-target","");
+                $(".product").find(".love").attr("data-target","");
+            }
+          },
+          error: function (response) {
+            alert("error ");
+            //location.href="{{route('log')}}";
+          },
+        });
+        
+    });
+
+    $(document).on('click', '#modal-reg', function(){
+
+            var fname = $('#reg_fname').val();
+            var lname = $('#reg_lname').val();
+            var email = $('#reg_email').val();
+            var password = $('#reg_password').val();
+            var confirmpassword = $('#reg_confirmpassword').val();
+            var phone = $('#reg_phone').val();
+            var meta = $(this).parent().find('meta[name="_token"]').attr('content');
+            alert(phone);
+
+            $.ajax({
+              url: "/register",
+              type: 'POST',
+              context:this,
+              data: {
+                '_token' :meta,
+                'fname' : fname,
+                'lname' : lname,
+                'email': email,
+                'password': password,
+                'confirmpassword' : confirmpassword,
+                'phone' : phone,
+              }, 
+              dataType: 'json',
+              success: function (response) {
+                alert(response.operation);
+                if(response.operation == 'failed'){
+                    if(response.errors.length<=1){
+                        $('#errors_reg').css("display","");
+                        $('#errors_reg').text(response.errors);
+                    }else{
+                        $.each(response.errors,function(i,error){
+                            $('#errors_log').text('');
+                            $('#errors_reg').css("display","");
+                            $('#errors_reg').append(error[0]+'<br>');
+                        });
+                    }
+                    
+                    //$('#errors').text()
+                }else{
+                    $('#login-modal').modal('hide');
+                    $('#log-li').attr("href", "/logout");
+                    $('#log-li').text("logout");
+                    $('#reg-li').text("");
+                    $(".product").find(".shopping-card").attr("data-target","");
+                    $(".product").find(".love").attr("data-target","");
+                }
+              },
+              error: function (response) {
+                alert("error ");
+                //location.href="{{route('log')}}";
+              },
+            });
+            
+        });
+
     // control select search change and input hidden
     $(".nav-bottom").find(".dropdown-menu .dropdown-item").click(function(){
         var txt = $(this).text();
@@ -304,6 +416,12 @@ $(document).ready(function(){
     });
     /**** End About Us Page *******/
 
+    /**** Start Log In Page *******/
+    $(".log-in-container .log-in-form-container .log-in-form .input-container input[type='checkbox']").click(function(){
+        $(this).parent().toggleClass("checked");
+    });
+    $(".log-in-container .log-in-form-container .log-in-form .input-container input").val("remember");
+    /**** End Log In Page *******/
     
     
     // $("body").niceScroll({

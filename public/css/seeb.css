@@ -553,10 +553,10 @@ button:focus{
 .prod-hor-card:hover{
     box-shadow: 0px 0px 8px var(--stronggray-color);
     transform: scale(1.1);
-    -webkit-transition:all 0.5s ease;
-    -moz-transition:all 0.5s ease;
-    -o-transition:all 0.5s ease;
-    transition:all 0.5s ease
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    transition:all 0.3s ease
 }
 .prod-hor-card .prod-img{
     position: relative;
@@ -678,10 +678,19 @@ button:focus{
 }
 .product:hover{
     box-shadow: 0px 0px 8px var(--stronggray-color);
-    -webkit-transition:all 0.5s ease;
-    -moz-transition:all 0.5s ease;
-    -o-transition:all 0.5s ease;
-    transition:all 0.5s ease
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    transition:all 0.3s ease
+}
+.product .fill-link,
+.sub-container .stores .row .store .fill-link{
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0
 }
 .product .love{
     position: absolute;
@@ -745,10 +754,10 @@ button:focus{
 }
 .product .product-details .product-name:hover{
     color: var(--orange-color);
-    -webkit-transition:all 0.8s ease;
-    -moz-transition:all 0.8s ease;
-    -o-transition:all 0.8s ease;
-    transition:all 0.8s ease
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    transition:all 0.3s ease
 }
 .product .product-details .price{
     display: block
@@ -982,9 +991,10 @@ button:focus{
 }
 .sub-container .stores .row .store > div > a{
     text-decoration: none;
-    /*max-width: 50%;*/
+    max-width: 50%;
     font-size: 17px;
-    color: var(--orange-color)
+    color: var(--orange-color);
+    z-index: 99999
 }
 .sub-container .stores .row .store > div > a:hover{
     color: var(--fairouzi-color);
@@ -1014,10 +1024,11 @@ button:focus{
     position: fixed;
     width: 40px;
     height: 150px;
-    background-color: var(--lightgray-color);
+    background-color: #FFF;
     margin: 10px 0px;
     border-top-right-radius: 13px;
-    border-bottom-right-radius: 13px
+    border-bottom-right-radius: 13px;
+    border: 1px solid var(--fairouzi-color)
 }
 .social-bar{
     bottom: 0px;
@@ -1443,6 +1454,10 @@ button:focus{
     border: 1px solid #dfdedea3;
     box-shadow: -4px 3px 6px var(--lightgray-color)
 }
+.modal-body .log-in-container .log-in-form-container,
+.modal-body .register-container .register-form-container{
+    margin-top: 15px
+}
 .log-in-container .log-in-form-container .log-in-form,
 .register-container .register-form-container .register-form{
     margin-top: 20px
@@ -1479,6 +1494,34 @@ button:focus{
 }
 .register-container .register-form-container .form-heading{
     width: 75px
+}
+.log-in-container .log-in-form-container .log-in-form .input-container{
+    background-color: var(--backgray);
+    border: 1px solid var(--lightgray-color);
+    width: 19px;
+    height: 18px;
+    display: inline-flex;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: 10px
+}
+.log-in-container .log-in-form-container .log-in-form .check-label{
+    color: var(--stronggray-color)
+}
+.log-in-container .log-in-form-container .log-in-form .checked{
+    background-image: url("../icons/vectorpaint.svg");
+    background-attachment: inherit;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center
+}
+.log-in-container .log-in-form-container .log-in-form .input-container > input:hover{
+    cursor: pointer
+}
+.log-in-container .log-in-form-container .log-in-form .input-container > input{
+    transform: scaleX(3.5) scaleY(2.5);
+    opacity: 0;
+    z-index: 99999
 }
 .log-in-container .log-in-form-container .log-in-form .input-group .input-group-prepend .input-group-text,
 .register-container .register-form-container .register-form .input-group .input-group-prepend .input-group-text{
@@ -1547,18 +1590,19 @@ button:focus{
     margin-top: 5px
 }
 .log-in-container .log-in-form-container .log-in-form .social-login .hvr-bounce-to-bottom:before{
-    background-color: var(--fairouzi-color);
+    background-color: var(--orange-color);
     border-radius: 13px
 }
 .log-in-container .log-in-form-container .log-in-form .social-login .alter-btn{
-    background-color: transparent;
+    background-color: var(--fairouzi-color);
     border: 0px;
     margin: 0px 25px;
     text-align: center;
-    color: var(--stronggray-color);
+    color: #FFF;
     font-size: 13px;
     padding: 5px;
-    width: 90px
+    width: 90px;
+    border-radius: 13px
 }
 .log-in-container .log-in-form-container .log-in-form .social-login .alter-btn:hover{
     color: #FFF;
@@ -1566,13 +1610,11 @@ button:focus{
 }
 .log-in-container .log-in-form-container .log-in-form .social-login .alter-btn > div{
     border-radius: 50%;
-    box-shadow: 0px 0px 6px var(--stronggray-color);
     width: 25px;
     height: 25px;
     overflow: hidden;
     padding: 2px;
-    margin: 0px auto 3px;
-    background-color: #FFF
+    margin: 0px auto 3px
 }
 .log-in-container .log-in-form-container .log-in-form .social-login .alter-btn > div > img{
     width: 100%;
