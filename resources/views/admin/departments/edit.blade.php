@@ -147,12 +147,24 @@
 
               <div class="row">
                 <div class="col-md-12">
-                     <div class="form-group">
+                  <div class="form-group">
                     <!--<label class="bmd-label-floating">User Level </label>-->
                     <p>{{ trans('admin.status') }}</p>
-                    {{ Form::select('is_active', ['active' => trans('admin.active'), 'inactive' => trans('admin.inactive')], $department->is_active, ['class' => 'form-control', 'placeholder' => trans('admin.name_in_arabic')]) }}
+                    {{ Form::select('is_active', ['active' => trans('admin.active'), 'inactive' => trans('admin.inactive')], $department->is_active, ['class' => 'form-control', 'placeholder' => trans('admin.status')]) }}
                   </div>
 
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">{{ trans('admin.photo') }}</label>
+                    {{ Form::file('photo', ['class'=>'form-control']) }}
+                    @if(isset($department->photo))
+                      <img src="{{ url('storage/' . $department->photo) }}" style="width:50px;height:50px">
+                    @endif
+                  </div>
                 </div>
               </div>
 
@@ -188,6 +200,9 @@
                   <div class="form-group">
                     <label class="bmd-label-floating">{{ trans('admin.icon') }}</label>
                     {{ Form::file('icon', ['class'=>'form-control']) }}
+                    @if(isset($department->icon))
+                      <img src="{{ url('storage/' . $department->icon) }}" style="width:50px;height:50px">
+                    @endif
                   </div>
                 </div>
               </div>

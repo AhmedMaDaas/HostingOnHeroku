@@ -103,15 +103,6 @@
   		addInputs();
   	}
 
-  	$('.datepicker').datepicker({
-		rtl: '{{ lang() == "ar" ? true : false }}',
-		language: '{{ lang() }}',
-		format: 'yyyy-mm-dd',
-		todayBtn: true,
-		clearBtn: true,
-		autoclose: false
-	});
-
     var mallsData = [
       @foreach(App\Country::all() as $country)
         {
