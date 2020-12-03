@@ -473,7 +473,7 @@
           id: '{{ auth()->guard("admin")->user()->id }}',
           _token: '{{ csrf_token() }}'
         },
-        success: function(){
+        success: function(data){
           console.log(data);
         }
       }); 

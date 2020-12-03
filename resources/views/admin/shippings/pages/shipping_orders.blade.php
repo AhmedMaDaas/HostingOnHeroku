@@ -30,16 +30,16 @@
             </thead>
             <tbody>
               @foreach($bills as $bill)
-                <tr>
+                <tr id="{{ $bill->id }}">
                   <td ><a class="text-dark order-id" id="order{{$bill->id}}" href="">{{ $bill->id }}</a></td>
                   <td >
                     <a class="text-dark customer-name" href="" id="customer{{$bill->id}}">{{ $bill->user->name }}</a>
                   </td>
-                  <td class="d-none d-md-table-cell">{{ $bill->products->count() }}</td>
-                  <td class="d-none d-md-table-cell">{{ $bill->address }}</td>
-                  <td class="d-none d-md-table-cell">{{ $bill->created_at }}</td>
-                  <td class="d-none d-md-table-cell">${{ $bill->total_coast }}</td>
-                  <td class="d-none d-md-table-cell">${{ $bill->shipping_coast }}</td>
+                  <td class="d-none d-md-table-cell products-count">{{ $bill->products->count() }}</td>
+                  <td class="d-none d-md-table-cell address">{{ $bill->address }}</td>
+                  <td class="d-none d-md-table-cell order-date">{{ $bill->created_at }}</td>
+                  <td class="d-none d-md-table-cell total-coast">${{ $bill->total_coast }}</td>
+                  <td class="d-none d-md-table-cell shipping-coast">${{ $bill->shipping_coast }} <i class="fa fa-spin fa-spinner hidden"></i></td>
                   <td class="text-right">
                     <div class="dropdown show d-inline-block widget-dropdown">
                       <a class="dropdown-toggle icon-burger-mini" href="" role="button" id="dropdown-recent-order1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"><span class="jam jam-more-vertical"></span></a>
@@ -75,17 +75,15 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="mdi mdi-currency-usd"></i>
-                    </span>
-                  </div>
-                  <input type="number" class="form-control" placeholder="" aria-label="">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="mdi mdi-currency-usd"></i>
+                  </span>
                 </div>
-                <button class="btn btn-primary" type="submit">{{ trans('admin.save') }}</button>
-              </form>     
+                <input style="color:black" type="number" class="form-control" placeholder="" aria-label="">
+              </div>
+              <button id="{{$bill->id}}" class="btn btn-primary update-shipping-coast" data-dismiss="modal" type="submit">{{ trans('admin.save') }}</button>
             </div>
           </div>
         </div>
@@ -107,7 +105,7 @@
                     <div class="card text-center widget-profile px-0 border-0">
                       @if(isset($bill->user->photo) && Storage::has($bill->user->photo))
                       <div class="card-img mx-auto rounded-circle-mid">
-                        <img class="customer-img-small" src="{{ url('storage/' . $bill->user->photo) }}" alt="user image">
+                        <img class="customer-img-small" src="{{ Storage::url('storage/' . $bill->user->photo) }}" alt="user image">
                       </div>
                       @endif
                       <div class="card-body">
@@ -183,7 +181,7 @@
                     </address>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row bill-info">
                   <div class="col-md-3">
                      <h6>{{ trans('admin.address') }}:</h6>  {{ $bill->address }}
                   </div>
@@ -203,6 +201,8 @@
                       <th>#</th>
                       <th>{{ trans('admin.item') }}</th>
                       <th>{{ trans('admin.mall') }}</th>
+                      <th>{{ trans('admin.size') }}</th>
+                      <th>{{ trans('admin.color') }}</th>
                       <th>{{ trans('admin.quantity') }}</th>
                       <th>{{ trans('admin.unit_coast') }}</th>
                     </tr>
@@ -213,6 +213,8 @@
                         <td>{{ $productInBill->product->id }}</td>
                         <td>{{ $productInBill->product->{'name_' . lang()} }}</td>
                         <td>{{ $productInBill->mall->{'name_' . lang()} }}</td>
+                        <td>{{ isset($productInBill->size) ? $productInBill->size->{'name_' . lang()} : '' }}</td>
+                        <td>{{ isset($productInBill->color) ? $productInBill->color->{'name_' . lang()} : '' }}</td>
                         <td>{{ $productInBill->quantity }}</td>
                         <td>${{ $productInBill->product_coast }}</td>
                       </tr>
@@ -249,19 +251,19 @@
           <nav aria-label="Page navigation example">
             <ul class="pagination pagination-flat pagination-flat-rounded">
               <li class="page-item">
-                <a class="page-link" href="{{ $page > 1 ? url('admin/shipping/shipping-overview') . '?page=' . ($page - 1) : '#' }}" aria-label="Previous">
-                  <span aria-hidden="true" class="mdi mdi-chevron-left"></span>
+                <a class="page-link" href="{{ $page > 1 ? url('admin/shipping/shipping-orders') . '?page=' . ($page - 1) : '#' }}" aria-label="Previous">
+                  <span class="jam jam-arrow-left"></span>
                   <span class="sr-only">{{ trans('admin.previous') }}</span>
                 </a>
               </li>
               @for($i = 1; $i <= $pagesNumber; $i++)
               <li class="page-item {{ $page == $i ? 'active' : '' }}">
-                <a class="page-link" href="{{ url('admin/shipping/shipping-overview') }}?page={{ $i }}">{{ $i }}</a>
+                <a class="page-link" href="{{ url('admin/shipping/shipping-orders') }}?page={{ $i }}">{{ $i }}</a>
               </li>
               @endfor
               <li class="page-item">
-                <a class="page-link" href="{{ $page == $pagesNumber ? '#' : url('admin/shipping/shipping-overview') . '?page=' . ($page + 1) }}" aria-label="Next">
-                  <span aria-hidden="true" class="mdi mdi-chevron-right"></span>
+                <a class="page-link" href="{{ $page == $pagesNumber ? '#' : url('admin/shipping/shipping-orders') . '?page=' . ($page + 1) }}" aria-label="Next">
+                  <span class="jam jam-arrow-right"></span>
                   <span class="sr-only">{{ trans('admin.next') }}</span>
                 </a>
               </li>
@@ -290,6 +292,26 @@
       });
     }
 
+    function updateOrder(id, coast, url, type){
+      $.ajax({
+        url: url,
+        type: type,
+        data: {
+          id: id,
+          shipping_coast: coast,
+          _token: '{{ csrf_token() }}'
+        },
+        success: function(data){
+          $('tr#' + id).find('.shipping-coast .fa').addClass('hidden');
+          $('tr#' + id).find('.shipping-coast').html('$' + coast + ' <i class="fa fa-spin fa-spinner hidden"></i>');
+          console.log(data);
+        },
+        error: function(){
+          $('tr#' + id).find('.shipping-coast .fa').addClass('hidden');
+        }
+      });
+    }
+
     $(document).ready(function(){
       $(document).on('click', '.accept-order', function(e){
         e.preventDefault();
@@ -297,6 +319,16 @@
         var url = "{{ url('admin/shipping/accept-order') }}";
         var type = 'post';
         orderAction(id, url, type, $(this));
+      });
+
+      $(document).on('click', '.update-shipping-coast', function(e){
+        e.preventDefault();
+        var id = $(this).attr('id');
+        var url = "{{ url('admin/shipping/update-order') }}";
+        var type = 'post';
+        var coast = $(this).parent('div').find('input').val();
+        $('tr#' + id).find('.shipping-coast .fa').removeClass('hidden');
+        updateOrder(id, coast, url, type);
       });
 
       $(document).on('click', '.reject-order', function(e){

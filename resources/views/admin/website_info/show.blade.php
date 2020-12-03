@@ -17,7 +17,7 @@
                     <label class="bmd-label-floating">{{ trans('admin.main_photo') }}</label>
                     {{ Form::file('main_photo', ['class'=>'form-control']) }}
                     @if(!empty($info->main_photo))
-                      <img src="{{ url('storage/' . $info->main_photo) }}" style="width:50px;height:50px"/>
+                      <img src="{{ Storage::url('storage/' . $info->main_photo) }}" style="width:50px;height:50px"/>
                     @endif
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                     <label class="bmd-label-floating">{{ trans('admin.desc_photo') }}</label>
                     {{ Form::file('desc_photo', ['class'=>'form-control']) }}
                     @if(!empty($info->desc_photo))
-                      <img src="{{ url('storage/' . $info->desc_photo) }}" style="width:50px;height:50px"/>
+                      <img src="{{ Storage::url('storage/' . $info->desc_photo) }}" style="width:50px;height:50px"/>
                     @endif
                   </div>
                 </div>
