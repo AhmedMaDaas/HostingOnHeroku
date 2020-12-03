@@ -318,12 +318,14 @@
             </div>
 
             <div class="brands1" id="brands1">
+                @if(count($colors))
                 <h4>Color</h4>
                 @foreach($colors as $color)
                     <input type="checkbox" name="colors" value="{{$color->id}}">
                     <label>{{$color->name_en}}</label>
                     <br>
                 @endforeach
+                @endif
                 <!-- <input type="checkbox" name="colors" value="red">
                 <label>Red</label>
                 <br>
@@ -335,12 +337,14 @@
             </div>
             
             <div class="brands1" id="brands1">
+                @if(count($sizes))
                 <h4>Size</h4>
                 @foreach($sizes as $size)
                     <input type="checkbox" name="sizes" value="{{$size->id}}">
                     <label>{{$size->name_en}}</label>
                     <br>
                 @endforeach
+                @endif
                 <!-- <input type="checkbox" name="sizes" value="3">
                 <label>XS</label>
                 <br>
