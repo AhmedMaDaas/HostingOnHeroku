@@ -25,6 +25,8 @@ Route::group(['prefix' => 'mobile', 'namespace' => 'Api'], function(){
 
 	Route::get('/getProductDetails/{id}', 'ProductsController@productDetails');
 
+	Route::get('/searchProducts', 'ProductsController@productsSearch');
+
 	Route::get('/getDepartments', 'DepartmentsController@getDepartments');
 
 });

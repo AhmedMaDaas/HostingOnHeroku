@@ -57,6 +57,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin'], function(){
 		Route::post('shipping/delete-order', 'ShippingOrders@deleteOrder');
 
 		Route::post('shipping/accept-order', 'ShippingOrders@acceptOrder');
+		
+		Route::post('shipping/update-order', 'ShippingOrders@updateOrder');
 
 		Route::post('shipping/reject-order', 'ShippingOrders@rejectOrder');
 

@@ -24,6 +24,8 @@ Route::group(['prefix'=>'shipping', 'namespace'=>'Shipping'], function(){
 
 		Route::post('accept-order', 'ShippingOrders@acceptOrder');
 
+		Route::post('update-order', 'ShippingOrders@updateOrder');
+
 		Route::post('reject-order', 'ShippingOrders@rejectOrder');
 
 		Route::post('return-order', 'ShippingOrders@returnOrder');

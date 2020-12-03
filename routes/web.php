@@ -25,7 +25,7 @@ Route::get('/login','log@log')->name('login');
 Route::post('/login','log@postLog')->name('login.post');
 
 Route::get('/register', 'log@Reg')->name('reg');
-Route::post('/register', 'log@postReg');
+Route::post('/register', 'log@postReg')->name('reg.post');
 
 Route::get('/logout','log@logout')->name('logout');
 
@@ -46,6 +46,9 @@ Route::get('/success/{status}','bill@makePayment');
 Route::get('/about-us','aboutUs@showPage');
 
 Route::get('/callback/{service}', 'log@callback');
+
+Route::get('/stores-by-department/{departmentId}','store@showStoresByDep')->name('getStoreByDepartment');
+Route::post('/stores-by-department/{departmentId}','store@postStoresByDep')->name('postStoreByDepartment');
 
 // Route::get('/test', function(){
 //     $deps = \DB::table('departments')
