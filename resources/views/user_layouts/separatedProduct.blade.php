@@ -13,7 +13,7 @@
     @else
         <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love" data-toggle="modal" data-target="#login-modal">
     @endif
-    <img src="{{Storage::url('/storage/'.$product->photo)}}">
+    <img src="{{url('/storage/'.$product->photo)}}">
     <div class="product-details">
         <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
             {{$product->name_en}}

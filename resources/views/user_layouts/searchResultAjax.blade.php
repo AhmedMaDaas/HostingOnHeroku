@@ -67,7 +67,7 @@
                             <div class="row justify-content-center">
                                 @foreach($element as $department)
                                     <div class="col-md-6 col-sm-4 col-xs-6 cat">
-                                        <img src="{{Storage::url('/storage/'.$department->photo)}}" class="filter-gray">
+                                        <img src="{{url('/storage/'.$department->photo)}}" class="filter-gray">
                                         <div class="store-footer">
                                             <a href="{{route('getShowAll',['productsType' => 'products-best-selling'])}}">{{$department->name_en}}</a>
                                         </div>

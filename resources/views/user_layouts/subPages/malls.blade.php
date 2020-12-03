@@ -17,12 +17,12 @@
                   <div class="swiper-wrapper">
                     @foreach($departmentsParents as $mainId => $parent)
                             @foreach($parent->child as $sub)
-                                <a href="{{route('getStoreByDepartment',['departmentId' => $sub->id])}}"><div class="swiper-slide"><img src="{{Storage::url('/storage/'.$sub->icon)}}" class="filter-orange"><span>{{$sub->name_en}}</span></div></a>
+                                <a href="{{route('getStoreByDepartment',['departmentId' => $sub->id])}}"><div class="swiper-slide"><img src="{{url('/storage/'.$sub->icon)}}" class="filter-orange"><span>{{$sub->name_en}}</span></div></a>
                             @endforeach
                         @endforeach
 
                         @foreach($subDepartmentWithoutParent as $sub)
-                            <a href="{{route('getStoreByDepartment',['departmentId' => $sub->id])}}"><div class="swiper-slide"><img src="{{Storage::url('/storage/'.$sub->icon)}}" class="filter-orange"><span>{{$sub->name_en}}</span></div></a>
+                            <a href="{{route('getStoreByDepartment',['departmentId' => $sub->id])}}"><div class="swiper-slide"><img src="{{url('/storage/'.$sub->icon)}}" class="filter-orange"><span>{{$sub->name_en}}</span></div></a>
                         @endforeach
                     <!-- <div class="swiper-slide"><img src="{{url('/')}}/icons/local_dining-24px.svg" class="filter-orange"><span>Restaurant</span></div>
                     <div class="swiper-slide"><img src="{{url('/')}}/icons/local_fire_department-24px.svg" class="filter-orange"><span>Restaurant</span></div>
@@ -53,7 +53,7 @@
                           @foreach($malls as $mall)
                               @include('user_layouts.separatedStore',['mall'=>$mall,'departmentId'=>'all'])
                               <!-- <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                  <img src="{{Storage::url('/storage/'.$mall->icon)}}">
+                                  <img src="{{url('/storage/'.$mall->icon)}}">
                                   <div class="store-footer">
                                       <a href="{{route('storebrand.get',['mallId'=>$mall->id,'departmentId'=>'all'])}}">{{$mall->name_en}}</a>
                                   </div>

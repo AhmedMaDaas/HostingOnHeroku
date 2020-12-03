@@ -21,7 +21,7 @@
     <!-- carousal -->
     <section class="tesst">
         <div class="brand">
-            <img src="{{Storage::url('/storage/'.$mall->icon)}}">
+            <img src="{{url('/storage/'.$mall->icon)}}">
             <h4 class="brandname">{{$mall->name_en}}</h4>
             <input class="numfollowInput" type="hidden" value="{{$countFollowers}}">
             <span class="numfollow">{{$countFollowers}} followers</span>
@@ -58,7 +58,7 @@
                 <div class="carousel-item">
                 @endif
                     <a href="#">
-                        <img src="{{Storage::url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
+                        <img src="{{url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
                     </a>
                 </div>
             @endforeach

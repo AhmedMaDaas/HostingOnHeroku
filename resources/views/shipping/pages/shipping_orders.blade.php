@@ -103,9 +103,9 @@
                 <div class="no-gutters">
                   <div class="profile-content-left pt-5 pb-3 px-3 px-xl-5">
                     <div class="card text-center widget-profile px-0 border-0">
-                      @if(isset($bill->user->photo) && Storage::has($bill->user->photo))
+                      @if(isset($bill->user->photo))
                       <div class="card-img mx-auto rounded-circle-mid">
-                        <img class="customer-img-small" src="{{ Storage::url('storage/' . $bill->user->photo) }}" alt="user image">
+                        <img class="customer-img-small" src="{{ url('storage/' . $bill->user->photo) }}" alt="user image">
                       </div>
                       @endif
                       <div class="card-body">

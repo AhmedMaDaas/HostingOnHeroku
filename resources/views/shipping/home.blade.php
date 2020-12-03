@@ -83,9 +83,9 @@
                   <tr>
                     <td >
                       <div class="media">
-                        @if(isset($bill->user->photo) && Storage::has($bill->user->photo))
+                        @if(isset($bill->user->photo))
                         <div class="media-image mr-3 rounded-circle">
-                          <img class="customer-img-small rounded-circle w-45" src="{{ Storage::url('storage/' . $bill->user->photo) }}" alt="customer image">
+                          <img class="customer-img-small rounded-circle w-45" src="{{ url('storage/' . $bill->user->photo) }}" alt="customer image">
                         </div>
                         @endif
                         <div class="media-body align-self-center">
@@ -111,9 +111,9 @@
                             <div class="no-gutters">
                               <div class="profile-content-left pt-5 pb-3 px-3 px-xl-5">
                                 <div class="card text-center widget-profile px-0 border-0">
-                                  @if(isset($bill->user->photo) && Storage::has($bill->user->photo))
+                                  @if(isset($bill->user->photo))
                                   <div class="card-img mx-auto rounded-circle-mid">
-                                    <img class="customer-img-small" src="{{ Storage::url('storage/' . $bill->user->photo) }}" alt="user image">
+                                    <img class="customer-img-small" src="{{ url('storage/' . $bill->user->photo) }}" alt="user image">
                                   </div>
                                   @endif
                                   <div class="card-body">
@@ -174,9 +174,9 @@
           @foreach($topStoresBills as $bill)
             <div class="card-body py-0">
               <div class="media d-flex mb-5">
-                @if(isset($bill->mall->icon) && Storage::has($bill->mall->icon))
+                @if(isset($bill->mall->icon))
                 <div class="media-image align-self-center mr-3 rounded">
-                  <img class="store-img-small" src="{{ Storage::url('storage/' . $bill->mall->icon) }}" alt="customer image">
+                  <img class="store-img-small" src="{{ url('storage/' . $bill->mall->icon) }}" alt="customer image">
                 </div>
                 @endif
                 <div class="media-body align-self-center">
@@ -203,9 +203,9 @@
                       <div class="no-gutters">
                         <div class="profile-content-left pt-5 pb-3 px-3 px-xl-5">
                           <div class="card text-center widget-profile px-0 border-0">
-                            @if(isset($bill->mall->icon) && Storage::has($bill->mall->icon))
+                            @if(isset($bill->mall->icon))
                             <div class="card-img mx-auto rounded-circle-mid">
-                              <img class="customer-img-small" src="{{ Storage::url('storage/' . $bill->mall->icon) }}" alt="store image">
+                              <img class="customer-img-small" src="{{ url('storage/' . $bill->mall->icon) }}" alt="store image">
                             </div>
                             @endif
                             <div class="card-body">

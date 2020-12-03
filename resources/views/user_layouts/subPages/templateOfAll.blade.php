@@ -38,7 +38,7 @@
                     <div class="carousel-item">
                     @endif
                         <a href="{{route('storebrand.get',['mallId'=>$ad->mall->id,'departmentId'=>'all'])}}">
-                            <img src="{{Storage::url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
+                            <img src="{{url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
                         </a>
                     </div>
                 @endforeach
