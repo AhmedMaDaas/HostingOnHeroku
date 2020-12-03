@@ -33,8 +33,8 @@ class CreateProductsTable extends Migration
             $table->bigInteger('country_id')->unsigned()->nullable();
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
 
-            $table->bigInteger('size_id')->unsigned()->nullable();
-            $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade');
+            $table->bigInteger('size_product_id')->unsigned()->nullable();
+            $table->foreign('size_product_id')->references('id')->on('sizes')->onDelete('cascade');
             $table->string('size')->nullable();
 
             $table->float('evaluation')->default(0.0);

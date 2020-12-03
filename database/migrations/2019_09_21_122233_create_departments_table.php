@@ -19,6 +19,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('name_en');
             $table->string('description')->nullable();
             $table->string('owner');
+            $table->string('photo')->nullable();
             $table->string('icon')->nullable();
             $table->string('keywords')->nullable();
             $table->enum('is_active', ['active', 'inactive'])->default('inactive');

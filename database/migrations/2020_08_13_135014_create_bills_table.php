@@ -21,7 +21,7 @@ class CreateBillsTable extends Migration
             $table->double('total_coast');
             $table->enum('status', ['pending', 'completed', 'cancelled', 'opened', 'new'])->default('opened');
             $table->enum('payment', ['cash', 'paypal', 'credit_card']);
-            $table->double('shipping_coast')->default(100);
+            $table->double('shipping_coast')->default(0);
             $table->tinyInteger('visible')->default(1);
             $table->tinyInteger('new')->default(1);
             $table->string('id_payment')->nullable();
