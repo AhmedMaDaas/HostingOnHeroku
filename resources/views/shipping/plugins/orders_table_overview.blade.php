@@ -3,7 +3,7 @@
     <!-- Recent Order Table -->
     <div class="card card-table-border-none" id="recent-orders">
       <div class="card-header justify-content-between">
-        <h2>Recent Orders</h2>
+        <h2>{{ trans('admin.shipping_orders') }}</h2>
         <div class="date-range-report ">
           <span></span>
         </div>
@@ -81,7 +81,7 @@
                   <div class="card text-center widget-profile px-0 border-0">
                     @if(isset($bill->user->photo) && Storage::has($bill->user->photo))
                     <div class="card-img mx-auto rounded-circle-mid">
-                      <img class="customer-img-small" src="{{ url('storage/' . $bill->user->photo) }}" alt="user image">
+                      <img class="customer-img-small" src="{{ Storage::url('storage/' . $bill->user->photo) }}" alt="user image">
                     </div>
                     @endif
                     <div class="card-body">
@@ -157,7 +157,7 @@
                   </address>
                 </div>
               </div>
-              <div class="row">
+              <div class="row bill-info">
                 <div class="col-md-3">
                    <h6>{{ trans('admin.address') }}:</h6>  {{ $bill->address }}
                 </div>
@@ -177,6 +177,8 @@
                     <th>#</th>
                     <th>{{ trans('admin.item') }}</th>
                     <th>{{ trans('admin.mall') }}</th>
+                    <th>{{ trans('admin.size') }}</th>
+                    <th>{{ trans('admin.color') }}</th>
                     <th>{{ trans('admin.quantity') }}</th>
                     <th>{{ trans('admin.unit_coast') }}</th>
                   </tr>
@@ -187,6 +189,8 @@
                       <td>{{ $productInBill->product->id }}</td>
                       <td>{{ $productInBill->product->{'name_' . lang()} }}</td>
                       <td>{{ $productInBill->mall->{'name_' . lang()} }}</td>
+                      <td>{{ isset($productInBill->size) ? $productInBill->size->{'name_' . lang()} : '' }}</td>
+                      <td>{{ isset($productInBill->color) ? $productInBill->color->{'name_' . lang()} : '' }}</td>
                       <td>{{ $productInBill->quantity }}</td>
                       <td>${{ $productInBill->product_coast }}</td>
                     </tr>

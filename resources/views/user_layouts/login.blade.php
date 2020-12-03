@@ -3,13 +3,14 @@
     <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="utf-8">
+        @include('user_layouts.separatedCss',['title'=>'Login'])
+        <!-- <meta charset="utf-8">
         <title>Log In</title>
         <link rel="stylesheet" href="{{url('/')}}/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{url('/')}}/css/normalize.css">
         <link rel="stylesheet" href="{{url('/')}}/package/css/swiper.min.css">
         <link rel="stylesheet" href="{{url('/')}}/css/hover-min.css">
-        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css"> -->
     </head>
     <body>
 @endsection
@@ -25,6 +26,12 @@
 
 </div>
 @endif
+
+@if(Session::has('failed'))
+  <div class="alert alert-danger">
+    {{ Session::get('failed') }}
+   </div>
+@endif
     <!-- Start Log In -->
     <div class="log-in-container">
         <div class="log-in-form-container">
@@ -38,15 +45,18 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><img src="{{url('/')}}/icons/pngegg%20(2).png" class="filter-orange"></span>
                   </div>
-                  <input type="email" name="email" class="form-control" placeholder="Email" value="{{old('fname')}}">
+                  <input type="email" name="email" class="form-control" placeholder="Email" value="{{old('fname')}}" required>
                 </div>
                 
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><img src="{{url('/')}}/icons/lock-24px.svg" class="filter-orange"></span>
                   </div>
-                  <input type="password" name="password" class="form-control" placeholder="Password">
+                  <input type="password" name="password" class="form-control" placeholder="Password" required>
                 </div>
+                <span class="input-container"><input type="checkbox" name="remember_me" value="1"></span>
+                <label class="check-label">Remember me</label>
+                
                 <input type="submit" name="log" class="form-btn" value="Log In">
                 <hr>
                 <p class="form-explain">Or Log In With</p>
@@ -89,7 +99,7 @@
         </div>
         </div>
         
-    </div>
+  </div>
     <!-- End Footer -->
     <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
     <script src="{{url('/')}}/js/popper.js"></script>

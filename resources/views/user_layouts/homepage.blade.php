@@ -3,13 +3,16 @@
 <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="utf-8">
+        @include('user_layouts.separatedCss',['title'=>'Home'])
+        <!-- <meta charset="utf-8">
         <title>Home</title>
         <link rel="stylesheet" href="{{url('/')}}/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{url('/')}}/css/normalize.css">
         <link rel="stylesheet" href="{{url('/')}}/package/css/swiper.min.css">
-        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/hover-min.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css"> -->
         <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
+        
         
     </head>
     <body>
@@ -31,7 +34,7 @@
                 <!--<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>-->
             @endforeach
         </ol>
-          <div class="carousel-inner">
+            <div class="carousel-inner">
                 @foreach($ads as $i => $ad)
                     @if($i==0)
                     <div class="carousel-item active">
@@ -39,26 +42,12 @@
                     <div class="carousel-item">
                     @endif
                         <a href="{{route('storebrand.get',['mallId'=>$ad->mall->id,'departmentId'=>'all'])}}">
-                            <img src="{{url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
+                            <img src="{{Storage::url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
                         </a>
                     </div>
                 @endforeach
-                <!-- <div class="carousel-item active">
-                    <a href="#">
-                        <img src="images/65695255-black-friday-sales-fashion-shopping-woman-black-silhouette-with-shopping-bags-black-friday-sale-adve.jpg" class="d-block w-100" alt="...">
-                    </a>
-                </div>
-                <div class="carousel-item">
-                    <a href="#">
-                        <img src="images/sales.jpg" class="d-block w-100" alt="...">
-                    </a>
-                </div>
-                <div class="carousel-item">
-                    <a href="#">
-                        <img src="images/pexels-artem-beliaikin-2292953.jpg" class="d-block w-100" alt="...">
-                    </a>
-                </div> -->
-                </div>
+
+            </div>
     </div>
     <!-- End Ads Carousel -->
     
@@ -82,68 +71,7 @@
             <div class="products">
                 <div class="row justify-content-center">
                     @foreach($productsWithSale as $product)
-                        <div class="col-md-2 col-sm-4 col-xs-6 product">
-                            <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
-                            <meta name="_token" content="{{ csrf_token() }}">
-                            @if(count($product->users))
-                                @foreach($product->users as $user)
-                                    @if(!empty($user))
-                                    <img src="icons/favorite-24px.svg" class="filter-orange love" style="opacity: 100%;">
-                                    @else
-                                    <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                                    @endif
-                                @endforeach
-                            @else
-                                <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                            @endif
-                            <img src="{{url('/storage/'.$product->photo)}}">
-                            <div class="product-details">
-                                <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
-                                    {{$product->name_en}}
-                                </a>
-                                <span class="price">{{$product->price_offer}} omr</span>
-                                <span class="old-price"><del>{{$product->price}} omr</del></span>
-                                <span class="discount">{{(int)((($product->price-$product->price_offer)/$product->price)*100)}}%</span>
-                                <div class="rating">
-                                    <input type="hidden" class="index-star" value="0">
-                                    @if(count($product->evaluationUsers))
-                                        @foreach($product->evaluationUsers as $evaluation)
-                                            @for($i=1;$i<=$evaluation->evaluation;$i++)
-                                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                            @endfor
-                                            @for($i=$evaluation->evaluation;$i<5;$i++)
-                                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                            @endfor
-                                        @endforeach
-                                    @else
-                                        <img src="icons/star_border-24px.svg" class="filter-yellow">
-                                        <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <span class="rating-amount">(30)</span>
-                                    @endif
-                                    <!-- <input type="hidden" class="index-star" value="0">
-                                    <img src="icons/star-24px.svg" class="filter-yellow">
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <span class="rating-amount">(30)</span> -->
-                                </div>
-                                <div class="stock-div">
-                                    <span class="label">Stock</span>
-                                    <div class="progress">
-                                        @if($product->stock >= 100)
-                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        @else
-                                        <div class="progress-bar" role="progressbar" style="width: {{($product->stock/100)*100}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        @endif
-                                    </div>
-                                </div>
-                                <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                            </div>
-                        </div>
+                        @include('user_layouts.separatedProduct',['product'=>$product])
                     @endforeach
                 </div>
             </div>
@@ -168,7 +96,7 @@
                 @foreach($products as $product)
                     <div class="col-md-3 col-sm-4 col-xs-6 prod-hor-card">
                         <div class="prod-img">
-                            <img src="{{url('/storage/'.$product->photo)}}">
+                            <img src="{{Storage::url('/storage/'.$product->photo)}}">
                         </div>
                         <div class="prod-hor-details">
                             @foreach($product->malls as  $key => $mall)
@@ -274,7 +202,16 @@
                       <!-- Swiper -->
                   <div class="swiper-container">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide"><img src="icons/local_dining-24px.svg" class="filter-orange"><span>Restaurant</span></div>
+                         @foreach($departmentsParents as $mainId => $parent)
+                            @foreach($parent->child as $sub)
+                                <a href="{{route('getStoreByDepartment',['departmentId' => $sub->id])}}"><div class="swiper-slide"><img src="{{Storage::url('/storage/'.$sub->icon)}}" class="filter-orange"><span>{{$sub->name_en}}    </span></div></a>
+                            @endforeach
+                        @endforeach
+
+                        @foreach($subDepartmentWithoutParent as $sub)
+                            <a href="{{route('getStoreByDepartment',['departmentId' => $sub->id])}}"><div class="swiper-slide"><img src="{{Storage::url('/storage/'.$sub->icon)}}" class="filter-orange"><span>{{$sub->name_en}}    </span></div></a>
+                        @endforeach
+                      <!-- <div class="swiper-slide"><img src="icons/local_dining-24px.svg" class="filter-orange"><span>Restaurant</span></div>
                       <div class="swiper-slide"><img src="icons/local_fire_department-24px.svg" class="filter-orange"><span>Restaurant</span></div>
                       <div class="swiper-slide"><img src="icons/check_circle-24px.svg" class="filter-orange"><span>Restaurant</span></div>
                       <div class="swiper-slide"><img src="icons/local_dining-24px.svg" class="filter-orange"><span>Restaurant</span></div>
@@ -293,7 +230,7 @@
                       <div class="swiper-slide"><img src="icons/star_border-24px.svg" class="filter-orange"><span>Restaurant</span></div>
                       <div class="swiper-slide"><img src="icons/local_dining-24px.svg" class="filter-orange"><span>Restaurant</span></div>
                       <div class="swiper-slide"><img src="icons/local_fire_department-24px.svg" class="filter-orange"><span>Restaurant</span></div>
-                      <div class="swiper-slide"><img src="icons/star_border-24px.svg" class="filter-orange"><span>Restaurant</span></div>
+                      <div class="swiper-slide"><img src="icons/star_border-24px.svg" class="filter-orange"><span>Restaurant</span></div> -->
                     </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
@@ -301,73 +238,15 @@
                     <div class="stores">
                         <div class="row justify-content-center">
                             @foreach($malls as $mall)
-                                <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                    <img src="{{url('/storage/'.$mall->icon)}}">
+                                @include('user_layouts.separatedStore',['mall'=>$mall,'departmentId'=>'all'])
+                                <!-- <div class="col-md-6 col-sm-4 col-xs-6 store">
+                                     <a href="{{route('storebrand.get',['mallId'=> $mall->id , 'departmentId'=> 'all'])}}" class="fill-link"></a>
+                                    <img src="{{Storage::url('/storage/'.$mall->icon)}}">
                                     <div class="store-footer">
                                         <a href="{{route('storebrand.get',['mallId'=> $mall->id , 'departmentId'=> 'all'])}}">{{$mall->name_en}}</a>
                                     </div>
-                                </div>
+                                </div> -->
                             @endforeach
-                            <!-- <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/talis_full_logo.png">
-                                <div class="store-footer">
-                                    <a href="#">talis</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/masotti.png">
-                                <div class="store-footer">
-                                    <a href="#">Masotti</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/zara.jpg">
-                                <div class="store-footer">
-                                    <a href="#">ZARA</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/talis_full_logo.png">
-                                <div class="store-footer">
-                                    <a href="#">talis</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/masotti.png">
-                                <div class="store-footer">
-                                    <a href="#">Masotti</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/zara.jpg">
-                                <div class="store-footer">
-                                    <a href="#">ZARA</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/talis_full_logo.png">
-                                <div class="store-footer">
-                                    <a href="#">talis</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/masotti.png">
-                                <div class="store-footer">
-                                    <a href="#">Masotti</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/talis_full_logo.png">
-                                <div class="store-footer">
-                                    <a href="#">talis</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                <img src="images/masotti.png">
-                                <div class="store-footer">
-                                    <a href="#">Masotti</a>
-                                </div>
-                            </div> -->
                         </div>
                         
                     </div>
@@ -387,7 +266,8 @@
             <div class="products">
                 <div class="row justify-content-center">
                     @foreach($bestSellerProducts as $product)
-                        <div class="col-md-2 col-sm-4 col-xs-6 product">
+                        @include('user_layouts.separatedProduct',['product'=>$product->product])
+                        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                             <input type="hidden" id="product-id" class="product-id" value="{{$product->product->id}}">
                             <meta name="_token" content="{{ csrf_token() }}">
                             @if(count($product->product->users))
@@ -401,7 +281,7 @@
                             @else
                                 <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
                             @endif
-                            <img src="{{url('/storage/'.$product->product->photo)}}">
+                            <img src="{{Storage::url('/storage/'.$product->product->photo)}}">
                             <div class="product-details">
                                 <a href="{{route('product.get',['productId'=>$product->product->id])}}" class="product-name">
                                     {{$product->product->name_en}}
@@ -432,144 +312,11 @@
                                         <img src="icons/star_border-24px.svg" class="filter-yellow"> 
                                         <span class="rating-amount">(30)</span>
                                     @endif
-                                    <!-- <input type="hidden" class="index-star" value="0">
-                                    <img src="icons/star-24px.svg" class="filter-yellow">
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <span class="rating-amount">(30)</span> -->
                                 </div>
                                 <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                             </div>
-                        </div>
+                        </div> -->
                     @endforeach
-                    <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/banner_1.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/product_6.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/black-framed-eyeglasses-on-white-jacket-and-blue-denim-934070.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/pexels-markus-spiske-191158.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/gallery_1.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/4.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div> -->
                     
                 </div>
             </div>
@@ -588,7 +335,8 @@
             <div class="products">
                 <div class="row justify-content-center">
                     @foreach($justForYouProduct as $product)
-                        <div class="col-md-2 col-sm-4 col-xs-6 product">
+                        @include('user_layouts.separatedProduct',['product'=>$product])
+                        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                             <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                             <meta name="_token" content="{{ csrf_token() }}">
                             @if(count($product->users))
@@ -602,7 +350,7 @@
                             @else
                                 <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
                             @endif
-                            <img src="{{url('/storage/'.$product->photo)}}">
+                            <img src="{{Storage::url('/storage/'.$product->photo)}}">
                             <div class="product-details">
                                 <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                     {{$product->name_en}}
@@ -633,145 +381,11 @@
                                         <img src="icons/star_border-24px.svg" class="filter-yellow"> 
                                         <span class="rating-amount">(30)</span>
                                     @endif
-                                    <!-- <input type="hidden" class="index-star" value="0">
-                                    <img src="icons/star-24px.svg" class="filter-yellow">
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <span class="rating-amount">(30)</span> -->
                                 </div>
                                 <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                             </div>
-                        </div>
+                        </div> -->
                     @endforeach
-                    <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/banner_1.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/product_6.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/black-framed-eyeglasses-on-white-jacket-and-blue-denim-934070.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/pexels-markus-spiske-191158.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/gallery_1.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div>
-                     <div class="col-md-2 col-sm-4 col-xs-6 product">
-                        <img src="icons/favorite-24px.svg" class="filter-fairouzi love">
-                        <img src="images/4.jpg">
-                        <div class="product-details">
-                            <a href="#" class="product-name">
-                                New product from our amazing store pla pla pla pla pla pla pla pla pla pla
-                            </a>
-                            <span class="price">120.00 omr</span>
-                            <span class="old-price"><del>150.00 omr</del></span>
-                            <span class="discount">50%</span>
-                            <div class="rating">
-                                <img src="icons/star-24px.svg" class="filter-yellow">
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <img src="icons/star_border-24px.svg" class="filter-yellow"> 
-                                <span class="rating-amount">(30)</span>
-                            </div>
-                            <img src="icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
-                        </div>
-                    </div> -->
-                    
                 </div>
             </div>
             <div class="showall"><a href="{{route('getShowAll',['productsType' => 'products-just-for-you'])}}" class="show-all">Show All</a><img src="icons/keyboard_arrow_right-24px.svg" class="filter-fairouzi right-arrow"></div>
@@ -830,7 +444,7 @@
         </div>
         </div>
         
-    </div>
+  </div>
     <!-- End Footer -->
 
     <!--ajax in seeb.js-->
@@ -868,6 +482,7 @@
     <script src="{{url('/')}}/package/js/swiper.min.js"></script>
     <script src="{{url('/')}}/js/jquery.nicescroll.min.js"></script>
     <script src="{{url('/')}}/js/seeb.js"></script>
+    <script src="{{url('/')}}/js/serviceLoginAjax.js"></script>
     <script>
       
         var currentDate = $('.current_date').val();
@@ -932,6 +547,71 @@
           // location.replace("/finish");
         }
       }, 1000);
+    </script>
+    <script type="text/javascript">
+    // $(document).on('click', '#google-log', function(){
+    //     //var thisVar = $(this);
+    //     renderButton();
+    //  });
+    //     function renderButton() {
+    //         alert('start');
+    //         gapi.signin2.render('g-signin2', {
+    //             'scope': 'profile email',
+    //             'width': 250,
+    //             'height': 40,
+    //             'longtitle': true,
+    //             'theme': 'dark',
+    //             'onsuccess': onSignIn,
+    //             'onfailure': onFailure
+    //         });
+    //     }
+
+    //     function onSignIn(googleUser) {
+    //         alert('userInfo');
+    //         var profile = googleUser.getBasicProfile();
+    //         console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    //         console.log('Name: ' + profile.getName());
+    //         console.log('Image URL: ' + profile.getImageUrl());
+    //         console.log('Email: ' + profile.getEmail());
+    //         var googleTockenId = profile.getId();
+    //         var name = profile.getName();
+    //         var email = profile.getEmail();
+    //         var profile = profile.getImageUrl();
+    //         // $("#loaderIcon").show('fast');
+    //         // $("#g-signin2").hide('fast');
+    //         //saveUserData(googleTockenId,name,email,profile); // save data to our database for reference
+    //     }
+    //     // Sign-in failure callback
+    //     function onFailure(error) {
+    //         alert(error);
+    //     }
+    //     // Sign out the user
+    //     function signOut() {
+    //         if(confirm("Are you sure to signout?")){
+    //             var auth2 = gapi.auth2.getAuthInstance();
+    //             auth2.signOut().then(function () {
+    //                 $("#loginDetails").hide();
+    //                 $("#loaderIcon").hide('fast');
+    //                 $("#g-signin2").show('fast');
+    //             });
+    //             auth2.disconnect();
+    //         }
+    //     }
+    //     function saveUserData(googleTockenId,name,email,profile) {
+    //         $.post("script.php",{authProvider:"Google",googleTockenId:googleTockenId,name:name,email:email,profile:profile},
+    //             function (response) {
+    //             var data = response.split('^');
+    //             if (data[1] == "loggedIn"){
+    //                 $("#loaderIcon").hide('fast');
+    //                 $("#g-signin2").hide('fast');
+    //                 $("#profileLabel").attr('src',profile);
+    //                 $("#nameLabel").html(name);
+    //                 $("#emailLabel").html(email);
+    //                 $("#googleIdLabel").html(googleTockenId);
+    //                 $("#loginDetails").show();
+    //             }
+    //         });
+    //     }
     </script>
 </body>
 </html>

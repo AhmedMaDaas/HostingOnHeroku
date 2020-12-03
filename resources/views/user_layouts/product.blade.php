@@ -3,14 +3,16 @@
     <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="utf-8">
+        @include('user_layouts.separatedCss',['title'=>'Product'])
+        <!-- <meta charset="utf-8">
         <title>Product</title>
 
         <link rel="stylesheet" href="{{url('/')}}/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{url('/')}}/css/normalize.css">
         <link rel="stylesheet" href="{{url('/')}}/package/css/swiper.min.css">
-        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css">
-        	<link rel="stylesheet" href="{{url('/')}}/css/flexslider.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="{{url('/')}}css/hover-min.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css"> -->
+        <link rel="stylesheet" href="{{url('/')}}/css/flexslider.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="{{url('/')}}/css/product.css">
                
     </head>
@@ -40,13 +42,13 @@
 					<div class="flexslider">
 						<ul class="slides">
 
-							<li data-thumb="{{url('/storage/'.$product->photo)}}">
-								<div class="thumb-image"> <img src="{{url('/storage/'.$product->photo)}}" data-imagezoom="true" class="img-responsive"> </div>
+							<li data-thumb="{{Storage::url('/storage/'.$product->photo)}}">
+								<div class="thumb-image"> <img src="{{Storage::url('/storage/'.$product->photo)}}" data-imagezoom="true" class="img-responsive"> </div>
 							</li>
                             @if(count($product->files))
                                 @foreach($product->files as $file)
-                                <li data-thumb="{{url('/storage/'.$file->fullFile)}}">
-                                     <div class="thumb-image"> <img src="{{url('/storage/'.$file->fullFile)}}" data-imagezoom="true" class="img-responsive"> </div>
+                                <li data-thumb="{{Storage::url('/storage/'.$file->fullFile)}}">
+                                     <div class="thumb-image"> <img src="{{Storage::url('/storage/'.$file->fullFile)}}" data-imagezoom="true" class="img-responsive"> </div>
                                 </li>
                                 @endforeach
                             @endif
@@ -121,7 +123,8 @@
                     <button class="gray"><input type="radio" name="h" hidden></button> -->
                 </div>
             @else
-                <br>
+                <span class="old-price">&nbsp;</span>
+                <span class="old-price">&nbsp;</span>
             @endif
             
             <!-- <div class="colorpic">
@@ -141,7 +144,8 @@
                     <button value="4"><input type="radio" name="h" hidden>XL</button> -->
                 </div>
             @else
-                <br>
+                <span class="old-price">&nbsp;</span>
+                <span class="old-price">&nbsp;</span>
             @endif
             
             <div class="quantityoption">
@@ -162,7 +166,7 @@
      <div class="sold">
         <h4>Sold By</h4>
          <div class="soldinfo">
-         <img src="{{url('/storage/'.$mallProduct->mall->icon)}}">
+         <img src="{{Storage::url('/storage/'.$mallProduct->mall->icon)}}">
              <div class="inffo">
                 <input type="hidden" value="{{$mallProduct->mall->id}}" name="mall"> 
                   <p class="storename">{{$mallProduct->mall->name_en}}</p>
@@ -181,7 +185,8 @@
                 <div class="row justify-content-center">
 
                     @foreach($relatedProducts as $product)
-                        <div class="col-md-2 col-sm-4 col-xs-6 product">
+                        @include('user_layouts.separatedProduct',['product'=>$product])
+                        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                                 <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                                 <meta name="_token" content="{{ csrf_token() }}">
                                 @if(count($product->users))
@@ -195,7 +200,7 @@
                                 @else
                                     <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                                 @endif
-                                <img src="{{url('/storage/'.$product->photo)}}">
+                                <img src="{{Storage::url('/storage/'.$product->photo)}}">
                                 <div class="product-details">
                                     <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                         {{$product->name_en}}
@@ -226,12 +231,6 @@
                                             <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                                             <span class="rating-amount">(30)</span>
                                         @endif
-                                        <!-- <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <span class="rating-amount">(30)</span> -->
                                     </div>
                                     <div class="stock-div">
                                         <span class="label">Stock</span>
@@ -245,7 +244,7 @@
                                     </div>
                                     <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                                 </div>
-                            </div>
+                            </div> -->
                     @endforeach
                     
                 </div>
@@ -314,7 +313,7 @@
         </div>
         </div>
         
-    </div>
+  </div>
     <!-- End Footer -->
     
     <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
@@ -323,8 +322,9 @@
     <script src="{{url('/')}}/js/bootstrap.bundle.min.js"></script>
     <script src="{{url('/')}}/package/js/swiper.min.js"></script>
     <script src="{{url('/')}}/js/jquery.nicescroll.min.js"></script>
-    <script src="{{url('/')}}/js/seeb.js"></script>
-    
+    <script src="{{url('/')}}/js/seeb.js"></script
+    <script src="{{url('/')}}/js/serviceLoginAjax.js"></script>
+
     <script defer src="{{url('/')}}/js/jquery.flexslider.js"></script>
 	<script src="{{url('/')}}/js/zoomsl.js"></script>
 	<script src="{{url('/')}}/js/zoomsl.min.js"></script>

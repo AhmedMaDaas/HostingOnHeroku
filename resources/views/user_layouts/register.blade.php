@@ -3,13 +3,14 @@
     <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="utf-8">
+        @include('user_layouts.separatedCss',['title'=>'Register'])
+        <!-- <meta charset="utf-8">
         <title>Register</title>
         <link rel="stylesheet" href="{{url('/')}}/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{url('/')}}/css/normalize.css">
         <link rel="stylesheet" href="{{url('/')}}/package/css/swiper.min.css">
         <link rel="stylesheet" href="{{url('/')}}/css/hover-min.css">
-        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css"> -->
     </head>
     <body>
 @endsection
@@ -108,7 +109,7 @@
         </div>
         </div>
         
-    </div>
+  </div>
     <!-- End Footer -->
     <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
     <script src="{{url('/')}}/js/popper.js"></script>

@@ -14,10 +14,11 @@
                     <div class="products">
                         <div class="row justify-content-center">
                             @foreach($element as $product)
-                                <div class="col-md-2 col-sm-4 col-xs-6 product">
+                                @include('user_layouts.separatedProduct',['product'=>$product])
+                                <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                                     <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                                     <meta name="_token" content="{{ csrf_token() }}">
-                                    <img src="{{url('/storage/'.$product->photo)}}">
+                                    <img src="{{Storage::url('/storage/'.$product->photo)}}">
                                     <div class="product-details">
                                         <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                             {{$product->name_en}}
@@ -48,15 +49,9 @@
                                                 <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                                                 <span class="rating-amount">(30)</span>
                                             @endif
-                                            <!-- <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                                            <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                            <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                            <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                            <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                            <span class="rating-amount">(30)</span> -->
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             @endforeach
                             
                         </div>
@@ -72,7 +67,7 @@
                             <div class="row justify-content-center">
                                 @foreach($element as $department)
                                     <div class="col-md-6 col-sm-4 col-xs-6 cat">
-                                        <img src="{{url('/storage/'.$department->photo)}}" class="filter-gray">
+                                        <img src="{{Storage::url('/storage/'.$department->photo)}}" class="filter-gray">
                                         <div class="store-footer">
                                             <a href="{{route('getShowAll',['productsType' => 'products-best-selling'])}}">{{$department->name_en}}</a>
                                         </div>
@@ -91,12 +86,13 @@
                     <div class="stores">
                                 <div class="row justify-content-center">
                                     @foreach($element as $mall)
-                                        <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                            <img src="{{url('/storage/'.$mall->photo)}}">
+                                        @include('user_layouts.separatedStore',['mall'=>$mall,'departmentId'=>'all'])
+                                        <!-- <div class="col-md-6 col-sm-4 col-xs-6 store">
+                                            <img src="{{Storage::url('/storage/'.$mall->icon)}}">
                                             <div class="store-footer">
                                                 <a href="{{route('storebrand.get',['mallId'=>$mall->id,'departmentId'=>'all'])}}">{{$mall->name_en}}</a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     @endforeach
                                     
                                 </div>

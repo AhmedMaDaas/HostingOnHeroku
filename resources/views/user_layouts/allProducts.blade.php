@@ -3,12 +3,14 @@
     <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="utf-8">
+        @include('user_layouts.separatedCss',['title'=>'All Products'])
+        <!-- <meta charset="utf-8">
         <title>Products With Sale</title>
         <link rel="stylesheet" href="{{url('/')}}/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{url('/')}}/css/normalize.css">
         <link rel="stylesheet" href="{{url('/')}}/package/css/swiper.min.css">
-        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/hover-min.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css"> -->
     </head>
     <body>
 @endsection
@@ -36,25 +38,10 @@
                     <div class="carousel-item">
                     @endif
                         <a href="{{route('storebrand.get',['mallId'=>$ad->mall->id,'departmentId'=>'all'])}}">
-                            <img src="{{url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
+                            <img src="{{Storage::url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
                         </a>
                     </div>
                 @endforeach
-                <!-- <div class="carousel-item active">
-                    <a href="#">
-                        <img src="images/65695255-black-friday-sales-fashion-shopping-woman-black-silhouette-with-shopping-bags-black-friday-sale-adve.jpg" class="d-block w-100" alt="...">
-                    </a>
-                </div>
-                <div class="carousel-item">
-                    <a href="#">
-                        <img src="images/sales.jpg" class="d-block w-100" alt="...">
-                    </a>
-                </div>
-                <div class="carousel-item">
-                    <a href="#">
-                        <img src="images/pexels-artem-beliaikin-2292953.jpg" class="d-block w-100" alt="...">
-                    </a>
-                </div> -->
           </div>
     </div>
     <!-- End Ads Carousel -->
@@ -79,7 +66,8 @@
                 <div class="best-of-cat">
                     <div class="row justify-content-center best-sel-prod">
                         @foreach($productsWithSale as $product)
-                        <div class="col-md-2 col-sm-4 col-xs-6 product">
+                            @include('user_layouts.separatedProduct',['product'=>$product])
+                        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                             <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                             <meta name="_token" content="{{ csrf_token() }}">
                             @if(count($product->users))
@@ -93,7 +81,7 @@
                             @else
                                 <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                             @endif
-                            <img src="{{url('/storage/'.$product->photo)}}">
+                            <img src="{{Storage::url('/storage/'.$product->photo)}}">
                             <div class="product-details">
                                 <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                     {{$product->name_en}}
@@ -120,13 +108,6 @@
                                         <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                                         <span class="rating-amount">(30)</span>
                                     @endif
-                                    <!-- <input type="hidden" class="index-star" value="0">
-                                    <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <span class="rating-amount">(30)</span> -->
                                 </div>
                                 <div class="stock-div">
                                     <span class="label">Stock</span>
@@ -140,7 +121,7 @@
                                 </div>
                                 <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                             </div>
-                        </div>
+                        </div> -->
                     @endforeach
 
                     <div class="replace_here"></div>
@@ -192,12 +173,13 @@
                     <div class="stores">
                         <div class="row justify-content-center">
                             @foreach($malls as $mall)
-                                <div class="col-md-6 col-sm-4 col-xs-6 store">
-                                    <img src="{{url('/storage/'.$mall->icon)}}">
+                                @include('user_layouts.separatedStore',['mall'=>$mall,'departmentId'=>'all'])
+                                <!-- <div class="col-md-6 col-sm-4 col-xs-6 store">
+                                    <img src="{{Storage::url('/storage/'.$mall->icon)}}">
                                     <div class="store-footer">
                                         <a href="{{route('storebrand.get',['mallId'=>$mall->id,'departmentId'=>'all'])}}">{{$mall->name_en}}</a>
                                     </div>
-                                </div>
+                                </div> -->
                             @endforeach
 
                             <div class="replace_here"></div>
@@ -231,7 +213,8 @@
                         </div>
                         <div class="row justify-content-center best-sel-prod">
                             @foreach($products as $product)
-                                <div class="col-md-2 col-sm-4 col-xs-6 product">
+                                @include('user_layouts.separatedProduct',['product'=>$product->product])
+                                <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                                     <input type="hidden" id="product-id" class="product-id" value="{{$product->product->id}}">
                                     <meta name="_token" content="{{ csrf_token() }}">
                                     @if(count($product->product->users))
@@ -245,7 +228,7 @@
                                     @else
                                         <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                                     @endif
-                                    <img src="{{url('/storage/'.$product->product->photo)}}">
+                                    <img src="{{Storage::url('/storage/'.$product->product->photo)}}">
                                     <div class="product-details">
                                         <a href="{{route('product.get',['productId'=>$product->product->id])}}" class="product-name">
                                             {{$product->product->name_en}}
@@ -276,17 +259,10 @@
                                                 <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                                                 <span class="rating-amount">(30)</span>
                                             @endif
-                                            <!-- <input type="hidden" class="index-star" value="0">
-                                            <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                                            <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                            <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                            <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                            <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                            <span class="rating-amount">(30)</span> -->
                                         </div>
                                         <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                                     </div>
-                                </div>
+                                </div> -->
                             @endforeach
 
                             <div class="replace_here"></div>
@@ -327,7 +303,8 @@
                 <div class="best-of-cat">
                     <div class="row justify-content-center best-sel-prod">
                         @foreach($productsJustForYou as $product)
-                            <div class="col-md-2 col-sm-4 col-xs-6 product">
+                            @include('user_layouts.separatedProduct',['product'=>$product])
+                            <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                                 <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                                 <meta name="_token" content="{{ csrf_token() }}">
                                 @if(count($product->users))
@@ -341,7 +318,7 @@
                                 @else
                                     <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                                 @endif
-                                <img src="{{url('/storage/'.$product->photo)}}">
+                                <img src="{{Storage::url('/storage/'.$product->photo)}}">
                                 <div class="product-details">
                                     <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                         {{$product->name_en}}
@@ -372,17 +349,10 @@
                                             <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                                             <span class="rating-amount">(30)</span>
                                         @endif
-                                        <!-- <input type="hidden" class="index-star" value="0">
-                                        <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                        <span class="rating-amount">(30)</span> -->
                                     </div>
                                     <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                                 </div>
-                            </div>
+                            </div> -->
                         @endforeach
 
                         <div class="replace_here"></div>
@@ -405,7 +375,8 @@
             <div class="products">
                 <div class="row justify-content-center">
                     @foreach($productsJustForYou as $product)
-                        <div class="col-md-2 col-sm-4 col-xs-6 product">
+                        @include('user_layouts.separatedProduct',['product'=>$product])
+                        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                             <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                             <meta name="_token" content="{{ csrf_token() }}">
                             @if(count($product->users))
@@ -419,7 +390,7 @@
                             @else
                                 <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                             @endif
-                            <img src="{{url('/storage/'.$product->photo)}}">
+                            <img src="{{Storage::url('/storage/'.$product->photo)}}">
                             <div class="product-details">
                                 <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                     {{$product->name_en}}
@@ -450,17 +421,10 @@
                                         <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                                         <span class="rating-amount">(30)</span>
                                     @endif
-                                    <!-- <input type="hidden" class="index-star" value="0">
-                                    <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                    <span class="rating-amount">(30)</span> -->
                                 </div>
                                 <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                             </div>
-                        </div>
+                        </div> -->
                     @endforeach
                     
                     
@@ -499,7 +463,7 @@
         </div>
         </div>
         
-    </div>
+  </div>
     <!-- End Footer -->
     
     <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
@@ -509,6 +473,7 @@
     <script src="{{url('/')}}/package/js/swiper.min.js"></script>
     <script src="{{url('/')}}/js/jquery.nicescroll.min.js"></script>
     <script src="{{url('/')}}/js/seeb.js"></script>
+    <script src="{{url('/')}}/js/serviceLoginAjax.js"></script>
     <!-- Start script for search -->
     <script >
             $(".input-group-append .search-btn").click(function(){
@@ -564,7 +529,9 @@
                     if(response.operation == 'success'){
                         thisVar.parent().parent().find('.replace_here').replaceWith(response.view);
                         thisVar.parent().parent().find('.skip').val(response.skip);
-                    }else {};     
+                    }else {
+                        alert(response.message);
+                    };     
                     
                   },
                   error: function (response) {
@@ -573,6 +540,31 @@
                   },
              });
         });
+
+        // function showMoreStoresByDefinedDep(){
+        //     $.ajax({
+        //           url: ""+showWhat,
+        //           type: 'POST',
+        //           data: {
+        //             '_token' :"{{csrf_token()}}",
+        //             'skip' : skip,
+        //           }, 
+        //           dataType: 'json',
+        //           success: function (response) {
+        //             if(response.operation == 'success'){
+        //                 $('.replace_here').replaceWith(response.view);
+        //                 $('.skip').val(response.skip);
+        //             }else {
+        //                 alert(response.message);
+        //             };     
+                    
+        //           },
+        //           error: function (response) {
+        //             alert("error ");
+        //             //location.href="";
+        //           },
+        //      });
+        // }
     
         $(document).on('click',"#showall",function(e){
             var currentLocation = window.location.pathname+'';
@@ -593,7 +585,9 @@
                     if(response.operation == 'success'){
                         $('.replace_here').replaceWith(response.view);
                         $('.skip').val(response.skip);
-                    }else {};     
+                    }else {
+                        alert(response.message);
+                    };     
                     
                   },
                   error: function (response) {

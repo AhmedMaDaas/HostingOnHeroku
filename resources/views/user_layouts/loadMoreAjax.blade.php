@@ -1,15 +1,17 @@
 @if(count($malls))
     @foreach($malls as $mall)
-        <div class="col-md-6 col-sm-4 col-xs-6 store">
-            <img src="{{url('/storage/'.$mall->photo)}}">
+        @include('user_layouts.separatedStore',['mall'=>$mall,'departmentId'=>'all'])
+        <!-- <div class="col-md-6 col-sm-4 col-xs-6 store">
+            <img src="{{Storage::url('/storage/'.$mall->icon)}}">
             <div class="store-footer">
                 <a href="{{route('storebrand.get',['mallId'=>$mall->id,'departmentId'=>'all'])}}">{{$mall->name_en}}</a>
             </div>
-        </div>
+        </div> -->
     @endforeach
 @elseif(count($productsBestSellingByDep))
     @foreach($productsBestSellingByDep as $product)
-        <div class="col-md-2 col-sm-4 col-xs-6 product">
+        @include('user_layouts.separatedProduct',['product'=>$product->product])
+        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
             <input type="hidden" id="product-id" class="product-id" value="{{$product->product->id}}">
             <meta name="_token" content="{{ csrf_token() }}">
             @if(count($product->product->users))
@@ -23,7 +25,7 @@
             @else
                 <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
             @endif
-            <img src="{{url('/storage/'.$product->product->photo)}}">
+            <img src="{{Storage::url('/storage/'.$product->product->photo)}}">
             <div class="product-details">
                 <a href="{{route('product.get',['productId'=>$product->product->id])}}" class="product-name">
                     {{$product->product->name_en}}
@@ -54,21 +56,15 @@
                         <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                         <span class="rating-amount">(30)</span>
                     @endif
-                    <!-- <input type="hidden" class="index-star" value="0">
-                    <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <span class="rating-amount">(30)</span> -->
                 </div>
                 <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
             </div>
-        </div>
+        </div> -->
     @endforeach
 @elseif(count($productsWithSale))
 	@foreach($productsWithSale as $product)
-        <div class="col-md-2 col-sm-4 col-xs-6 product">
+        @include('user_layouts.separatedProduct',['product'=>$product])
+        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
             <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
             <meta name="_token" content="{{ csrf_token() }}">
             @if(count($product->users))
@@ -82,7 +78,7 @@
             @else
                 <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
             @endif
-            <img src="{{url('/storage/'.$product->photo)}}">
+            <img src="{{Storage::url('/storage/'.$product->photo)}}">
             <div class="product-details">
                 <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                     {{$product->name_en}}
@@ -109,13 +105,6 @@
                         <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                         <span class="rating-amount">(30)</span>
                     @endif
-                    <!-- <input type="hidden" class="index-star" value="0">
-                    <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <span class="rating-amount">(30)</span> -->
                 </div>
                 <div class="stock-div">
                     <span class="label">Stock</span>
@@ -129,11 +118,12 @@
                 </div>
                 <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
             </div>
-        </div>
+        </div> -->
     @endforeach
 @elseif(count($productsJustForYou))
     @foreach($productsJustForYou as $product)
-        <div class="col-md-2 col-sm-4 col-xs-6 product">
+        @include('user_layouts.separatedProduct',['product'=>$product])
+        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
             <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
             <meta name="_token" content="{{ csrf_token() }}">
             @if(count($product->users))
@@ -147,7 +137,7 @@
             @else
                 <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
             @endif
-            <img src="{{url('/storage/'.$product->photo)}}">
+            <img src="{{Storage::url('/storage/'.$product->photo)}}">
             <div class="product-details">
                 <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                     {{$product->name_en}}
@@ -178,21 +168,15 @@
                         <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                         <span class="rating-amount">(30)</span>
                     @endif
-                    <!-- <input type="hidden" class="index-star" value="0">
-                    <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                    <span class="rating-amount">(30)</span> -->
                 </div>
                 <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
             </div>
-        </div>
+        </div> -->
     @endforeach  
 @elseif(count($productsByDep))
     @foreach($productsByDep as $product)
-        <div class="col-md-2 col-sm-4 col-xs-6 product">
+        @include('user_layouts.separatedProduct',['product'=>$product])
+        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                 <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                 <meta name="_token" content="{{ csrf_token() }}">
                 @if(count($product->users))
@@ -206,7 +190,7 @@
                 @else
                     <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                 @endif
-                <img src="{{url('/storage/'.$product->photo)}}">
+                <img src="{{Storage::url('/storage/'.$product->photo)}}">
                 <div class="product-details">
                     <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                         {{$product->name_en}}
@@ -233,13 +217,6 @@
                             <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                             <span class="rating-amount">(30)</span>
                         @endif
-                        <!-- <input type="hidden" class="index-star" value="0">
-                        <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                        <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                        <span class="rating-amount">(30)</span> -->
                     </div>
                     <div class="stock-div">
                         <span class="label">Stock</span>
@@ -253,11 +230,12 @@
                     </div>
                     <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                 </div>
-            </div>
+            </div> -->
     @endforeach
 @elseif(count($productsByDepFilter))
     @foreach($productsByDepFilter as $product)
-        <div class="col-md-2 col-sm-4 col-xs-6 product">
+        @include('user_layouts.separatedProduct',['product'=>$product->product])
+        <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
         <input type="hidden" id="product-id" class="product-id" value="{{$product->product->id}}">
         <meta name="_token" content="{{ csrf_token() }}">
         @if(count($product->product->users))
@@ -271,7 +249,7 @@
         @else
             <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
         @endif
-        <img src="{{url('/storage/'.$product->product->photo)}}">
+        <img src="{{Storage::url('/storage/'.$product->product->photo)}}">
         <div class="product-details">
             <a href="{{route('product.get',['productId'=>$product->product->id])}}" class="product-name">
                 {{$product->product->name_en}}
@@ -302,13 +280,6 @@
                     <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                     <span class="rating-amount">(30)</span>
                 @endif
-                <!-- <input type="hidden" class="index-star" value="0">
-                <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                <span class="rating-amount">(30)</span> -->
             </div>
             <div class="stock-div">
                 <span class="label">Stock</span>
@@ -322,7 +293,7 @@
             </div>
             <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
         </div>
-    </div>
+    </div> -->
     @endforeach
 @endif
 

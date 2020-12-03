@@ -3,12 +3,14 @@
 <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="utf-8">
+        @include('user_layouts.separatedCss',['title'=>'Store Brand'])
+        <!-- <meta charset="utf-8">
         <title>store brand</title>
         <link rel="stylesheet" href="{{url('/')}}/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{url('/')}}/css/normalize.css">
         <link rel="stylesheet" href="{{url('/')}}/package/css/swiper.min.css">
-        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/hover-min.css">
+        <link rel="stylesheet" href="{{url('/')}}/css/seeb.css"> -->
         <link rel="stylesheet" href="{{url('/')}}/css/store2.css">
         <link rel="stylesheet" href="{{url('/')}}/css/storebrand.css">
     </head>
@@ -20,7 +22,7 @@
 <!-- carousal -->
 <section class="tesst">
     <div class="brand">
-        <img src="{{url('/storage/'.$mall->icon)}}">
+        <img src="{{Storage::url('/storage/'.$mall->icon)}}">
         <h4 class="brandname">{{$mall->name_en}}</h4>
         <input class="numfollowInput" type="hidden" value="{{$countFollowers}}">
         <span class="numfollow">{{$countFollowers}} followers</span>
@@ -57,7 +59,7 @@
                 <div class="carousel-item">
                 @endif
                     <a href="#">
-                        <img src="{{url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
+                        <img src="{{Storage::url('/storage/'.$ad->photo)}}" class="d-block w-100" alt="...">
                     </a>
                 </div>
             @endforeach
@@ -80,7 +82,7 @@
             </ul>
         </div>
 
-        <div class="home"><a href="{{route('home.get')}}">Home</a></div>
+        <div class="home"><a href="{{route('store.get',['mallId'=> $mall->id , 'departmentId' => 'all'])}}">Home</a></div>
         <div class="allproduct"><a href="{{route('storebrand.get',['mallId'=> $mall->id , 'departmentId' => 'all'])}}">All Product</a></div>
     </div>
     <div class="input-group">
@@ -366,7 +368,8 @@
                             <div class="row justify-content-center">
                                 @foreach($mallsProducts as $dep => $product)
                                     @if(count($mallsProducts))
-                                    <div class="col-md-2 col-sm-4 col-xs-6 product">
+                                        @include('user_layouts.separatedProduct',['product'=>$product->product])
+                                    <!-- <div class="col-md-2 col-sm-4 col-xs-6 product">
                                             <input type="hidden" id="product-id" class="product-id" value="{{$product->product->id}}">
                                             <meta name="_token" content="{{ csrf_token() }}">
                                             @if(count($product->product->users))
@@ -380,7 +383,7 @@
                                             @else
                                                 <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                                             @endif
-                                            <img src="{{url('/storage/'.$product->product->photo)}}">
+                                            <img src="{{Storage::url('/storage/'.$product->product->photo)}}">
                                             <div class="product-details">
                                                 <a href="{{route('product.get',['productId'=>$product->product->id])}}" class="product-name">
                                                     {{$product->product->name_en}}
@@ -411,12 +414,6 @@
                                                         <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                                                         <span class="rating-amount">(30)</span>
                                                     @endif
-                                                    <!-- <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                                    <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                                                    <span class="rating-amount">(30)</span> -->
                                                 </div>
                                                 <div class="stock-div">
                                                     <span class="label">Stock</span>
@@ -430,7 +427,7 @@
                                                 </div>
                                                 <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                                             </div>
-                                        </div>
+                                        </div> -->
                                         @endif
                                 @endforeach
 
@@ -481,7 +478,7 @@
         </div>
         </div>
         
-    </div>
+  </div>
     <!-- End Footer -->
     <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
     <script src="{{url('/')}}/js/popper.js"></script>
@@ -490,6 +487,7 @@
     <script src="{{url('/')}}/package/js/swiper.min.js"></script>
     <script src="{{url('/')}}/js/jquery.nicescroll.min.js"></script>
     <script src="{{url('/')}}/js/seeb.js"></script>
+    <script src="{{url('/')}}/js/serviceLoginAjax.js"></script>
       <script src="{{url('/')}}/js/store.js"></script>
 
       <!-- Start script for search -->
@@ -666,7 +664,9 @@
                     if(response.operation == 'success'){
                         thisVar.parent().parent().find('.replace_here').replaceWith(response.view);
                         thisVar.parent().find('.skip').val(response.skip);
-                    }else {};     
+                    }else {
+                        alert(response.message);
+                    };     
                     
                   },
                   error: function (response) {

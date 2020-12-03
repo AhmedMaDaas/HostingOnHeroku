@@ -3,13 +3,15 @@
   <!DOCTYPE html>
   <html>
   <head>
-      <meta charset="utf-8">
+      @include('user_layouts.separatedCss',['title'=>'CheckOut'])
+      <!-- <meta charset="utf-8">
       <title>CheckOut</title>
 
       <link rel="stylesheet" href="{{url('/')}}/css/bootstrap.min.css">
       <link rel="stylesheet" href="{{url('/')}}/css/normalize.css">
       <link rel="stylesheet" href="{{url('/')}}/package/css/swiper.min.css">
-      <link rel="stylesheet" href="{{url('/')}}/css/seeb.css">
+      <link rel="stylesheet" href="{{url('/')}}/css/hover-min.css">
+      <link rel="stylesheet" href="{{url('/')}}/css/seeb.css"> -->
       <link rel="stylesheet" href="{{url('/')}}/css/checkout.css">
              
   </head>
@@ -73,18 +75,7 @@
               <ul class="list-unstyled list">
             @endif
             <?php
-            if(($billProduct->product_coast != $billProduct->product->price) && 
-              (time()-(60*60*24)) > strtotime($billProduct->product->offer_end_at)){
-
-              // call function from app/http/helper
-               updatePriceBill($billProduct->id,$billProduct->product->price,$billProduct->quantity,$bill->id,$billProduct->product_coast,$bill->total_coast);
-            }
-            if(($billProduct->product_coast != $billProduct->product->price_offer) && 
-              (time()-(60*60*24)) <= strtotime($billProduct->product->offer_end_at)){
-
-              // call function from app/http/helper
-               updatePriceBill($billProduct->id,$billProduct->product->price_offer,$billProduct->quantity,$bill->id,$billProduct->product_coast,$bill->total_coast);
-            }
+            
                
             if(!empty($billProduct->color))$colorId = $billProduct->color->id;
             else $colorId = 0;
@@ -93,7 +84,7 @@
              ?>
                <li class="media">
                   <input type="checkbox" name="products" value="{{$billProduct->product->id.'/'.$colorId.'/'.$sizeId}}">
-                  <img class="mr-3" src="{{url('/storage/'.$billProduct->product->photo)}}" alt="Generic placeholder image">
+                  <img class="mr-3" src="{{Storage::url('/storage/'.$billProduct->product->photo)}}" alt="Generic placeholder image">
                     <div class="media-body">
                         <h6 class="mt-0 mb-1 description"><a href="{{route('product.get',['productId'=>$billProduct->product->id])}}">{{$billProduct->product->name_en}}</a></h6>
                         @if(!empty($billProduct->color))
@@ -173,10 +164,10 @@
           		 <p><span>({{$sumQuantity}})</span>item</p>
           	 </div>
 
-          	 <div class="code">
+          	 <!-- <div class="code">
             	   <input type="text" placeholder="code">
             		 <button class="apply">Apply</button>
-          	 </div>
+          	 </div> -->
 
         	 	 <span class="line"></span>
              <h5 class="location">Your Location</h5>
@@ -197,11 +188,12 @@
           <p class="likee"><img src="{{url('/')}}/images/ok-like-hand-sign.png">Product May Like</p>
       	   <span class="lline"></span>
            @foreach($relatedProducts as $product)
-             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 product">
+            @include('user_layouts.separatedProduct',['product'=>$product])
+             <!-- <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 product">
                   <input type="hidden" id="product-id" class="product-id" value="{{$product->id}}">
                   <meta name="_token" content="{{ csrf_token() }}">
                   <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
-                  <img src="{{url('/storage/'.$product->photo)}}">
+                  <img src="{{Storage::url('/storage/'.$product->photo)}}">
                   <div class="product-details">
                       <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                           {{$product->name_en}}
@@ -232,12 +224,6 @@
                             <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
                             <span class="rating-amount">(30)</span>
                         @endif
-                          <!-- <img src="{{url('/')}}/icons/star-24px.svg" class="filter-yellow">
-                          <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                          <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                          <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                          <img src="{{url('/')}}/icons/star_border-24px.svg" class="filter-yellow"> 
-                          <span class="rating-amount">(30)</span> -->
                       </div>
                       <div class="stock-div">
                           <span class="label">Stock</span>
@@ -251,7 +237,7 @@
                       </div>
                       <img src="{{url('/')}}/icons/shopping_cart-24px.svg" class="filter-fairouzi shopping-card">
                   </div>
-              </div>
+              </div> -->
            @endforeach
         </div>     
     </div>     
@@ -285,7 +271,7 @@
         </div>
         </div>
         
-    </div>
+  </div>
     <!-- End Footer -->
     
 <script src="{{url('/')}}/js/jquery-3.3.1.min.js"></script>
@@ -295,6 +281,7 @@
 <script src="{{url('/')}}/package/js/swiper.min.js"></script>
 <script src="{{url('/')}}/js/jquery.nicescroll.min.js"></script>
 <script src="{{url('/')}}/js/seeb.js"></script>
+<script src="{{url('/')}}/js/serviceLoginAjax.js"></script>
 <script src="{{url('/')}}/js/checkout.js"></script>
 <script>
   $(".input-group-append .search-btn").click(function(){
