@@ -244,8 +244,8 @@
                   <div class="form-group">
                     <label class="bmd-label-floating">{{ trans('admin.photo') }}</label>
                     {{ Form::file('photo', ['class' => 'form-control']) }}
-                    @if(isset($add->photo) && Storage::has($add->photo))
-                    	<img src="{{ Storage::url('storage/' . $add->photo) }}" style="width:50px;height:50px">
+                    @if(isset($add->photo))
+                    	<img src="{{ url('storage/' . $add->photo) }}" style="width:50px;height:50px">
                     @endif
                   </div>
                 </div>

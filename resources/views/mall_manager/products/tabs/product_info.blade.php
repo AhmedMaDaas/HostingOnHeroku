@@ -36,7 +36,7 @@
         @if(isset($product) && isset($product->photo))
           var mock = {name: '{{ $product->photo }}'};
           this.emit('addedfile', mock);
-          this.options.thumbnail.call(this, mock, '{{ Storage::url("storage/" . $product->photo) }}');
+          this.options.thumbnail.call(this, mock, '{{ url("storage/" . $product->photo) }}');
           this.files.push(mock);
 
           $('input[name="photo"]').val('{{ $product->photo }}');
