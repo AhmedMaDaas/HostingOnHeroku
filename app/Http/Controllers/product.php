@@ -100,15 +100,15 @@ class product extends Controller
         $product = $productClass->checkProduct($productId);
         if(!$product)return back()->with('failed', 'some thing wrong happen');
 
-        if(isset($_POST['add_product']) || isset($_POST['buy'])){
+        if(isset($_POST['add_product']) || isset($_POST['cash']) || isset($_POST['paybal'])){
             $colorId = $request->input('color');
             $sizeId = $request->input('size');
             $mallId = $request->input('mall');
             $quantity = $request->input('quantity');
 
             $mallId = $productClass->checkMallId($productId , $mallId);
-            $colorId = $billClass->checkColorId($colorId,$productId,1);
-            $sizeId = $billClass->checkSizeId($sizeId,$productId,1);
+            $colorId = $billClass->checkColorId($colorId,$productId);
+            $sizeId = $billClass->checkSizeId($sizeId,$productId);
 
             if($colorId == false || $sizeId == false || $mallId == false )return back()->with('failed', 'oops! choose a color and size');
             $checkQ = $productClass->checkQuantity($productId,$quantity,$sizeId,$colorId);
@@ -124,78 +124,107 @@ class product extends Controller
                 return back()->with('success', 'your product added successfully');
 
             }else{
+
+                $data = $this->validate(request(),[
+                    'country'=>'required',
+                    'city'=>'required',
+                    'street'=>'required'
+                ]);
+
+                $country = $request->input('country');
+                $city = $request->input('city');
+                $street = $request->input('street');
+
                 $product = $product->first();
                 
                 $productPrice = $productClass->checkPriceProduct($product);
                 
                 $bill = $billClass->createBill(session('login'),$productPrice,$productId,$colorId,$sizeId,$mallId,$quantity);
-                session(['bill'=>$bill]);
+                $bill->update(['address'=>$country.'/'.$city.'/'.$street]);
+                //session(['bill'=>$bill]);
 
-                $this->setContext();
+                if(isset($_POST['cash'])){
+                    dispatch(new MakeNewOrder($bill->id));
+                    $bill->update(['payment'=>'cash']);
+                    return back()->with('success', 'success');
 
-                $payer = new Payer();
-                $payer->setPaymentMethod("paypal");
+                }else{
+                    // $product = $product->first();
+                
+                    // $productPrice = $productClass->checkPriceProduct($product);
+                    
+                    // $bill = $billClass->createBill(session('login'),$productPrice,$productId,$colorId,$sizeId,$mallId,$quantity);
+                    session(['bill'=>$bill]);
 
-                $items_products = [];
-                //foreach($bill->products as $billProduct){
+                    $this->setContext();
 
-                    $item1 = new Item();
-                    $item1->setName($product->name_en.'|'.$product->name_ar)
-                        ->setCurrency('USD')
-                        ->setQuantity($quantity)
-                        ->setSku($product->id) // Similar to `item_number` in Classic API
-                        ->setPrice($bill->total_coast/$quantity);
+                    $payer = new Payer();
+                    $payer->setPaymentMethod("paypal");
 
-                    $items_products[] = $item1;
-                //}
+                    $items_products = [];
+                    //foreach($bill->products as $billProduct){
 
-                $itemList = new ItemList();
-                $itemList->setItems($items_products);
+                        $item1 = new Item();
+                        $item1->setName($product->name_en.'|'.$product->name_ar)
+                            ->setCurrency('USD')
+                            ->setQuantity($quantity)
+                            ->setSku($product->id) // Similar to `item_number` in Classic API
+                            ->setPrice($bill->total_coast/$quantity);
 
-                $details = new Details();
-                $details->setShipping($bill->shipping_coast)//تسعيرة الشحن
-                    ->setTax(0)//سعر الضرائب
-                    ->setSubtotal($bill->total_coast);
+                        $items_products[] = $item1;
+                    //}
 
-                $amount = new Amount();
-                $amount->setCurrency("USD")
-                    ->setTotal($bill->total_coast + $bill->shipping_coast)
-                    ->setDetails($details);
+                    $itemList = new ItemList();
+                    $itemList->setItems($items_products);
 
-                $transaction = new Transaction();
-                $transaction->setAmount($amount)
-                    ->setItemList($itemList)
-                    ->setDescription("Bazar Alseeb payment products")
-                    ->setInvoiceNumber(uniqid());
+                    $details = new Details();
+                    $details->setShipping($bill->shipping_coast)//تسعيرة الشحن
+                        ->setTax(0)//سعر الضرائب
+                        ->setSubtotal($bill->total_coast);
 
-                $baseUrl = url('/');
-                $redirectUrls = new RedirectUrls();
-                $redirectUrls->setReturnUrl("$baseUrl/success/true")
-                    ->setCancelUrl("$baseUrl/success/false");
+                    $amount = new Amount();
+                    $amount->setCurrency("USD")
+                        ->setTotal($bill->total_coast + $bill->shipping_coast)
+                        ->setDetails($details);
 
-                $payment = new Payment();
-                $payment->setIntent("sale")
-                    ->setPayer($payer)
-                    ->setRedirectUrls($redirectUrls)
-                    ->setTransactions(array($transaction));
+                    $transaction = new Transaction();
+                    $transaction->setAmount($amount)
+                        ->setItemList($itemList)
+                        ->setDescription("Bazar Alseeb payment products")
+                        ->setInvoiceNumber(uniqid());
 
-                $request = clone $payment;
+                    $baseUrl = url('/');
+                    $redirectUrls = new RedirectUrls();
+                    $redirectUrls->setReturnUrl("$baseUrl/success/true")
+                        ->setCancelUrl("$baseUrl/success/false");
 
-                try {
-                    $payment->create($this->apiContext);
-                } catch (Exception $ex) {
-                    //ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
-                    exit(1);
+                    $payment = new Payment();
+                    $payment->setIntent("sale")
+                        ->setPayer($payer)
+                        ->setRedirectUrls($redirectUrls)
+                        ->setTransactions(array($transaction));
+
+                    $request = clone $payment;
+
+                    try {
+                        $payment->create($this->apiContext);
+                    } catch (Exception $ex) {
+                        //ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
+                        exit(1);
+                    }
+
+                    $approvalUrl = $payment->getApprovalLink();
+
+                    session(['total_coast'=>$bill->total_coast,
+                             'shipping_coast' => $bill->shipping_coast,
+                        ]);
+
+                    return Redirect($approvalUrl);
+
+
                 }
 
-                $approvalUrl = $payment->getApprovalLink();
-
-                session(['total_coast'=>$bill->total_coast,
-                         'shipping_coast' => $bill->shipping_coast,
-                    ]);
-
-                return Redirect($approvalUrl);
-
+                
             }
             $bill->delete();
             
