@@ -308,7 +308,7 @@
                 @foreach($table as $row)
                     <tr>
                         @foreach($row as $cell)
-                            <td contenteditable='true' rowspan="{{ $cell['rowspan'] }}" colspan="{{ $cell['colspan'] }}">{{ $cell['text'] }}</td>
+                            <td rowspan="{{ $cell['rowspan'] }}" colspan="{{ $cell['colspan'] }}">{{ $cell['text'] }}</td>
                         @endforeach
                     </tr>
                 @endforeach
