@@ -31,6 +31,30 @@
         {{ Session::get('failed') }}
        </div>
     @endif
+
+    <!-- <div class="modal buyynow" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <form method="post" class="modal-content" >
+                {{csrf_field()}}
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Location</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="country" placeholder="Country">
+                    <input type="text" name="city" placeholder="city">
+                    <input type="text" name="street" placeholder="street">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="cash" class="cash">Cash Pay</button>
+                    <button type="submit" name="paybal" class="paypal">Paypal Pay</button>
+                </div>
+            </form>
+          </div>
+    </div> -->
+
 <form method="post">
     {{csrf_field()}}
  <section class="productsingle">
@@ -64,8 +88,32 @@
 				
 			</div>
 		</div>
-    </div>
+    </div> 
 
+
+    <div class="modal buyynow" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div  class="modal-content" >
+                {{csrf_field()}}
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Location</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="country" placeholder="Country">
+                    <input type="text" name="city" placeholder="city">
+                    <input type="text" name="street" placeholder="street">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="cash" class="cash">Cash Pay</button>
+                    <button type="submit" name="paybal" class="paypal">Paypal Pay</button>
+                </div>
+            </div>
+          </div>
+    </div>
+    
         <div class="options">
             <h3 class="productname">{{$product->name_en}}</h3>
             <p class="description">{{$product->content}}</p>
@@ -156,7 +204,7 @@
                 <button value="2" type="button" class="value-plus">+</button>
             </div>
             <div class="button">
-                <button class="buynow" name="buy">Buy Now</button>
+                <input type="button" class="buynow" name="cache" value="Buy Now"><!-- </button> -->
                 <button class="addtocart" name="add_product">Add To Cart</button>
             </div>
 
@@ -200,7 +248,7 @@
                                 @else
                                     <img src="{{url('/')}}/icons/favorite-24px.svg" class="filter-fairouzi love">
                                 @endif
-                                <img src="{{Storage::url('/storage/'.$product->photo)}}">
+                                <img src="{{url('/storage/'.$product->photo)}}">
                                 <div class="product-details">
                                     <a href="{{route('product.get',['productId'=>$product->id])}}" class="product-name">
                                         {{$product->name_en}}
