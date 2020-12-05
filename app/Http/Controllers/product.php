@@ -7,6 +7,7 @@ use App\Http\Controllers\classes\productClass;
 use App\Http\Controllers\classes\indexClass;
 use App\Http\Controllers\classes\billClass;
 use App\Commint;
+use App\Jobs\MakeNewOrder;
 
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
