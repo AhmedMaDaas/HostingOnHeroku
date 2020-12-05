@@ -53,11 +53,19 @@ class productClass{
 		return $commints;
 	}
 
-	function getSomeProducts($mallId,$productId){
+	function getProductsByDep($departmentId){
+		$productsByDep = Product::where('stock','>=',1)->where('department_id',$departmentId)->inRandomOrder()->take(9)->get();
+		return $productsByDep;
+	}
+
+	function getSomeProducts($mallId,$productId,$departmentId){
 
 		$relatedProducts = Product::where('stock','>=',1)->whereHas('malls',function($query) use($mallId){
 					return $query->where('mall_id',$mallId);
 				})->inRandomOrder()->take(9)->get();
+
+		$productsByDep = $this->getProductsByDep($departmentId);
+		$relatedProducts = $relatedProducts->merge($productsByDep);
 		return $relatedProducts;
 
 		// $relatedProducts = $mall->load(['products'=> function($query)use($productId){
