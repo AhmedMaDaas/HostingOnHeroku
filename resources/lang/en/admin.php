@@ -273,4 +273,5 @@ return [
 	'add' => 'Add',
 	'deleted' => 'Deleted',
 	'email_page' => 'E-mail Page',
+	'size' => 'Size',
 ];
