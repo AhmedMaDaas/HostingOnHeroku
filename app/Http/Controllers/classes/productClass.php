@@ -55,7 +55,7 @@ class productClass{
 
 	function getSomeProducts($mallId,$productId){
 
-		$relatedProducts = Product::where('id',$productId)->where('stock','>=',1)->whereHas('malls',function($query) use($mallId){
+		$relatedProducts = Product::where('stock','>=',1)->whereHas('malls',function($query) use($mallId){
 					return $query->where('mall_id',$mallId);
 				})->inRandomOrder()->take(9)->get();
 		return $relatedProducts;

@@ -545,20 +545,28 @@ class indexClass{
 		return $depsIds;
 	}
 
-	function getProductsByBill($userId){
+	function getProductsByBill($userId,$skip=0){
 		$billsIds = $this->getLastBills($userId);
 		$depsIds = $this->getDepsIdsByBill($billsIds);
-		$products = Product::whereIn('department_id',$depsIds)->where('stock','>=',1)->inRandomOrder()->with('malls')->with('users')->take(6)->get();
+		$products = Product::whereIn('department_id',$depsIds)->where('stock','>=',1)->inRandomOrder()->with('malls')->with('users')->skip($skip)->take(6)->get();
 		return $products;
 	}
 
-	function getProductsByMallFollowing(){
+	function getProductsByMallFollowing($skip=0){
 		$mallsIds = MallUser::where('user_id',session('login'))->pluck('mall_id')->toArray();
 
 		$productsFollow = Product::where('stock','>=',1)->whereHas('malls',function($query) use($mallsIds){
 					return $query->whereIn('mall_id',$mallsIds);
-				})->inRandomOrder()->with('malls')->with('users')->take(6)->get();
+				})->inRandomOrder()->with('malls')->with('users')->skip($skip)->take(6)->get();
 		return $productsFollow;
+	}
+
+	function getProductsByLove($skip=0){
+		$productsByLove = Product::where('stock','>=',1)->whereHas('users',function($query){
+					return $query->where('user_id','=',session('login'));
+				})->inRandomOrder()->with('malls')->with('users')->skip($skip)->take(6)->get();
+
+		return $productsByLove;
 	}
 
 
@@ -569,19 +577,25 @@ class indexClass{
 		// return $products;
 		if(!$all){
 			if(session('login')){
-				$products = Product::where('stock','>=',1)->whereHas('users',function($query){
-					return $query->where('user_id','=',session('login'));
-				})->inRandomOrder()->with('malls')->with('users')->take(6)->get();
+				// $products = Product::where('stock','>=',1)->whereHas('users',function($query){
+				// 	return $query->where('user_id','=',session('login'));
+				// })->inRandomOrder()->with('malls')->with('users')->take(6)->get();
 
+				$productsByLove = $this->getProductsByLove();
 				$productsFollow = $this->getProductsByMallFollowing();
 				$getProductsByBill = $this->getProductsByBill(session('login'));
 
-
-				$productsGet = $this->getProducts();
-
-				$products = $productsGet->merge($products);
-				$products = $products->merge($productsFollow);
+				$products = $productsByLove->merge($productsFollow);
 				$products = $products->merge($getProductsByBill);
+				//$products = $products->merge($getProductsByBill);
+				if(count($products)<4){
+					/*
+					*
+					*	get all Products
+					*/
+					$productsGet = $this->getProducts();
+					$products = $products->merge($productsGet);
+				}
 
 				//$productUser = ProductUser::where('id',session('login'))->inRandomOrder()->with('malls')->take(6)->get();
 			}else{
@@ -592,18 +606,23 @@ class indexClass{
 		}else{
 
 			if(session('login')){
-			$products = Product::where('stock','>=',1)->whereHas('users',function($query){
-				return $query->where('user_id','=',session('login'));
-			})->inRandomOrder()->with('malls')->with('users')->skip($skip)->take(6)->get();
 
-			$productsFollow = $this->getProductsByMallFollowing();
-			$getProductsByBill = $this->getProductsByBill(session('login'));
+			$productsByLove = $this->getProductsByLove($skip);
+			$productsFollow = $this->getProductsByMallFollowing($skip);
+			$getProductsByBill = $this->getProductsByBill(session('login'),$skip);
 
-			$productsGet = $this->getProducts($all , $skip);
-
-			$products = $productsGet->merge($products);
-			$products = $products->merge($productsFollow);
+			$products = $productsByLove->merge($productsFollow);
 			$products = $products->merge($getProductsByBill);
+			//$products = $products->merge($getProductsByBill);
+
+			if(count($products)<12){
+				/*
+				*
+				*	get all Products
+				*/
+				$productsGet = $this->getProducts($all , $skip);
+				$products = $products->merge($productsGet);
+			}
 
 			//$productUser = ProductUser::where('id',session('login'))->inRandomOrder()->with('malls')->take(6)->get();
 			}else{
