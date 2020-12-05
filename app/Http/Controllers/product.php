@@ -54,7 +54,7 @@ class product extends Controller
         
         $countFollowers = $mallProduct->mall->followers;
 
-        $relatedProducts = $productClass->getSomeProducts($mallProduct->mall_id,$productId);
+        $relatedProducts = $productClass->getSomeProducts($mallProduct->mall_id,$productId,$product->department_id);
         //$commintsInPage = 6;
 //dd($indexClass->getDepartments());
         // $departmentsParents = $indexClass->getDepartmentsWithParent2();
